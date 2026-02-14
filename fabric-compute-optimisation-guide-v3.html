@@ -926,6 +926,95 @@
         .budget-table tr:last-child td { border-bottom: none; }
         .budget-table tr:hover { background: var(--accent-soft); }
 
+        /* ---- Validation Cards ---- */
+        .validation-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+        .validation-card {
+            background: var(--bg-primary);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 20px 22px;
+            transition: all var(--transition);
+        }
+        .validation-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        .validation-card:last-child:nth-child(odd) {
+            grid-column: 1 / -1;
+        }
+        .validation-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+        .validation-card-title {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text-primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .validation-card-title .vc-icon { font-size: 18px; }
+        .fit-tag {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 980px;
+            font-size: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        .fit-strong {
+            background: var(--green-bg);
+            color: var(--green-text);
+        }
+        .fit-moderate {
+            background: var(--yellow-bg);
+            color: var(--yellow-text);
+        }
+        .fit-review {
+            background: var(--red-bg);
+            color: var(--red-text);
+        }
+        .validation-answer {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            margin-bottom: 8px;
+            font-weight: 500;
+        }
+        .validation-answer strong {
+            color: var(--text-secondary);
+        }
+        .validation-rationale {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+        .validation-summary {
+            background: var(--bg-card);
+            border: 1.5px solid var(--accent);
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            margin-bottom: 28px;
+        }
+        .validation-summary p {
+            font-size: 14px;
+            color: var(--text-primary);
+            line-height: 1.7;
+        }
+        @media (max-width: 768px) {
+            .validation-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
         /* ---- Print ---- */
         @media print {
             .nav-buttons { display: none; }
@@ -2623,6 +2712,94 @@
             html+='<tr><td><strong>Optimised mix</strong></td><td>~\u00a3'+Math.round(optimised).toLocaleString()+'</td><td>~\u00a3'+Math.round(optimised*12).toLocaleString()+'</td><td>Reserved prod + PAYG dev with pause</td></tr>';
             html+='</tbody></table>';
             html+='<p style="font-size:11px;color:var(--text-tertiary);">* UK South PAYG estimates (Feb 2025). Verify at <a href="https://azure.microsoft.com/en-gb/pricing/details/microsoft-fabric/" target="_blank" style="color:var(--accent);">azure.microsoft.com/pricing</a>.</p>';
+            // === Validation & Rationale Section ===
+            html+='<div class="result-section-title">✅ Validation & Rationale</div>';
+            // Gather user answers for each dimension
+            var a_emp=getAnswer('q1_1','single')||'Not answered';
+            var a_mat=getAnswer('q1_2','single')||'Not answered';
+            var a_lic=getAnswer('q2_1','single')||'Not answered';
+            var a_pain=getAnswer('q2_2','multi');
+            var a_vol=getAnswer('q3_1','single')||'Not answered';
+            var a_freq=getAnswer('q3_2','single')||'Not answered';
+            var a_wkl=getAnswer('q4_1','multi');
+            var a_cop=getAnswer('q4_2','single')||'Not answered';
+            var a_usr=getAnswer('q5_1','single')||'Not answered';
+            var a_bud=getAnswer('q5_2','single')||'Not answered';
+            // Fit indicators per dimension
+            function fitTag(score){
+                if(score>=6)return'<span class="fit-tag fit-strong">Strong Fit</span>';
+                if(score>=3)return'<span class="fit-tag fit-moderate">Moderate Fit</span>';
+                return'<span class="fit-tag fit-review">Needs Review</span>';
+            }
+            // Rationale builders per dimension
+            function orgRationale(emp,mat,score){
+                var r='With <strong>'+emp+'</strong> employees and a <strong>'+mat.split('(')[0].trim()+'</strong> data maturity level, ';
+                if(score>=6)r+='your organisation has the scale and governance maturity that benefits from a higher-tier F-SKU to support concurrent workloads and enterprise-grade demands.';
+                else if(score>=3)r+='your organisation is at a transitional stage — a mid-range F-SKU provides room to grow without over-provisioning while you mature your data practices.';
+                else r+='your organisation\'s smaller scale and earlier maturity stage mean a lower-tier F-SKU is appropriate, keeping costs aligned with current demand.';
+                return r;
+            }
+            function dataRationale(vol,freq,score){
+                var r='A data estate of <strong>'+vol+'</strong> with <strong>'+freq.toLowerCase()+'</strong> refresh frequency ';
+                if(score>=6)r+='represents significant compute demand — large volumes combined with frequent refreshes require sustained CU capacity to avoid throttling and ensure timely data availability.';
+                else if(score>=3)r+='represents moderate compute requirements — the recommended SKU balances refresh performance with cost efficiency for your data patterns.';
+                else r+='indicates lighter compute needs — a smaller SKU handles this volume and refresh cadence comfortably without unnecessary spend.';
+                return r;
+            }
+            function workloadRationale(wkl,cop,score){
+                var wkls=wkl&&wkl.length?wkl.join(', '):'None selected';
+                var r='Planned workloads include <strong>'+wkls+'</strong>. ';
+                if(wkl&&wkl.length>=4)r+='Running multiple Fabric workload types simultaneously demands higher CU headroom to prevent resource contention. ';
+                else if(wkl&&wkl.length>=2)r+='A moderate workload mix benefits from sufficient CUs to handle parallel execution without throttling. ';
+                else r+='A focused workload profile means CU demands are concentrated, allowing a leaner SKU. ';
+                if(cop==='Yes, as a priority')r+='Your priority use of <strong>Copilot for Fabric</strong> enforces a minimum F64 capacity requirement.';
+                else if(cop==='Yes, if available')r+='Copilot for Fabric is a consideration — if activated, note that F64 is the minimum required SKU.';
+                return r;
+            }
+            function usersRationale(usr,score){
+                var r='With a peak concurrent user count of <strong>'+usr+'</strong>, ';
+                if(score>=6)r+='the recommended SKU ensures report rendering and query execution remain responsive under heavy concurrent load without triggering smoothing or throttling.';
+                else if(score>=3)r+='the SKU provides adequate headroom for your user base while keeping costs proportional to actual consumption patterns.';
+                else r+='a smaller SKU comfortably serves this user base — interactive query performance will remain strong at this concurrency level.';
+                return r;
+            }
+            function budgetRationale(bud,prodSku,score){
+                var r='Your indicated budget of <strong>'+bud+'</strong> ';
+                if(score>=6)r+='supports the recommended <strong>'+prodSku+'</strong> production capacity, with room to explore reserved pricing for further savings.';
+                else if(score>=3)r+='aligns with the recommended <strong>'+prodSku+'</strong> — consider the optimised mix (reserved prod + PAYG dev with pause/resume) to maximise value within this envelope.';
+                else r+='is on the tighter side for the computed workload needs. The <strong>'+prodSku+'</strong> recommendation prioritises capability, but review the Pause/Resume and Reserved options to fit within budget.';
+                return r;
+            }
+            // Build summary
+            var compositeLabel=composite>=6?'high':'moderate';
+            if(composite<3)compositeLabel='lower';
+            html+='<div class="validation-summary"><p>Based on your responses across all five dimensions, your composite score of <strong>'+composite.toFixed(1)+'/10</strong> indicates a <strong>'+compositeLabel+' demand profile</strong>. ';
+            html+='We recommend <strong>'+prodSku+'</strong> for production and <strong>'+devSku+'</strong> for development. ';
+            html+='Below is a breakdown of how each dimension influenced this recommendation.</p></div>';
+            // Build cards
+            html+='<div class="validation-grid">';
+            // 1. Organisation
+            html+='<div class="validation-card"><div class="validation-card-header"><div class="validation-card-title"><span class="vc-icon">🏢</span>Organisation Profile</div>'+fitTag(sc.orgScale)+'</div>';
+            html+='<div class="validation-answer"><strong>Employees:</strong> '+a_emp+' · <strong>Maturity:</strong> '+a_mat.split('(')[0].trim()+'</div>';
+            html+='<div class="validation-rationale">'+orgRationale(a_emp,a_mat,sc.orgScale)+'</div></div>';
+            // 2. Data Estate
+            html+='<div class="validation-card"><div class="validation-card-header"><div class="validation-card-title"><span class="vc-icon">🗄️</span>Data Estate</div>'+fitTag(sc.dataEstate)+'</div>';
+            html+='<div class="validation-answer"><strong>Volume:</strong> '+a_vol+' · <strong>Refresh:</strong> '+a_freq+'</div>';
+            html+='<div class="validation-rationale">'+dataRationale(a_vol,a_freq,sc.dataEstate)+'</div></div>';
+            // 3. Workloads
+            html+='<div class="validation-card"><div class="validation-card-header"><div class="validation-card-title"><span class="vc-icon">⚡</span>Fabric Workloads</div>'+fitTag(sc.workloads)+'</div>';
+            html+='<div class="validation-answer"><strong>Workloads:</strong> '+(a_wkl&&a_wkl.length?a_wkl.join(', '):'None selected')+' · <strong>Copilot:</strong> '+a_cop+'</div>';
+            html+='<div class="validation-rationale">'+workloadRationale(a_wkl,a_cop,sc.workloads)+'</div></div>';
+            // 4. Users
+            html+='<div class="validation-card"><div class="validation-card-header"><div class="validation-card-title"><span class="vc-icon">👥</span>Users</div>'+fitTag(sc.users)+'</div>';
+            html+='<div class="validation-answer"><strong>Peak concurrent:</strong> '+a_usr+'</div>';
+            html+='<div class="validation-rationale">'+usersRationale(a_usr,sc.users)+'</div></div>';
+            // 5. Budget
+            html+='<div class="validation-card"><div class="validation-card-header"><div class="validation-card-title"><span class="vc-icon">💰</span>Budget</div>'+fitTag(sc.budget)+'</div>';
+            html+='<div class="validation-answer"><strong>Monthly budget:</strong> '+a_bud+'</div>';
+            html+='<div class="validation-rationale">'+budgetRationale(a_bud,prodSku,sc.budget)+'</div></div>';
+            html+='</div>';
+            // === End Validation Section ===
             html+='<div style="margin-top:28px;padding:16px 20px;background:var(--bg-secondary);border-radius:var(--radius-md);font-size:13px;color:var(--text-secondary);line-height:1.6;">';
             html+='<strong style="color:var(--text-primary);">⚡ Important:</strong> This is a <strong>recommended starting point</strong>. ';
             html+='Microsoft recommends monitoring via the <a href="https://learn.microsoft.com/en-us/fabric/enterprise/metrics-app" target="_blank" style="color:var(--accent);">Capacity Metrics App</a> for 2–4 weeks then adjusting. F-SKUs can be changed at any time with no downtime.</div>';
