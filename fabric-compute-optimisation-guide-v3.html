@@ -2252,7 +2252,7 @@
         <!-- ============================================ -->
         <div class="section-divider" id="fsku">
             <h2>🎯 F-SKU Capacity Assessment</h2>
-            <p>Interactive wizard — 10 questions across 5 stages producing a tailored F-SKU recommendation with radar profile</p>
+            <p>Interactive wizard — 25 questions across 5 stages producing a tailored F-SKU recommendation with radar profile</p>
             <a href="#recommendations" class="nav-btn nav-btn-outline" style="margin-top:8px;">↑ Back to top</a>
         </div>
         <div class="fsku-section">
@@ -2282,11 +2282,33 @@
                         <label class="option-chip"><input type="radio" name="q1_2" value="Optimised (well-governed, automated, CI/CD)" onchange="onAnswer()"><span class="chip-text">Optimised (well-governed, automated, CI/CD)</span></label>
                         <label class="option-chip"><input type="radio" name="q1_2" value="Advanced (data mesh, self-service with guardrails)" onchange="onAnswer()"><span class="chip-text">Advanced (data mesh, self-service with guardrails)</span></label>
                     </div><textarea class="wizard-notes" id="notes_q1_2" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q3</div><div class="question-text">What industry sector does your organisation operate in?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q1_3" value="Financial Services" onchange="onAnswer()"><span class="chip-text">Financial Services</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_3" value="Healthcare & Life Sciences" onchange="onAnswer()"><span class="chip-text">Healthcare & Life Sciences</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_3" value="Government & Public Sector" onchange="onAnswer()"><span class="chip-text">Government & Public Sector</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_3" value="Retail & Consumer Goods" onchange="onAnswer()"><span class="chip-text">Retail & Consumer Goods</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_3" value="Manufacturing & Energy" onchange="onAnswer()"><span class="chip-text">Manufacturing & Energy</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_3" value="Technology & Media" onchange="onAnswer()"><span class="chip-text">Technology & Media</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_3" value="Education & Non-Profit" onchange="onAnswer()"><span class="chip-text">Education & Non-Profit</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_3" value="Other" onchange="onAnswer()"><span class="chip-text">Other</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q1_3" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q4</div><div class="question-text">How many business units or departments will use Fabric?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q1_4" value="1 (single team)" onchange="onAnswer()"><span class="chip-text">1 (single team)</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_4" value="2–5" onchange="onAnswer()"><span class="chip-text">2–5</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_4" value="6–15" onchange="onAnswer()"><span class="chip-text">6–15</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_4" value="15+" onchange="onAnswer()"><span class="chip-text">15+</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q1_4" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q5</div><div class="question-text">What is your geographic operating model?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q1_5" value="Single region" onchange="onAnswer()"><span class="chip-text">Single region</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_5" value="Multi-region (same country)" onchange="onAnswer()"><span class="chip-text">Multi-region (same country)</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_5" value="Multi-country (same continent)" onchange="onAnswer()"><span class="chip-text">Multi-country (same continent)</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_5" value="Global (multiple continents)" onchange="onAnswer()"><span class="chip-text">Global (multiple continents)</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q1_5" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
                     <div class="wizard-nav"><div></div><button class="wiz-nav-btn primary" onclick="goToStage(1)">Next: Current Foundation →</button></div>
                 </div>
                 <div class="wizard-panel" id="panel1" style="display:none;">
                     <div class="panel-header"><span class="panel-icon">🏗️</span><div><h3>Stage 2: Current Foundation</h3><p>Existing platform, licensing, and readiness</p></div></div>
-                    <div class="wizard-question"><div class="question-number">Q3</div><div class="question-text">What is your current Power BI licensing model?</div><div class="option-grid">
+                    <div class="wizard-question"><div class="question-number">Q6</div><div class="question-text">What is your current Power BI licensing model?</div><div class="option-grid">
                         <label class="option-chip"><input type="radio" name="q2_1" value="Power BI Free only" onchange="onAnswer()"><span class="chip-text">Power BI Free only</span></label>
                         <label class="option-chip"><input type="radio" name="q2_1" value="Power BI Pro" onchange="onAnswer()"><span class="chip-text">Power BI Pro</span></label>
                         <label class="option-chip"><input type="radio" name="q2_1" value="Premium Per User (PPU)" onchange="onAnswer()"><span class="chip-text">Premium Per User (PPU)</span></label>
@@ -2294,7 +2316,7 @@
                         <label class="option-chip"><input type="radio" name="q2_1" value="Microsoft Fabric (already using)" onchange="onAnswer()"><span class="chip-text">Microsoft Fabric (already using)</span></label>
                         <label class="option-chip"><input type="radio" name="q2_1" value="No Power BI currently" onchange="onAnswer()"><span class="chip-text">No Power BI currently</span></label>
                     </div><textarea class="wizard-notes" id="notes_q2_1" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
-                    <div class="wizard-question"><div class="question-number">Q4</div><div class="question-text">What are your top pain points? <span class="multi-hint">(select all that apply)</span></div><div class="option-grid">
+                    <div class="wizard-question"><div class="question-number">Q7</div><div class="question-text">What are your top pain points? <span class="multi-hint">(select all that apply)</span></div><div class="option-grid">
                         <label class="option-chip"><input type="checkbox" name="q2_2" value="Performance / slow reports" onchange="onAnswer()"><span class="chip-text">Performance / slow reports</span></label>
                         <label class="option-chip"><input type="checkbox" name="q2_2" value="Cost too expensive" onchange="onAnswer()"><span class="chip-text">Cost too expensive</span></label>
                         <label class="option-chip"><input type="checkbox" name="q2_2" value="Governance gaps" onchange="onAnswer()"><span class="chip-text">Governance gaps</span></label>
@@ -2304,11 +2326,34 @@
                         <label class="option-chip"><input type="checkbox" name="q2_2" value="Scalability ceiling" onchange="onAnswer()"><span class="chip-text">Scalability ceiling</span></label>
                         <label class="option-chip"><input type="checkbox" name="q2_2" value="Manual processes" onchange="onAnswer()"><span class="chip-text">Manual processes</span></label>
                     </div><textarea class="wizard-notes" id="notes_q2_2" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q8</div><div class="question-text">What is your current Azure commercial agreement?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q2_3" value="Enterprise Agreement (EA)" onchange="onAnswer()"><span class="chip-text">Enterprise Agreement (EA)</span></label>
+                        <label class="option-chip"><input type="radio" name="q2_3" value="Microsoft Customer Agreement (MCA)" onchange="onAnswer()"><span class="chip-text">Microsoft Customer Agreement (MCA)</span></label>
+                        <label class="option-chip"><input type="radio" name="q2_3" value="Cloud Solution Provider (CSP)" onchange="onAnswer()"><span class="chip-text">Cloud Solution Provider (CSP)</span></label>
+                        <label class="option-chip"><input type="radio" name="q2_3" value="Pay-As-You-Go" onchange="onAnswer()"><span class="chip-text">Pay-As-You-Go</span></label>
+                        <label class="option-chip"><input type="radio" name="q2_3" value="Not sure / No Azure yet" onchange="onAnswer()"><span class="chip-text">Not sure / No Azure yet</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q2_3" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q9</div><div class="question-text">What other data platforms are currently in use? <span class="multi-hint">(select all that apply)</span></div><div class="option-grid">
+                        <label class="option-chip"><input type="checkbox" name="q2_4" value="Azure Synapse Analytics" onchange="onAnswer()"><span class="chip-text">Azure Synapse Analytics</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q2_4" value="Azure Data Factory" onchange="onAnswer()"><span class="chip-text">Azure Data Factory</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q2_4" value="Databricks" onchange="onAnswer()"><span class="chip-text">Databricks</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q2_4" value="SQL Server / Azure SQL" onchange="onAnswer()"><span class="chip-text">SQL Server / Azure SQL</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q2_4" value="Snowflake" onchange="onAnswer()"><span class="chip-text">Snowflake</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q2_4" value="AWS / GCP services" onchange="onAnswer()"><span class="chip-text">AWS / GCP services</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q2_4" value="None / Spreadsheets only" onchange="onAnswer()"><span class="chip-text">None / Spreadsheets only</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q2_4" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q10</div><div class="question-text">What is your target migration timeline to Fabric?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q2_5" value="Immediate (< 1 month)" onchange="onAnswer()"><span class="chip-text">Immediate (< 1 month)</span></label>
+                        <label class="option-chip"><input type="radio" name="q2_5" value="Short-term (1–3 months)" onchange="onAnswer()"><span class="chip-text">Short-term (1–3 months)</span></label>
+                        <label class="option-chip"><input type="radio" name="q2_5" value="Medium-term (3–6 months)" onchange="onAnswer()"><span class="chip-text">Medium-term (3–6 months)</span></label>
+                        <label class="option-chip"><input type="radio" name="q2_5" value="Long-term (6–12 months)" onchange="onAnswer()"><span class="chip-text">Long-term (6–12 months)</span></label>
+                        <label class="option-chip"><input type="radio" name="q2_5" value="Exploration / no timeline yet" onchange="onAnswer()"><span class="chip-text">Exploration / no timeline yet</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q2_5" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
                     <div class="wizard-nav"><button class="wiz-nav-btn" onclick="goToStage(0)">← Previous</button><button class="wiz-nav-btn primary" onclick="goToStage(2)">Next: Data Estate →</button></div>
                 </div>
                 <div class="wizard-panel" id="panel2" style="display:none;">
-                    <div class="panel-header"><span class="panel-icon">🗄️</span><div><h3>Stage 3: Data Estate</h3><p>Data volumes and refresh patterns</p></div></div>
-                    <div class="wizard-question"><div class="question-number">Q5</div><div class="question-text">What is your total data volume across all sources?</div><div class="option-grid">
+                    <div class="panel-header"><span class="panel-icon">🗄️</span><div><h3>Stage 3: Data Estate</h3><p>Data volumes, sources, and refresh patterns</p></div></div>
+                    <div class="wizard-question"><div class="question-number">Q11</div><div class="question-text">What is your total data volume across all sources?</div><div class="option-grid">
                         <label class="option-chip"><input type="radio" name="q3_1" value="< 10 GB" onchange="onAnswer()"><span class="chip-text">< 10 GB</span></label>
                         <label class="option-chip"><input type="radio" name="q3_1" value="10–100 GB" onchange="onAnswer()"><span class="chip-text">10–100 GB</span></label>
                         <label class="option-chip"><input type="radio" name="q3_1" value="100 GB–1 TB" onchange="onAnswer()"><span class="chip-text">100 GB–1 TB</span></label>
@@ -2316,18 +2361,38 @@
                         <label class="option-chip"><input type="radio" name="q3_1" value="10–50 TB" onchange="onAnswer()"><span class="chip-text">10–50 TB</span></label>
                         <label class="option-chip"><input type="radio" name="q3_1" value="50+ TB" onchange="onAnswer()"><span class="chip-text">50+ TB</span></label>
                     </div><textarea class="wizard-notes" id="notes_q3_1" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
-                    <div class="wizard-question"><div class="question-number">Q6</div><div class="question-text">How frequently does your data need to be refreshed?</div><div class="option-grid">
+                    <div class="wizard-question"><div class="question-number">Q12</div><div class="question-text">How frequently does your data need to be refreshed?</div><div class="option-grid">
                         <label class="option-chip"><input type="radio" name="q3_2" value="Weekly" onchange="onAnswer()"><span class="chip-text">Weekly</span></label>
                         <label class="option-chip"><input type="radio" name="q3_2" value="Daily (once)" onchange="onAnswer()"><span class="chip-text">Daily (once)</span></label>
                         <label class="option-chip"><input type="radio" name="q3_2" value="Multiple times per day" onchange="onAnswer()"><span class="chip-text">Multiple times per day</span></label>
                         <label class="option-chip"><input type="radio" name="q3_2" value="Near real-time (15–60 mins)" onchange="onAnswer()"><span class="chip-text">Near real-time (15–60 mins)</span></label>
                         <label class="option-chip"><input type="radio" name="q3_2" value="Real-time (streaming)" onchange="onAnswer()"><span class="chip-text">Real-time (streaming)</span></label>
                     </div><textarea class="wizard-notes" id="notes_q3_2" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q13</div><div class="question-text">How many distinct data sources do you connect to?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q3_3" value="1–3" onchange="onAnswer()"><span class="chip-text">1–3</span></label>
+                        <label class="option-chip"><input type="radio" name="q3_3" value="4–10" onchange="onAnswer()"><span class="chip-text">4–10</span></label>
+                        <label class="option-chip"><input type="radio" name="q3_3" value="11–25" onchange="onAnswer()"><span class="chip-text">11–25</span></label>
+                        <label class="option-chip"><input type="radio" name="q3_3" value="26–50" onchange="onAnswer()"><span class="chip-text">26–50</span></label>
+                        <label class="option-chip"><input type="radio" name="q3_3" value="50+" onchange="onAnswer()"><span class="chip-text">50+</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q3_3" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q14</div><div class="question-text">What types of data do you primarily work with? <span class="multi-hint">(select all that apply)</span></div><div class="option-grid">
+                        <label class="option-chip"><input type="checkbox" name="q3_4" value="Structured (SQL tables, CSV)" onchange="onAnswer()"><span class="chip-text">Structured (SQL tables, CSV)</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q3_4" value="Semi-structured (JSON, Parquet, XML)" onchange="onAnswer()"><span class="chip-text">Semi-structured (JSON, Parquet, XML)</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q3_4" value="Unstructured (images, documents, logs)" onchange="onAnswer()"><span class="chip-text">Unstructured (images, documents, logs)</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q3_4" value="Streaming / event data" onchange="onAnswer()"><span class="chip-text">Streaming / event data</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q3_4" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q15</div><div class="question-text">What is your expected annual data growth rate?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q3_5" value="< 10% (stable)" onchange="onAnswer()"><span class="chip-text">< 10% (stable)</span></label>
+                        <label class="option-chip"><input type="radio" name="q3_5" value="10–25% (moderate)" onchange="onAnswer()"><span class="chip-text">10–25% (moderate)</span></label>
+                        <label class="option-chip"><input type="radio" name="q3_5" value="25–50% (fast)" onchange="onAnswer()"><span class="chip-text">25–50% (fast)</span></label>
+                        <label class="option-chip"><input type="radio" name="q3_5" value="50–100% (rapid)" onchange="onAnswer()"><span class="chip-text">50–100% (rapid)</span></label>
+                        <label class="option-chip"><input type="radio" name="q3_5" value="100%+ (explosive)" onchange="onAnswer()"><span class="chip-text">100%+ (explosive)</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q3_5" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
                     <div class="wizard-nav"><button class="wiz-nav-btn" onclick="goToStage(1)">← Previous</button><button class="wiz-nav-btn primary" onclick="goToStage(3)">Next: Fabric Workloads →</button></div>
                 </div>
                 <div class="wizard-panel" id="panel3" style="display:none;">
-                    <div class="panel-header"><span class="panel-icon">⚡</span><div><h3>Stage 4: Fabric Workloads</h3><p>Which Fabric workloads and their intensity</p></div></div>
-                    <div class="wizard-question"><div class="question-number">Q7</div><div class="question-text">Which Fabric workloads do you plan to use? <span class="multi-hint">(select all that apply)</span></div><div class="option-grid">
+                    <div class="panel-header"><span class="panel-icon">⚡</span><div><h3>Stage 4: Fabric Workloads</h3><p>Which Fabric workloads, their intensity, and operational maturity</p></div></div>
+                    <div class="wizard-question"><div class="question-number">Q16</div><div class="question-text">Which Fabric workloads do you plan to use? <span class="multi-hint">(select all that apply)</span></div><div class="option-grid">
                         <label class="option-chip"><input type="checkbox" name="q4_1" value="Data Engineering (Spark, Lakehouse)" onchange="onAnswer()"><span class="chip-text">Data Engineering (Spark, Lakehouse)</span></label>
                         <label class="option-chip"><input type="checkbox" name="q4_1" value="Data Factory (Pipelines, Dataflows)" onchange="onAnswer()"><span class="chip-text">Data Factory (Pipelines, Dataflows)</span></label>
                         <label class="option-chip"><input type="checkbox" name="q4_1" value="Data Warehouse (SQL analytics)" onchange="onAnswer()"><span class="chip-text">Data Warehouse (SQL analytics)</span></label>
@@ -2336,17 +2401,37 @@
                         <label class="option-chip"><input type="checkbox" name="q4_1" value="Data Science (ML)" onchange="onAnswer()"><span class="chip-text">Data Science (ML)</span></label>
                         <label class="option-chip"><input type="checkbox" name="q4_1" value="Not sure yet" onchange="onAnswer()"><span class="chip-text">Not sure yet</span></label>
                     </div><textarea class="wizard-notes" id="notes_q4_1" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
-                    <div class="wizard-question"><div class="question-number">Q8</div><div class="question-text">Do you plan to use Copilot for Fabric?</div><div class="option-grid">
+                    <div class="wizard-question"><div class="question-number">Q17</div><div class="question-text">Do you plan to use Copilot for Fabric?</div><div class="option-grid">
                         <label class="option-chip"><input type="radio" name="q4_2" value="No" onchange="onAnswer()"><span class="chip-text">No</span></label>
                         <label class="option-chip"><input type="radio" name="q4_2" value="Yes, if available" onchange="onAnswer()"><span class="chip-text">Yes, if available</span></label>
                         <label class="option-chip"><input type="radio" name="q4_2" value="Yes, as a priority" onchange="onAnswer()"><span class="chip-text">Yes, as a priority</span></label>
                         <label class="option-chip"><input type="radio" name="q4_2" value="Not sure yet" onchange="onAnswer()"><span class="chip-text">Not sure yet</span></label>
                     </div><textarea class="wizard-notes" id="notes_q4_2" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q18</div><div class="question-text">How many concurrent Spark sessions do you expect at peak?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q4_3" value="None (no Spark)" onchange="onAnswer()"><span class="chip-text">None (no Spark)</span></label>
+                        <label class="option-chip"><input type="radio" name="q4_3" value="1–3" onchange="onAnswer()"><span class="chip-text">1–3</span></label>
+                        <label class="option-chip"><input type="radio" name="q4_3" value="4–10" onchange="onAnswer()"><span class="chip-text">4–10</span></label>
+                        <label class="option-chip"><input type="radio" name="q4_3" value="11–25" onchange="onAnswer()"><span class="chip-text">11–25</span></label>
+                        <label class="option-chip"><input type="radio" name="q4_3" value="25+" onchange="onAnswer()"><span class="chip-text">25+</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q4_3" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q19</div><div class="question-text">How many semantic models and reports will be hosted?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q4_4" value="< 10" onchange="onAnswer()"><span class="chip-text">< 10</span></label>
+                        <label class="option-chip"><input type="radio" name="q4_4" value="10–50" onchange="onAnswer()"><span class="chip-text">10–50</span></label>
+                        <label class="option-chip"><input type="radio" name="q4_4" value="51–150" onchange="onAnswer()"><span class="chip-text">51–150</span></label>
+                        <label class="option-chip"><input type="radio" name="q4_4" value="151–500" onchange="onAnswer()"><span class="chip-text">151–500</span></label>
+                        <label class="option-chip"><input type="radio" name="q4_4" value="500+" onchange="onAnswer()"><span class="chip-text">500+</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q4_4" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q20</div><div class="question-text">Do you use or plan to use CI/CD for data assets (deployment pipelines, Git integration)?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q4_5" value="No, not planned" onchange="onAnswer()"><span class="chip-text">No, not planned</span></label>
+                        <label class="option-chip"><input type="radio" name="q4_5" value="Planning to adopt" onchange="onAnswer()"><span class="chip-text">Planning to adopt</span></label>
+                        <label class="option-chip"><input type="radio" name="q4_5" value="Partially in place" onchange="onAnswer()"><span class="chip-text">Partially in place</span></label>
+                        <label class="option-chip"><input type="radio" name="q4_5" value="Fully implemented" onchange="onAnswer()"><span class="chip-text">Fully implemented</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q4_5" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
                     <div class="wizard-nav"><button class="wiz-nav-btn" onclick="goToStage(2)">← Previous</button><button class="wiz-nav-btn primary" onclick="goToStage(4)">Next: Users & Budget →</button></div>
                 </div>
                 <div class="wizard-panel" id="panel4" style="display:none;">
-                    <div class="panel-header"><span class="panel-icon">💰</span><div><h3>Stage 5: Users & Budget</h3><p>Consumption patterns and commercial constraints</p></div></div>
-                    <div class="wizard-question"><div class="question-number">Q9</div><div class="question-text">What is your peak concurrent user count?</div><div class="option-grid">
+                    <div class="panel-header"><span class="panel-icon">💰</span><div><h3>Stage 5: Users & Budget</h3><p>Consumption patterns, commercial constraints, and optimisation appetite</p></div></div>
+                    <div class="wizard-question"><div class="question-number">Q21</div><div class="question-text">What is your peak concurrent user count?</div><div class="option-grid">
                         <label class="option-chip"><input type="radio" name="q5_1" value="< 10" onchange="onAnswer()"><span class="chip-text">< 10</span></label>
                         <label class="option-chip"><input type="radio" name="q5_1" value="10–25" onchange="onAnswer()"><span class="chip-text">10–25</span></label>
                         <label class="option-chip"><input type="radio" name="q5_1" value="26–50" onchange="onAnswer()"><span class="chip-text">26–50</span></label>
@@ -2354,7 +2439,7 @@
                         <label class="option-chip"><input type="radio" name="q5_1" value="101–250" onchange="onAnswer()"><span class="chip-text">101–250</span></label>
                         <label class="option-chip"><input type="radio" name="q5_1" value="250+" onchange="onAnswer()"><span class="chip-text">250+</span></label>
                     </div><textarea class="wizard-notes" id="notes_q5_1" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
-                    <div class="wizard-question"><div class="question-number">Q10</div><div class="question-text">What is your available monthly budget for Fabric capacity?</div><div class="option-grid">
+                    <div class="wizard-question"><div class="question-number">Q22</div><div class="question-text">What is your available monthly budget for Fabric capacity?</div><div class="option-grid">
                         <label class="option-chip"><input type="radio" name="q5_2" value="< £500/mo" onchange="onAnswer()"><span class="chip-text">< £500/mo</span></label>
                         <label class="option-chip"><input type="radio" name="q5_2" value="£500–£1,500/mo" onchange="onAnswer()"><span class="chip-text">£500–£1,500/mo</span></label>
                         <label class="option-chip"><input type="radio" name="q5_2" value="£1,500–£3,000/mo" onchange="onAnswer()"><span class="chip-text">£1,500–£3,000/mo</span></label>
@@ -2363,6 +2448,25 @@
                         <label class="option-chip"><input type="radio" name="q5_2" value="£15,000+/mo" onchange="onAnswer()"><span class="chip-text">£15,000+/mo</span></label>
                         <label class="option-chip"><input type="radio" name="q5_2" value="Not yet defined" onchange="onAnswer()"><span class="chip-text">Not yet defined</span></label>
                     </div><textarea class="wizard-notes" id="notes_q5_2" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q23</div><div class="question-text">How many total named users (viewers + creators) will access Fabric?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q5_3" value="< 25" onchange="onAnswer()"><span class="chip-text">< 25</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_3" value="25–100" onchange="onAnswer()"><span class="chip-text">25–100</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_3" value="101–500" onchange="onAnswer()"><span class="chip-text">101–500</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_3" value="501–2,000" onchange="onAnswer()"><span class="chip-text">501–2,000</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_3" value="2,000+" onchange="onAnswer()"><span class="chip-text">2,000+</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q5_3" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q24</div><div class="question-text">Is your budget fixed or can it scale with usage?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q5_4" value="Strictly fixed" onchange="onAnswer()"><span class="chip-text">Strictly fixed</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_4" value="Fixed with some flexibility" onchange="onAnswer()"><span class="chip-text">Fixed with some flexibility</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_4" value="Elastic (scales with business value)" onchange="onAnswer()"><span class="chip-text">Elastic (scales with business value)</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_4" value="Not yet determined" onchange="onAnswer()"><span class="chip-text">Not yet determined</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q5_4" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q25</div><div class="question-text">Are you open to using Pause/Resume to optimise costs?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q5_5" value="Yes, for dev/test environments" onchange="onAnswer()"><span class="chip-text">Yes, for dev/test environments</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_5" value="Yes, for all non-production" onchange="onAnswer()"><span class="chip-text">Yes, for all non-production</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_5" value="No, need 24/7 availability" onchange="onAnswer()"><span class="chip-text">No, need 24/7 availability</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_5" value="Not sure yet" onchange="onAnswer()"><span class="chip-text">Not sure yet</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q5_5" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
                     <div class="wizard-nav"><button class="wiz-nav-btn" onclick="goToStage(3)">← Previous</button><button class="wiz-nav-btn generate" onclick="generateAssessment()">🎯 Generate Assessment</button></div>
                 </div>
             </div>
@@ -2594,8 +2698,44 @@
     </script>
     <script>
     (function() {
-        var STAGES = [{"id": "org-profile", "title": "Organisation Profile", "icon": "🏢", "desc": "Scale, maturity, and operating context", "questions": [{"id": "q1_1", "text": "How many employees does your organisation have?", "type": "single", "options": ["< 500", "500–2,000", "2,000–10,000", "10,000–50,000", "50,000+"]}, {"id": "q1_2", "text": "How would you describe your organisation's data maturity?", "type": "single", "options": ["Ad-hoc (spreadsheets, no central platform)", "Reactive (some BI tools, limited governance)", "Managed (centralised platform, some governance)", "Optimised (well-governed, automated, CI/CD)", "Advanced (data mesh, self-service with guardrails)"]}]}, {"id": "current-foundation", "title": "Current Foundation", "icon": "🏗️", "desc": "Existing platform, licensing, and readiness", "questions": [{"id": "q2_1", "text": "What is your current Power BI licensing model?", "type": "single", "options": ["Power BI Free only", "Power BI Pro", "Premium Per User (PPU)", "Premium P-SKU (P1/P2/P3/P4)", "Microsoft Fabric (already using)", "No Power BI currently"]}, {"id": "q2_2", "text": "What are your top pain points? (select all that apply)", "type": "multi", "options": ["Performance / slow reports", "Cost too expensive", "Governance gaps", "Refresh failures", "Security gaps", "No single source of truth", "Scalability ceiling", "Manual processes"]}]}, {"id": "data-estate", "title": "Data Estate", "icon": "🗄️", "desc": "Data volumes and refresh patterns", "questions": [{"id": "q3_1", "text": "What is your total data volume across all sources?", "type": "single", "options": ["< 10 GB", "10–100 GB", "100 GB–1 TB", "1–10 TB", "10–50 TB", "50+ TB"]}, {"id": "q3_2", "text": "How frequently does your data need to be refreshed?", "type": "single", "options": ["Weekly", "Daily (once)", "Multiple times per day", "Near real-time (15–60 mins)", "Real-time (streaming)"]}]}, {"id": "fabric-workloads", "title": "Fabric Workloads", "icon": "⚡", "desc": "Which Fabric workloads and their intensity", "questions": [{"id": "q4_1", "text": "Which Fabric workloads do you plan to use?", "type": "multi", "options": ["Data Engineering (Spark, Lakehouse)", "Data Factory (Pipelines, Dataflows)", "Data Warehouse (SQL analytics)", "Power BI (Semantic Models, Reports)", "Real-Time Intelligence", "Data Science (ML)", "Not sure yet"]}, {"id": "q4_2", "text": "Do you plan to use Copilot for Fabric?", "type": "single", "options": ["No", "Yes, if available", "Yes, as a priority", "Not sure yet"]}]}, {"id": "users-budget", "title": "Users & Budget", "icon": "💰", "desc": "Consumption patterns and commercial constraints", "questions": [{"id": "q5_1", "text": "What is your peak concurrent user count?", "type": "single", "options": ["< 10", "10–25", "26–50", "51–100", "101–250", "250+"]}, {"id": "q5_2", "text": "What is your available monthly budget for Fabric capacity?", "type": "single", "options": ["< £500/mo", "£500–£1,500/mo", "£1,500–£3,000/mo", "£3,000–£6,000/mo", "£6,000–£15,000/mo", "£15,000+/mo", "Not yet defined"]}]}];
-        var TOTAL_Q = 10;
+        var STAGES = [
+            {"id":"org-profile","title":"Organisation Profile","icon":"🏢","desc":"Scale, maturity, and operating context","questions":[
+                {"id":"q1_1","text":"How many employees does your organisation have?","type":"single","options":["< 500","500–2,000","2,000–10,000","10,000–50,000","50,000+"]},
+                {"id":"q1_2","text":"How would you describe your organisation's data maturity?","type":"single","options":["Ad-hoc (spreadsheets, no central platform)","Reactive (some BI tools, limited governance)","Managed (centralised platform, some governance)","Optimised (well-governed, automated, CI/CD)","Advanced (data mesh, self-service with guardrails)"]},
+                {"id":"q1_3","text":"What industry sector does your organisation operate in?","type":"single","options":["Financial Services","Healthcare & Life Sciences","Government & Public Sector","Retail & Consumer Goods","Manufacturing & Energy","Technology & Media","Education & Non-Profit","Other"]},
+                {"id":"q1_4","text":"How many business units or departments will use Fabric?","type":"single","options":["1 (single team)","2–5","6–15","15+"]},
+                {"id":"q1_5","text":"What is your geographic operating model?","type":"single","options":["Single region","Multi-region (same country)","Multi-country (same continent)","Global (multiple continents)"]}
+            ]},
+            {"id":"current-foundation","title":"Current Foundation","icon":"🏗️","desc":"Existing platform, licensing, and readiness","questions":[
+                {"id":"q2_1","text":"What is your current Power BI licensing model?","type":"single","options":["Power BI Free only","Power BI Pro","Premium Per User (PPU)","Premium P-SKU (P1/P2/P3/P4)","Microsoft Fabric (already using)","No Power BI currently"]},
+                {"id":"q2_2","text":"What are your top pain points? (select all that apply)","type":"multi","options":["Performance / slow reports","Cost too expensive","Governance gaps","Refresh failures","Security gaps","No single source of truth","Scalability ceiling","Manual processes"]},
+                {"id":"q2_3","text":"What is your current Azure commercial agreement?","type":"single","options":["Enterprise Agreement (EA)","Microsoft Customer Agreement (MCA)","Cloud Solution Provider (CSP)","Pay-As-You-Go","Not sure / No Azure yet"]},
+                {"id":"q2_4","text":"What other data platforms are currently in use?","type":"multi","options":["Azure Synapse Analytics","Azure Data Factory","Databricks","SQL Server / Azure SQL","Snowflake","AWS / GCP services","None / Spreadsheets only"]},
+                {"id":"q2_5","text":"What is your target migration timeline to Fabric?","type":"single","options":["Immediate (< 1 month)","Short-term (1–3 months)","Medium-term (3–6 months)","Long-term (6–12 months)","Exploration / no timeline yet"]}
+            ]},
+            {"id":"data-estate","title":"Data Estate","icon":"🗄️","desc":"Data volumes, sources, and refresh patterns","questions":[
+                {"id":"q3_1","text":"What is your total data volume across all sources?","type":"single","options":["< 10 GB","10–100 GB","100 GB–1 TB","1–10 TB","10–50 TB","50+ TB"]},
+                {"id":"q3_2","text":"How frequently does your data need to be refreshed?","type":"single","options":["Weekly","Daily (once)","Multiple times per day","Near real-time (15–60 mins)","Real-time (streaming)"]},
+                {"id":"q3_3","text":"How many distinct data sources do you connect to?","type":"single","options":["1–3","4–10","11–25","26–50","50+"]},
+                {"id":"q3_4","text":"What types of data do you primarily work with?","type":"multi","options":["Structured (SQL tables, CSV)","Semi-structured (JSON, Parquet, XML)","Unstructured (images, documents, logs)","Streaming / event data"]},
+                {"id":"q3_5","text":"What is your expected annual data growth rate?","type":"single","options":["< 10% (stable)","10–25% (moderate)","25–50% (fast)","50–100% (rapid)","100%+ (explosive)"]}
+            ]},
+            {"id":"fabric-workloads","title":"Fabric Workloads","icon":"⚡","desc":"Which Fabric workloads, their intensity, and operational maturity","questions":[
+                {"id":"q4_1","text":"Which Fabric workloads do you plan to use?","type":"multi","options":["Data Engineering (Spark, Lakehouse)","Data Factory (Pipelines, Dataflows)","Data Warehouse (SQL analytics)","Power BI (Semantic Models, Reports)","Real-Time Intelligence","Data Science (ML)","Not sure yet"]},
+                {"id":"q4_2","text":"Do you plan to use Copilot for Fabric?","type":"single","options":["No","Yes, if available","Yes, as a priority","Not sure yet"]},
+                {"id":"q4_3","text":"How many concurrent Spark sessions do you expect at peak?","type":"single","options":["None (no Spark)","1–3","4–10","11–25","25+"]},
+                {"id":"q4_4","text":"How many semantic models and reports will be hosted?","type":"single","options":["< 10","10–50","51–150","151–500","500+"]},
+                {"id":"q4_5","text":"Do you use or plan to use CI/CD for data assets?","type":"single","options":["No, not planned","Planning to adopt","Partially in place","Fully implemented"]}
+            ]},
+            {"id":"users-budget","title":"Users & Budget","icon":"💰","desc":"Consumption patterns, commercial constraints, and optimisation appetite","questions":[
+                {"id":"q5_1","text":"What is your peak concurrent user count?","type":"single","options":["< 10","10–25","26–50","51–100","101–250","250+"]},
+                {"id":"q5_2","text":"What is your available monthly budget for Fabric capacity?","type":"single","options":["< £500/mo","£500–£1,500/mo","£1,500–£3,000/mo","£3,000–£6,000/mo","£6,000–£15,000/mo","£15,000+/mo","Not yet defined"]},
+                {"id":"q5_3","text":"How many total named users (viewers + creators) will access Fabric?","type":"single","options":["< 25","25–100","101–500","501–2,000","2,000+"]},
+                {"id":"q5_4","text":"Is your budget fixed or can it scale with usage?","type":"single","options":["Strictly fixed","Fixed with some flexibility","Elastic (scales with business value)","Not yet determined"]},
+                {"id":"q5_5","text":"Are you open to using Pause/Resume to optimise costs?","type":"single","options":["Yes, for dev/test environments","Yes, for all non-production","No, need 24/7 availability","Not sure yet"]}
+            ]}
+        ];
+        var TOTAL_Q = 25;
         var currentStage = 0;
         var SKU_TABLE = [
             {name:'F2',cus:2,payg:262,res:158},{name:'F4',cus:4,payg:525,res:315},
@@ -2650,12 +2790,21 @@
             if(!q)return 0;return Math.min(a.length/Math.max(q.options.length-1,1),1)*max;
         }
         function computeScores(){
+            // Stage 1: Organisation (employees 25, maturity 25, industry 15, departments 20, geography 15)
+            var orgRaw=(optIdx('q1_1',25)+optIdx('q1_2',25)+optIdx('q1_3',15)+optIdx('q1_4',20)+optIdx('q1_5',15));
+            // Stage 3: Data Estate (volume 25, frequency 25, sources 20, types 15, growth 15)
+            var dataRaw=(optIdx('q3_1',25)+optIdx('q3_2',25)+optIdx('q3_3',20)+multiScore('q3_4',15)+optIdx('q3_5',15));
+            // Stage 4: Workloads (workload mix 30, copilot 15, spark 20, models 20, cicd 15)
+            var wklRaw=(multiScore('q4_1',30)+optIdx('q4_2',15)+optIdx('q4_3',20)+optIdx('q4_4',20)+optIdx('q4_5',15));
+            // Stage 5: Users (concurrent 30, budget 25, total users 20, budget flex 15, pause 10)
+            var usrRaw=(optIdx('q5_1',30)+optIdx('q5_3',20));
+            var budRaw=(optIdx('q5_2',25)+optIdx('q5_4',15));
             return {
-                orgScale:     Math.min(10,(optIdx('q1_1',50)+optIdx('q1_2',50))/100*10),
-                dataEstate:   Math.min(10,(optIdx('q3_1',50)+optIdx('q3_2',50))/100*10),
-                workloads:    Math.min(10,(multiScore('q4_1',70)+optIdx('q4_2',30))/100*10),
-                users:        Math.min(10, optIdx('q5_1',100)/100*10),
-                budget:       Math.min(10, optIdx('q5_2',100)/100*10)
+                orgScale:     Math.min(10, orgRaw/100*10),
+                dataEstate:   Math.min(10, dataRaw/100*10),
+                workloads:    Math.min(10, wklRaw/100*10),
+                users:        Math.min(10, usrRaw/50*10),
+                budget:       Math.min(10, budRaw/40*10)
             };
         }
         function drawRadar(sc,id){
@@ -2714,90 +2863,117 @@
             html+='<p style="font-size:11px;color:var(--text-tertiary);">* UK South PAYG estimates (Feb 2025). Verify at <a href="https://azure.microsoft.com/en-gb/pricing/details/microsoft-fabric/" target="_blank" style="color:var(--accent);">azure.microsoft.com/pricing</a>.</p>';
             // === Validation & Rationale Section ===
             html+='<div class="result-section-title">✅ Validation & Rationale</div>';
-            // Gather user answers for each dimension
+            // Gather all user answers
             var a_emp=getAnswer('q1_1','single')||'Not answered';
             var a_mat=getAnswer('q1_2','single')||'Not answered';
+            var a_ind=getAnswer('q1_3','single')||'Not answered';
+            var a_dept=getAnswer('q1_4','single')||'Not answered';
+            var a_geo=getAnswer('q1_5','single')||'Not answered';
             var a_lic=getAnswer('q2_1','single')||'Not answered';
             var a_pain=getAnswer('q2_2','multi');
+            var a_azure=getAnswer('q2_3','single')||'Not answered';
+            var a_plat=getAnswer('q2_4','multi');
+            var a_timeline=getAnswer('q2_5','single')||'Not answered';
             var a_vol=getAnswer('q3_1','single')||'Not answered';
             var a_freq=getAnswer('q3_2','single')||'Not answered';
+            var a_src=getAnswer('q3_3','single')||'Not answered';
+            var a_dtype=getAnswer('q3_4','multi');
+            var a_growth=getAnswer('q3_5','single')||'Not answered';
             var a_wkl=getAnswer('q4_1','multi');
             var a_cop=getAnswer('q4_2','single')||'Not answered';
+            var a_spark=getAnswer('q4_3','single')||'Not answered';
+            var a_models=getAnswer('q4_4','single')||'Not answered';
+            var a_cicd=getAnswer('q4_5','single')||'Not answered';
             var a_usr=getAnswer('q5_1','single')||'Not answered';
             var a_bud=getAnswer('q5_2','single')||'Not answered';
-            // Fit indicators per dimension
+            var a_total=getAnswer('q5_3','single')||'Not answered';
+            var a_flex=getAnswer('q5_4','single')||'Not answered';
+            var a_pause=getAnswer('q5_5','single')||'Not answered';
+            // Fit indicators
             function fitTag(score){
                 if(score>=6)return'<span class="fit-tag fit-strong">Strong Fit</span>';
                 if(score>=3)return'<span class="fit-tag fit-moderate">Moderate Fit</span>';
                 return'<span class="fit-tag fit-review">Needs Review</span>';
             }
-            // Rationale builders per dimension
-            function orgRationale(emp,mat,score){
-                var r='With <strong>'+emp+'</strong> employees and a <strong>'+mat.split('(')[0].trim()+'</strong> data maturity level, ';
-                if(score>=6)r+='your organisation has the scale and governance maturity that benefits from a higher-tier F-SKU to support concurrent workloads and enterprise-grade demands.';
-                else if(score>=3)r+='your organisation is at a transitional stage — a mid-range F-SKU provides room to grow without over-provisioning while you mature your data practices.';
-                else r+='your organisation\'s smaller scale and earlier maturity stage mean a lower-tier F-SKU is appropriate, keeping costs aligned with current demand.';
+            // Rationale builders — now incorporating all questions
+            function orgRationale(){
+                var r='With <strong>'+a_emp+'</strong> employees and a <strong>'+a_mat.split('(')[0].trim()+'</strong> data maturity level';
+                r+=', operating in <strong>'+a_ind+'</strong>';
+                var regulated=['Financial Services','Healthcare & Life Sciences','Government & Public Sector'];
+                if(regulated.indexOf(a_ind)>=0) r+=' (a regulated sector requiring stricter governance and compliance overhead)';
+                r+='. ';
+                r+='<strong>'+a_dept+'</strong> business unit(s) will use Fabric across a <strong>'+a_geo.toLowerCase()+'</strong> footprint. ';
+                if(sc.orgScale>=6)r+='This combination of scale, sector complexity, and multi-department usage drives the need for a higher-tier F-SKU with sufficient CU headroom.';
+                else if(sc.orgScale>=3)r+='This profile suggests a mid-range F-SKU — enough capacity for your current teams with room to grow without over-provisioning.';
+                else r+='Your smaller scale and concentrated usage mean a lower-tier F-SKU keeps costs aligned with demand while covering your needs.';
                 return r;
             }
-            function dataRationale(vol,freq,score){
-                var r='A data estate of <strong>'+vol+'</strong> with <strong>'+freq.toLowerCase()+'</strong> refresh frequency ';
-                if(score>=6)r+='represents significant compute demand — large volumes combined with frequent refreshes require sustained CU capacity to avoid throttling and ensure timely data availability.';
-                else if(score>=3)r+='represents moderate compute requirements — the recommended SKU balances refresh performance with cost efficiency for your data patterns.';
-                else r+='indicates lighter compute needs — a smaller SKU handles this volume and refresh cadence comfortably without unnecessary spend.';
+            function dataRationale(){
+                var r='A data estate of <strong>'+a_vol+'</strong> across <strong>'+a_src+'</strong> data sources with <strong>'+a_freq.toLowerCase()+'</strong> refresh frequency. ';
+                var dtypes=a_dtype&&a_dtype.length?a_dtype.join(', '):'Not specified';
+                r+='Primary data types: <strong>'+dtypes+'</strong>. ';
+                r+='Expected growth rate: <strong>'+a_growth.split('(')[0].trim()+'</strong>. ';
+                if(sc.dataEstate>=6)r+='High volume, diverse sources, and frequent refreshes combined with rapid growth require sustained CU capacity to avoid throttling and ensure timely data availability.';
+                else if(sc.dataEstate>=3)r+='The recommended SKU balances refresh performance with cost efficiency — your data footprint is moderate but monitor growth closely as it may warrant future scale-up.';
+                else r+='Your data footprint is lightweight — a smaller SKU handles this volume, source count, and refresh cadence comfortably.';
                 return r;
             }
-            function workloadRationale(wkl,cop,score){
-                var wkls=wkl&&wkl.length?wkl.join(', '):'None selected';
-                var r='Planned workloads include <strong>'+wkls+'</strong>. ';
-                if(wkl&&wkl.length>=4)r+='Running multiple Fabric workload types simultaneously demands higher CU headroom to prevent resource contention. ';
-                else if(wkl&&wkl.length>=2)r+='A moderate workload mix benefits from sufficient CUs to handle parallel execution without throttling. ';
-                else r+='A focused workload profile means CU demands are concentrated, allowing a leaner SKU. ';
-                if(cop==='Yes, as a priority')r+='Your priority use of <strong>Copilot for Fabric</strong> enforces a minimum F64 capacity requirement.';
-                else if(cop==='Yes, if available')r+='Copilot for Fabric is a consideration — if activated, note that F64 is the minimum required SKU.';
+            function workloadRationale(){
+                var wkls=a_wkl&&a_wkl.length?a_wkl.join(', '):'None selected';
+                var r='Planned workloads: <strong>'+wkls+'</strong>. ';
+                if(a_spark!=='None (no Spark)')r+='With <strong>'+a_spark+'</strong> expected concurrent Spark sessions, each reserving CUs, this is a key capacity driver. ';
+                r+='Hosting <strong>'+a_models+'</strong> semantic models/reports drives background refresh load. ';
+                if(a_cicd==='Fully implemented'||a_cicd==='Partially in place')r+='Your CI/CD pipeline maturity (<strong>'+a_cicd.toLowerCase()+'</strong>) adds build and validation workloads. ';
+                if(a_wkl&&a_wkl.length>=4)r+='Running multiple workload types simultaneously demands higher CU headroom. ';
+                else if(a_wkl&&a_wkl.length>=2)r+='A moderate workload mix benefits from sufficient CUs for parallel execution. ';
+                if(a_cop==='Yes, as a priority')r+='Your priority use of <strong>Copilot for Fabric</strong> enforces a minimum F64 capacity.';
+                else if(a_cop==='Yes, if available')r+='If Copilot is activated, note F64 is the minimum required SKU.';
                 return r;
             }
-            function usersRationale(usr,score){
-                var r='With a peak concurrent user count of <strong>'+usr+'</strong>, ';
-                if(score>=6)r+='the recommended SKU ensures report rendering and query execution remain responsive under heavy concurrent load without triggering smoothing or throttling.';
-                else if(score>=3)r+='the SKU provides adequate headroom for your user base while keeping costs proportional to actual consumption patterns.';
-                else r+='a smaller SKU comfortably serves this user base — interactive query performance will remain strong at this concurrency level.';
+            function usersRationale(){
+                var r='<strong>'+a_usr+'</strong> peak concurrent users from a total base of <strong>'+a_total+'</strong> named users. ';
+                if(sc.users>=6)r+='This high concurrency and user base ensures the SKU provides responsive report rendering and query execution without triggering smoothing or throttling.';
+                else if(sc.users>=3)r+='The SKU provides adequate headroom for your user base while keeping costs proportional to actual consumption.';
+                else r+='A smaller SKU comfortably serves this user base — interactive query performance will remain strong.';
                 return r;
             }
-            function budgetRationale(bud,prodSku,score){
-                var r='Your indicated budget of <strong>'+bud+'</strong> ';
-                if(score>=6)r+='supports the recommended <strong>'+prodSku+'</strong> production capacity, with room to explore reserved pricing for further savings.';
-                else if(score>=3)r+='aligns with the recommended <strong>'+prodSku+'</strong> — consider the optimised mix (reserved prod + PAYG dev with pause/resume) to maximise value within this envelope.';
-                else r+='is on the tighter side for the computed workload needs. The <strong>'+prodSku+'</strong> recommendation prioritises capability, but review the Pause/Resume and Reserved options to fit within budget.';
+            function budgetRationale(){
+                var r='Monthly budget of <strong>'+a_bud+'</strong> with <strong>'+a_flex.toLowerCase()+'</strong> budget flexibility. ';
+                if(a_pause.indexOf('Yes')===0)r+='Your willingness to use Pause/Resume (<strong>'+a_pause.toLowerCase()+'</strong>) can reduce dev/test costs by ~60%. ';
+                else if(a_pause==='No, need 24/7 availability')r+='24/7 availability means Pause/Resume savings are not applicable — reserved pricing becomes more important. ';
+                if(sc.budget>=6)r+='This budget supports the recommended <strong>'+prodSku+'</strong>, with room for reserved pricing savings.';
+                else if(sc.budget>=3)r+='Consider the optimised mix (reserved prod + PAYG dev with pause/resume) to maximise value within this budget.';
+                else r+='Budget is tighter for the computed workload needs — review Reserved and Pause/Resume options carefully. The <strong>'+prodSku+'</strong> recommendation prioritises capability.';
                 return r;
             }
             // Build summary
             var compositeLabel=composite>=6?'high':'moderate';
             if(composite<3)compositeLabel='lower';
-            html+='<div class="validation-summary"><p>Based on your responses across all five dimensions, your composite score of <strong>'+composite.toFixed(1)+'/10</strong> indicates a <strong>'+compositeLabel+' demand profile</strong>. ';
+            html+='<div class="validation-summary"><p>Based on your responses across all 25 questions and five dimensions, your composite score of <strong>'+composite.toFixed(1)+'/10</strong> indicates a <strong>'+compositeLabel+' demand profile</strong>. ';
             html+='We recommend <strong>'+prodSku+'</strong> for production and <strong>'+devSku+'</strong> for development. ';
             html+='Below is a breakdown of how each dimension influenced this recommendation.</p></div>';
             // Build cards
             html+='<div class="validation-grid">';
             // 1. Organisation
             html+='<div class="validation-card"><div class="validation-card-header"><div class="validation-card-title"><span class="vc-icon">🏢</span>Organisation Profile</div>'+fitTag(sc.orgScale)+'</div>';
-            html+='<div class="validation-answer"><strong>Employees:</strong> '+a_emp+' · <strong>Maturity:</strong> '+a_mat.split('(')[0].trim()+'</div>';
-            html+='<div class="validation-rationale">'+orgRationale(a_emp,a_mat,sc.orgScale)+'</div></div>';
+            html+='<div class="validation-answer"><strong>Employees:</strong> '+a_emp+' · <strong>Maturity:</strong> '+a_mat.split('(')[0].trim()+' · <strong>Sector:</strong> '+a_ind+' · <strong>Departments:</strong> '+a_dept+' · <strong>Geography:</strong> '+a_geo+'</div>';
+            html+='<div class="validation-rationale">'+orgRationale()+'</div></div>';
             // 2. Data Estate
             html+='<div class="validation-card"><div class="validation-card-header"><div class="validation-card-title"><span class="vc-icon">🗄️</span>Data Estate</div>'+fitTag(sc.dataEstate)+'</div>';
-            html+='<div class="validation-answer"><strong>Volume:</strong> '+a_vol+' · <strong>Refresh:</strong> '+a_freq+'</div>';
-            html+='<div class="validation-rationale">'+dataRationale(a_vol,a_freq,sc.dataEstate)+'</div></div>';
+            html+='<div class="validation-answer"><strong>Volume:</strong> '+a_vol+' · <strong>Refresh:</strong> '+a_freq+' · <strong>Sources:</strong> '+a_src+' · <strong>Growth:</strong> '+a_growth.split('(')[0].trim()+'</div>';
+            html+='<div class="validation-rationale">'+dataRationale()+'</div></div>';
             // 3. Workloads
             html+='<div class="validation-card"><div class="validation-card-header"><div class="validation-card-title"><span class="vc-icon">⚡</span>Fabric Workloads</div>'+fitTag(sc.workloads)+'</div>';
-            html+='<div class="validation-answer"><strong>Workloads:</strong> '+(a_wkl&&a_wkl.length?a_wkl.join(', '):'None selected')+' · <strong>Copilot:</strong> '+a_cop+'</div>';
-            html+='<div class="validation-rationale">'+workloadRationale(a_wkl,a_cop,sc.workloads)+'</div></div>';
+            html+='<div class="validation-answer"><strong>Workloads:</strong> '+(a_wkl&&a_wkl.length?a_wkl.join(', '):'None selected')+' · <strong>Copilot:</strong> '+a_cop+' · <strong>Spark sessions:</strong> '+a_spark+' · <strong>Models/Reports:</strong> '+a_models+' · <strong>CI/CD:</strong> '+a_cicd+'</div>';
+            html+='<div class="validation-rationale">'+workloadRationale()+'</div></div>';
             // 4. Users
             html+='<div class="validation-card"><div class="validation-card-header"><div class="validation-card-title"><span class="vc-icon">👥</span>Users</div>'+fitTag(sc.users)+'</div>';
-            html+='<div class="validation-answer"><strong>Peak concurrent:</strong> '+a_usr+'</div>';
-            html+='<div class="validation-rationale">'+usersRationale(a_usr,sc.users)+'</div></div>';
+            html+='<div class="validation-answer"><strong>Peak concurrent:</strong> '+a_usr+' · <strong>Total named users:</strong> '+a_total+'</div>';
+            html+='<div class="validation-rationale">'+usersRationale()+'</div></div>';
             // 5. Budget
             html+='<div class="validation-card"><div class="validation-card-header"><div class="validation-card-title"><span class="vc-icon">💰</span>Budget</div>'+fitTag(sc.budget)+'</div>';
-            html+='<div class="validation-answer"><strong>Monthly budget:</strong> '+a_bud+'</div>';
-            html+='<div class="validation-rationale">'+budgetRationale(a_bud,prodSku,sc.budget)+'</div></div>';
+            html+='<div class="validation-answer"><strong>Monthly budget:</strong> '+a_bud+' · <strong>Flexibility:</strong> '+a_flex+' · <strong>Pause/Resume:</strong> '+a_pause+'</div>';
+            html+='<div class="validation-rationale">'+budgetRationale()+'</div></div>';
             html+='</div>';
             // === End Validation Section ===
             html+='<div style="margin-top:28px;padding:16px 20px;background:var(--bg-secondary);border-radius:var(--radius-md);font-size:13px;color:var(--text-secondary);line-height:1.6;">';
