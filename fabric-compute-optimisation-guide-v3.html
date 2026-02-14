@@ -258,6 +258,44 @@
         .recs-section td:first-child { font-weight: 600; color: var(--accent); font-size: 13px; }
         .recs-section td:last-child { text-align: center; }
 
+        /* ---- Recs Benefit Filter ---- */
+        .recs-benefit-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+            align-items: center;
+        }
+        .recs-benefit-filters .filter-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-right: 4px;
+        }
+        .recs-filter-summary {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-bottom: 24px;
+            padding: 10px 18px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-subtle);
+            display: none;
+        }
+        .recs-filter-summary span {
+            font-weight: 600;
+            color: var(--accent);
+        }
+        .category-section.hidden-by-filter {
+            display: none;
+        }
+        .recs-section tbody tr {
+            transition: opacity 0.2s ease;
+        }
+        .recs-section tbody tr.hidden-by-filter {
+            display: none;
+        }
+
         /* Matrix table columns */
         .matrix-section td:first-child { font-weight: 600; color: var(--accent); font-size: 13px; }
 
@@ -413,6 +451,243 @@
             min-width: 28px;
             text-align: right;
             font-size: 12px;
+        }
+
+        /* ---- View Toggle ---- */
+        .view-toggle {
+            display: flex;
+            gap: 0;
+            margin-bottom: 32px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 4px;
+            border: 1px solid var(--border-subtle);
+            width: fit-content;
+        }
+        .view-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-size: 13.5px;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all var(--transition);
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+        .view-toggle-btn:hover {
+            color: var(--text-primary);
+        }
+        .view-toggle-btn.active {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border-color: var(--border-subtle);
+            box-shadow: var(--shadow-sm);
+            font-weight: 600;
+        }
+        .view-toggle-btn .vtb-icon {
+            font-size: 15px;
+        }
+
+        /* ---- Quadrant View ---- */
+        .quadrant-container {
+            margin-bottom: 52px;
+        }
+        .quadrant-container h3 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            letter-spacing: -0.2px;
+        }
+        .quadrant-container > p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            line-height: 1.6;
+        }
+        .quadrant-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+        .quadrant-filter-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 20px;
+            border-radius: 980px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all var(--transition);
+            border: 2px solid var(--border-light);
+            background: var(--bg-card);
+            color: var(--text-secondary);
+        }
+        .quadrant-filter-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-sm);
+        }
+        .quadrant-filter-btn.active {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(196, 101, 58, 0.08);
+        }
+        .quadrant-filter-btn .qf-count {
+            background: var(--bg-secondary);
+            color: var(--text-tertiary);
+            padding: 2px 8px;
+            border-radius: 980px;
+            font-size: 11px;
+            font-weight: 700;
+            margin-left: 2px;
+            transition: all var(--transition);
+        }
+        .quadrant-filter-btn.active .qf-count {
+            background: var(--accent);
+            color: #fff;
+        }
+        .quadrant-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 32px;
+        }
+        .quadrant-column {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .quadrant-column-header {
+            padding: 14px 18px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .quadrant-column-header .qch-count {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 20px;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+        }
+        .qcol-quick .quadrant-column-header {
+            background: var(--green-bg);
+            color: var(--green-text);
+            border-bottom: 2px solid var(--green-text);
+        }
+        .qcol-moderate .quadrant-column-header {
+            background: var(--yellow-bg);
+            color: var(--yellow-text);
+            border-bottom: 2px solid var(--yellow-text);
+        }
+        .qcol-investment .quadrant-column-header {
+            background: var(--red-bg);
+            color: var(--red-text);
+            border-bottom: 2px solid var(--red-text);
+        }
+        .quadrant-column-body {
+            padding: 12px;
+            max-height: 480px;
+            overflow-y: auto;
+        }
+        .quadrant-item {
+            padding: 10px 14px;
+            margin-bottom: 8px;
+            border-radius: var(--radius-sm);
+            font-size: 12.5px;
+            color: var(--text-primary);
+            line-height: 1.5;
+            border: 1px solid var(--border-subtle);
+            background: var(--bg-primary);
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+        .quadrant-item:last-child {
+            margin-bottom: 0;
+        }
+        .quadrant-item:hover {
+            border-color: var(--accent);
+            background: var(--accent-soft);
+            transform: translateX(2px);
+        }
+        .quadrant-item-num {
+            font-weight: 700;
+            color: var(--accent);
+            margin-right: 6px;
+        }
+        .quadrant-item-benefit {
+            display: inline-block;
+            margin-top: 6px;
+        }
+        .quadrant-item-category {
+            display: block;
+            font-size: 11px;
+            color: var(--text-tertiary);
+            margin-top: 4px;
+            font-weight: 500;
+        }
+        .quadrant-empty {
+            padding: 24px 14px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-style: italic;
+        }
+        .quadrant-placeholder {
+            padding: 48px 24px;
+            text-align: center;
+            background: var(--bg-card);
+            border: 2px dashed var(--border-light);
+            border-radius: var(--radius-md);
+            color: var(--text-tertiary);
+            font-size: 14px;
+            line-height: 1.7;
+        }
+        .quadrant-placeholder span {
+            display: block;
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+        .quadrant-detail {
+            margin-top: 0;
+        }
+        .quadrant-detail-header {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            letter-spacing: -0.2px;
+        }
+        @media (max-width: 768px) {
+            .quadrant-grid {
+                grid-template-columns: 1fr;
+            }
+            .quadrant-filters {
+                flex-direction: column;
+            }
+            .quadrant-filter-btn {
+                width: 100%;
+                justify-content: center;
+            }
         }
 
         /* ---- Page Break & Footer ---- */
@@ -1008,6 +1283,8 @@
             .nav-buttons { display: none; }
             .nav-btn { display: none !important; }
             .search-container { display: none; }
+            .recs-benefit-filters { display: none; }
+            .recs-filter-summary { display: none !important; }
             .brand-header { border-bottom: 1px solid #ccc; }
             body { padding: 24px; background: #fff; }
             .section-divider { page-break-before: always; }
@@ -1032,6 +1309,8 @@
             .matrix-stats { gap: 10px; }
             .stat-card { min-width: 90px; padding: 14px 12px; }
             .legend-container { flex-direction: column; }
+            .recs-benefit-filters { gap: 8px; }
+            .recs-benefit-filters .filter-label { width: 100%; margin-bottom: 2px; }
             td, th { padding: 10px 12px; font-size: 12px; }
         }
 
@@ -1084,6 +1363,7 @@
             <div class="brand-text">
                 <span class="brand-label">Microsoft Fabric</span>
                 <span class="brand-author">Content Author: By Shrikesh Pattni</span>
+                <span class="brand-author" style="color:var(--accent);font-weight:500;">Fabric Accelerator</span>
             </div>
         </div>
 
@@ -1134,6 +1414,24 @@
                 </div>
             </div>
         </div>
+
+        <!-- Benefit Rating Filter -->
+        <div class="recs-benefit-filters" id="recsBenefitFilters">
+            <span class="filter-label">Filter by Benefit:</span>
+            <button class="quadrant-filter-btn active" data-benefit="ALL" onclick="filterRecsBenefit('ALL', this)">
+                <span class="vtb-icon">📋</span> Show All <span class="qf-count" id="rfCount-all"></span>
+            </button>
+            <button class="quadrant-filter-btn" data-benefit="HIGH" onclick="filterRecsBenefit('HIGH', this)">
+                <span style="color:var(--green-text);">●</span> High <span class="qf-count" id="rfCount-high"></span>
+            </button>
+            <button class="quadrant-filter-btn" data-benefit="MID" onclick="filterRecsBenefit('MID', this)">
+                <span style="color:var(--orange-text);">●</span> Mid <span class="qf-count" id="rfCount-mid"></span>
+            </button>
+            <button class="quadrant-filter-btn" data-benefit="LOW" onclick="filterRecsBenefit('LOW', this)">
+                <span style="color:var(--grey-text);">●</span> Low <span class="qf-count" id="rfCount-low"></span>
+            </button>
+        </div>
+        <div class="recs-filter-summary" id="recsFilterSummary"></div>
 
         <div class="category-section">
             <div class="category-header">1. Capacity Management (Items #1–8)</div>
@@ -1580,6 +1878,50 @@
                 </div>
             </div>
 
+            <!-- View Toggle -->
+            <div class="view-toggle" id="matrixViewToggle">
+                <button class="view-toggle-btn active" onclick="switchMatrixView('value-type', this)">
+                    <span class="vtb-icon">🎯</span> Explore by Value Type
+                </button>
+                <button class="view-toggle-btn" onclick="switchMatrixView('all-recs', this)">
+                    <span class="vtb-icon">📋</span> All Recommendations
+                </button>
+            </div>
+
+            <!-- VIEW 1: Explore by Value Type (Quadrant) -->
+            <div id="viewValueType">
+                <div class="quadrant-container" id="quadrantView">
+                    <p>Click a value type below to see all matching recommendations grouped by implementation effort — Quick Wins you can action immediately, Moderate efforts worth planning, and Investments that need architectural consideration.</p>
+
+                    <div class="quadrant-filters" id="quadrantFilters">
+                        <button class="quadrant-filter-btn" data-vtype="CU Reduction" onclick="filterQuadrant('CU Reduction', this)">
+                            <span style="color:var(--green-text);">⚡</span> CU Reduction <span class="qf-count" id="qfCount-cu">29</span>
+                        </button>
+                        <button class="quadrant-filter-btn" data-vtype="Cost Avoidance" onclick="filterQuadrant('Cost Avoidance', this)">
+                            <span style="color:var(--blue-text);">🛡️</span> Cost Avoidance <span class="qf-count" id="qfCount-ca">17</span>
+                        </button>
+                        <button class="quadrant-filter-btn" data-vtype="Throttling Prevention" onclick="filterQuadrant('Throttling Prevention', this)">
+                            <span style="color:var(--yellow-text);">⚠️</span> Throttling Prevention <span class="qf-count" id="qfCount-tp">7</span>
+                        </button>
+                        <button class="quadrant-filter-btn" data-vtype="Operational Efficiency" onclick="filterQuadrant('Operational Efficiency', this)">
+                            <span style="color:var(--peach-text);">⚙️</span> Operational Efficiency <span class="qf-count" id="qfCount-oe">13</span>
+                        </button>
+                    </div>
+
+                    <div id="quadrantContent">
+                        <div class="quadrant-placeholder">
+                            <span>👆</span>
+                            Select a value type above to explore recommendations<br>grouped by implementation effort
+                        </div>
+                    </div>
+
+                    <div class="quadrant-detail" id="quadrantDetail"></div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: All Recommendations by Category -->
+            <div id="viewAllRecs" style="display:none;">
+
         <div class="category-section">
             <div class="category-header">1. Capacity Management (Items #1–8)</div>
             <table>
@@ -2010,6 +2352,7 @@
             </table>
         </div>
 
+            </div><!-- /viewAllRecs -->
 
         </div>
 
@@ -2722,6 +3065,277 @@
         });
     })();
     </script>
+
+    <!-- Recs Benefit Filter Logic -->
+    <script>
+    (function() {
+        var recsSection = document.getElementById('recommendations');
+        if (!recsSection) return;
+
+        // Count benefit levels dynamically
+        var allRows = recsSection.querySelectorAll('.category-section tbody tr');
+        var counts = { ALL: 0, HIGH: 0, MID: 0, LOW: 0 };
+        allRows.forEach(function(row) {
+            var b = row.querySelector('.benefit-high, .benefit-mid, .benefit-low');
+            if (!b) return;
+            counts.ALL++;
+            if (b.classList.contains('benefit-high')) counts.HIGH++;
+            else if (b.classList.contains('benefit-mid')) counts.MID++;
+            else if (b.classList.contains('benefit-low')) counts.LOW++;
+        });
+
+        // Populate count badges
+        var elAll = document.getElementById('rfCount-all');
+        var elHigh = document.getElementById('rfCount-high');
+        var elMid = document.getElementById('rfCount-mid');
+        var elLow = document.getElementById('rfCount-low');
+        if (elAll) elAll.textContent = counts.ALL;
+        if (elHigh) elHigh.textContent = counts.HIGH;
+        if (elMid) elMid.textContent = counts.MID;
+        if (elLow) elLow.textContent = counts.LOW;
+
+        window.filterRecsBenefit = function(level, btnEl) {
+            // Toggle active button
+            var btns = document.querySelectorAll('#recsBenefitFilters .quadrant-filter-btn');
+            btns.forEach(function(b) { b.classList.remove('active'); });
+            btnEl.classList.add('active');
+
+            var summaryEl = document.getElementById('recsFilterSummary');
+            var categorySections = recsSection.querySelectorAll('.category-section');
+
+            if (level === 'ALL') {
+                // Show everything
+                allRows.forEach(function(row) { row.classList.remove('hidden-by-filter'); });
+                categorySections.forEach(function(sec) { sec.classList.remove('hidden-by-filter'); });
+                if (summaryEl) summaryEl.style.display = 'none';
+                return;
+            }
+
+            // Determine which class to match
+            var targetClass = 'benefit-' + level.toLowerCase();
+
+            // Filter rows
+            var visibleTotal = 0;
+            categorySections.forEach(function(sec) {
+                var rows = sec.querySelectorAll('tbody tr');
+                var visibleInSection = 0;
+                rows.forEach(function(row) {
+                    var b = row.querySelector('.benefit-high, .benefit-mid, .benefit-low');
+                    if (b && b.classList.contains(targetClass)) {
+                        row.classList.remove('hidden-by-filter');
+                        visibleInSection++;
+                        visibleTotal++;
+                    } else {
+                        row.classList.add('hidden-by-filter');
+                    }
+                });
+                // Hide entire category if no visible rows
+                if (visibleInSection === 0) {
+                    sec.classList.add('hidden-by-filter');
+                } else {
+                    sec.classList.remove('hidden-by-filter');
+                }
+            });
+
+            // Show summary
+            if (summaryEl) {
+                summaryEl.innerHTML = 'Showing <span>' + visibleTotal + '</span> of ' + counts.ALL + ' recommendations with <span>' + level + '</span> benefit rating';
+                summaryEl.style.display = 'block';
+            }
+        };
+    })();
+    </script>
+
+    <!-- View Toggle Logic -->
+    <script>
+    (function() {
+        window.switchMatrixView = function(view, btnEl) {
+            var valueTypeView = document.getElementById('viewValueType');
+            var allRecsView = document.getElementById('viewAllRecs');
+            var btns = document.querySelectorAll('.view-toggle-btn');
+            btns.forEach(function(b) { b.classList.remove('active'); });
+            btnEl.classList.add('active');
+
+            if (view === 'value-type') {
+                valueTypeView.style.display = 'block';
+                allRecsView.style.display = 'none';
+            } else {
+                valueTypeView.style.display = 'none';
+                allRecsView.style.display = 'block';
+            }
+        };
+    })();
+    </script>
+
+    <!-- Quadrant View Logic -->
+    <script>
+    (function() {
+        // Parse all 48 recommendations from the matrix-section tables
+        var matrixSection = document.querySelector('.matrix-section');
+        var allItems = [];
+        if (matrixSection) {
+            var catSections = matrixSection.querySelectorAll('.category-section');
+            catSections.forEach(function(sec) {
+                var catHeader = sec.querySelector('.category-header');
+                var catName = catHeader ? catHeader.textContent.trim() : '';
+                var rows = sec.querySelectorAll('tbody tr');
+                rows.forEach(function(row) {
+                    var cells = row.querySelectorAll('td');
+                    if (cells.length < 5) return;
+                    var num = cells[0].textContent.trim();
+                    var text = cells[1].textContent.trim();
+                    var vtypes = [];
+                    cells[2].querySelectorAll('.vtype-tag').forEach(function(t) {
+                        var raw = t.textContent.trim();
+                        if (raw.indexOf('CU Reduction') >= 0) vtypes.push('CU Reduction');
+                        else if (raw.indexOf('Cost Avoidance') >= 0) vtypes.push('Cost Avoidance');
+                        else if (raw.indexOf('Throttling Prevention') >= 0) vtypes.push('Throttling Prevention');
+                        else if (raw.indexOf('Operational Efficiency') >= 0) vtypes.push('Operational Efficiency');
+                    });
+                    var effortEl = cells[3].querySelector('.effort-tag');
+                    var effort = '';
+                    if (effortEl) {
+                        var eText = effortEl.textContent.trim();
+                        if (eText.indexOf('Quick Win') >= 0) effort = 'Quick Win';
+                        else if (eText.indexOf('Moderate') >= 0) effort = 'Moderate';
+                        else if (eText.indexOf('Investment') >= 0) effort = 'Investment';
+                    }
+                    var benefitEl = cells[4].querySelector('.benefit-high, .benefit-mid, .benefit-low');
+                    var benefit = benefitEl ? benefitEl.textContent.trim() : '';
+                    var benefitClass = '';
+                    if (benefitEl) {
+                        if (benefitEl.classList.contains('benefit-high')) benefitClass = 'benefit-high';
+                        else if (benefitEl.classList.contains('benefit-mid')) benefitClass = 'benefit-mid';
+                        else benefitClass = 'benefit-low';
+                    }
+                    allItems.push({
+                        num: num,
+                        text: text,
+                        vtypes: vtypes,
+                        effort: effort,
+                        benefit: benefit,
+                        benefitClass: benefitClass,
+                        category: catName,
+                        row: row
+                    });
+                });
+            });
+        }
+
+        // Expose filterQuadrant globally
+        var activeFilter = null;
+        window.filterQuadrant = function(vtype, btnEl) {
+            var btns = document.querySelectorAll('.quadrant-filter-btn');
+            var contentDiv = document.getElementById('quadrantContent');
+            var detailDiv = document.getElementById('quadrantDetail');
+
+            // Toggle — clicking same button deselects
+            if (activeFilter === vtype) {
+                activeFilter = null;
+                btns.forEach(function(b) { b.classList.remove('active'); });
+                contentDiv.innerHTML = '<div class="quadrant-placeholder"><span>👆</span>Select a value type above to explore recommendations<br>grouped by implementation effort</div>';
+                detailDiv.innerHTML = '';
+                return;
+            }
+
+            activeFilter = vtype;
+            btns.forEach(function(b) { b.classList.remove('active'); });
+            btnEl.classList.add('active');
+
+            // Filter items by value type
+            var matches = allItems.filter(function(item) {
+                return item.vtypes.indexOf(vtype) >= 0;
+            });
+
+            // Group by effort
+            var quickWins = matches.filter(function(i) { return i.effort === 'Quick Win'; });
+            var moderate = matches.filter(function(i) { return i.effort === 'Moderate'; });
+            var investment = matches.filter(function(i) { return i.effort === 'Investment'; });
+
+            // Build quadrant grid
+            var html = '<div class="quadrant-grid">';
+            html += buildColumn('Quick Win', quickWins, 'qcol-quick', '🚀');
+            html += buildColumn('Moderate', moderate, 'qcol-moderate', '🔧');
+            html += buildColumn('Investment', investment, 'qcol-investment', '🏗️');
+            html += '</div>';
+            contentDiv.innerHTML = html;
+
+            // Build detail table below
+            var vtypeIcon = '';
+            if (vtype === 'CU Reduction') vtypeIcon = '⚡';
+            else if (vtype === 'Cost Avoidance') vtypeIcon = '🛡️';
+            else if (vtype === 'Throttling Prevention') vtypeIcon = '⚠️';
+            else if (vtype === 'Operational Efficiency') vtypeIcon = '⚙️';
+
+            var detailHtml = '<div class="quadrant-detail-header">' + vtypeIcon + ' All ' + vtype + ' Recommendations (' + matches.length + ')</div>';
+            detailHtml += '<div class="category-section" style="margin-bottom:0;">';
+            detailHtml += '<table><thead><tr>';
+            detailHtml += '<th style="width:5%;">#</th>';
+            detailHtml += '<th style="width:40%;">Recommendation</th>';
+            detailHtml += '<th style="width:22%;">Category</th>';
+            detailHtml += '<th style="width:12%;">Effort</th>';
+            detailHtml += '<th style="width:10%;">Benefit</th>';
+            detailHtml += '</tr></thead><tbody>';
+
+            matches.forEach(function(item) {
+                var effortStyle = '';
+                var effortIcon = '';
+                if (item.effort === 'Quick Win') { effortStyle = 'color:var(--green-text);background:var(--green-bg);'; effortIcon = '🚀 '; }
+                else if (item.effort === 'Moderate') { effortStyle = 'color:var(--yellow-text);background:var(--yellow-bg);'; effortIcon = '🔧 '; }
+                else if (item.effort === 'Investment') { effortStyle = 'color:var(--red-text);background:var(--red-bg);'; effortIcon = '🏗️ '; }
+
+                // Shorten category name
+                var shortCat = item.category.replace(/\(Items #\d+.*?\)/g, '').replace(/^\d+\.\s*/, '').trim();
+
+                detailHtml += '<tr>';
+                detailHtml += '<td style="font-weight:600;color:var(--accent);">' + item.num + '</td>';
+                detailHtml += '<td>' + item.text + '</td>';
+                detailHtml += '<td style="font-size:12px;color:var(--text-secondary);">' + shortCat + '</td>';
+                detailHtml += '<td style="text-align:center;"><span class="effort-tag" style="' + effortStyle + '">' + effortIcon + item.effort + '</span></td>';
+                detailHtml += '<td style="text-align:center;"><span class="' + item.benefitClass + '">' + item.benefit + '</span></td>';
+                detailHtml += '</tr>';
+            });
+
+            detailHtml += '</tbody></table></div>';
+            detailDiv.innerHTML = detailHtml;
+
+            // Add click handlers for quadrant items to scroll to row in the table
+            contentDiv.querySelectorAll('.quadrant-item').forEach(function(el) {
+                el.addEventListener('click', function() {
+                    var itemNum = el.getAttribute('data-num');
+                    var match = allItems.find(function(i) { return i.num === itemNum; });
+                    if (match && match.row) {
+                        document.querySelectorAll('.search-highlight').forEach(function(r) { r.classList.remove('search-highlight'); });
+                        match.row.classList.add('search-highlight');
+                        match.row.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    }
+                });
+            });
+        };
+
+        function buildColumn(label, items, cssClass, icon) {
+            var html = '<div class="quadrant-column ' + cssClass + '">';
+            html += '<div class="quadrant-column-header"><span>' + icon + ' ' + label + '</span><span class="qch-count">' + items.length + '</span></div>';
+            html += '<div class="quadrant-column-body">';
+            if (items.length === 0) {
+                html += '<div class="quadrant-empty">No items at this effort level</div>';
+            } else {
+                items.forEach(function(item) {
+                    html += '<div class="quadrant-item" data-num="' + item.num + '">';
+                    html += '<span class="quadrant-item-num">' + item.num + '</span>';
+                    html += item.text;
+                    html += '<span class="quadrant-item-benefit"><span class="' + item.benefitClass + '">' + item.benefit + '</span></span>';
+                    var shortCat = item.category.replace(/\(Items #\d+.*?\)/g, '').replace(/^\d+\.\s*/, '').trim();
+                    html += '<span class="quadrant-item-category">' + shortCat + '</span>';
+                    html += '</div>';
+                });
+            }
+            html += '</div></div>';
+            return html;
+        }
+    })();
+    </script>
+
     <script>
     (function() {
         var STAGES = [
