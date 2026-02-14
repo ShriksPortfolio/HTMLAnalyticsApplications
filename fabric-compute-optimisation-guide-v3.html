@@ -415,6 +415,47 @@
             font-size: 12px;
         }
 
+        /* ---- View Toggle ---- */
+        .view-toggle {
+            display: flex;
+            gap: 0;
+            margin-bottom: 32px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-md);
+            padding: 4px;
+            border: 1px solid var(--border-subtle);
+            width: fit-content;
+        }
+        .view-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: var(--radius-sm);
+            font-size: 13.5px;
+            font-weight: 500;
+            font-family: inherit;
+            cursor: pointer;
+            transition: all var(--transition);
+            border: 1px solid transparent;
+            background: transparent;
+            color: var(--text-secondary);
+            white-space: nowrap;
+        }
+        .view-toggle-btn:hover {
+            color: var(--text-primary);
+        }
+        .view-toggle-btn.active {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            border-color: var(--border-subtle);
+            box-shadow: var(--shadow-sm);
+            font-weight: 600;
+        }
+        .view-toggle-btn .vtb-icon {
+            font-size: 15px;
+        }
+
         /* ---- Quadrant View ---- */
         .quadrant-container {
             margin-bottom: 52px;
@@ -1776,35 +1817,49 @@
                 </div>
             </div>
 
-            <!-- Quadrant View: Filter by Value Type -->
-            <div class="quadrant-container" id="quadrantView">
-                <h3>Explore by Value Type</h3>
-                <p>Click a value type below to see all matching recommendations grouped by implementation effort — Quick Wins you can action immediately, Moderate efforts worth planning, and Investments that need architectural consideration.</p>
-
-                <div class="quadrant-filters" id="quadrantFilters">
-                    <button class="quadrant-filter-btn" data-vtype="CU Reduction" onclick="filterQuadrant('CU Reduction', this)">
-                        <span style="color:var(--green-text);">⚡</span> CU Reduction <span class="qf-count" id="qfCount-cu">29</span>
-                    </button>
-                    <button class="quadrant-filter-btn" data-vtype="Cost Avoidance" onclick="filterQuadrant('Cost Avoidance', this)">
-                        <span style="color:var(--blue-text);">🛡️</span> Cost Avoidance <span class="qf-count" id="qfCount-ca">17</span>
-                    </button>
-                    <button class="quadrant-filter-btn" data-vtype="Throttling Prevention" onclick="filterQuadrant('Throttling Prevention', this)">
-                        <span style="color:var(--yellow-text);">⚠️</span> Throttling Prevention <span class="qf-count" id="qfCount-tp">7</span>
-                    </button>
-                    <button class="quadrant-filter-btn" data-vtype="Operational Efficiency" onclick="filterQuadrant('Operational Efficiency', this)">
-                        <span style="color:var(--peach-text);">⚙️</span> Operational Efficiency <span class="qf-count" id="qfCount-oe">13</span>
-                    </button>
-                </div>
-
-                <div id="quadrantContent">
-                    <div class="quadrant-placeholder">
-                        <span>👆</span>
-                        Select a value type above to explore recommendations<br>grouped by implementation effort
-                    </div>
-                </div>
-
-                <div class="quadrant-detail" id="quadrantDetail"></div>
+            <!-- View Toggle -->
+            <div class="view-toggle" id="matrixViewToggle">
+                <button class="view-toggle-btn active" onclick="switchMatrixView('value-type', this)">
+                    <span class="vtb-icon">🎯</span> Explore by Value Type
+                </button>
+                <button class="view-toggle-btn" onclick="switchMatrixView('all-recs', this)">
+                    <span class="vtb-icon">📋</span> All Recommendations
+                </button>
             </div>
+
+            <!-- VIEW 1: Explore by Value Type (Quadrant) -->
+            <div id="viewValueType">
+                <div class="quadrant-container" id="quadrantView">
+                    <p>Click a value type below to see all matching recommendations grouped by implementation effort — Quick Wins you can action immediately, Moderate efforts worth planning, and Investments that need architectural consideration.</p>
+
+                    <div class="quadrant-filters" id="quadrantFilters">
+                        <button class="quadrant-filter-btn" data-vtype="CU Reduction" onclick="filterQuadrant('CU Reduction', this)">
+                            <span style="color:var(--green-text);">⚡</span> CU Reduction <span class="qf-count" id="qfCount-cu">29</span>
+                        </button>
+                        <button class="quadrant-filter-btn" data-vtype="Cost Avoidance" onclick="filterQuadrant('Cost Avoidance', this)">
+                            <span style="color:var(--blue-text);">🛡️</span> Cost Avoidance <span class="qf-count" id="qfCount-ca">17</span>
+                        </button>
+                        <button class="quadrant-filter-btn" data-vtype="Throttling Prevention" onclick="filterQuadrant('Throttling Prevention', this)">
+                            <span style="color:var(--yellow-text);">⚠️</span> Throttling Prevention <span class="qf-count" id="qfCount-tp">7</span>
+                        </button>
+                        <button class="quadrant-filter-btn" data-vtype="Operational Efficiency" onclick="filterQuadrant('Operational Efficiency', this)">
+                            <span style="color:var(--peach-text);">⚙️</span> Operational Efficiency <span class="qf-count" id="qfCount-oe">13</span>
+                        </button>
+                    </div>
+
+                    <div id="quadrantContent">
+                        <div class="quadrant-placeholder">
+                            <span>👆</span>
+                            Select a value type above to explore recommendations<br>grouped by implementation effort
+                        </div>
+                    </div>
+
+                    <div class="quadrant-detail" id="quadrantDetail"></div>
+                </div>
+            </div>
+
+            <!-- VIEW 2: All Recommendations by Category -->
+            <div id="viewAllRecs" style="display:none;">
 
         <div class="category-section">
             <div class="category-header">1. Capacity Management (Items #1–8)</div>
@@ -2236,6 +2291,7 @@
             </table>
         </div>
 
+            </div><!-- /viewAllRecs -->
 
         </div>
 
@@ -2946,6 +3002,27 @@
                 search(this.value);
             }
         });
+    })();
+    </script>
+
+    <!-- View Toggle Logic -->
+    <script>
+    (function() {
+        window.switchMatrixView = function(view, btnEl) {
+            var valueTypeView = document.getElementById('viewValueType');
+            var allRecsView = document.getElementById('viewAllRecs');
+            var btns = document.querySelectorAll('.view-toggle-btn');
+            btns.forEach(function(b) { b.classList.remove('active'); });
+            btnEl.classList.add('active');
+
+            if (view === 'value-type') {
+                valueTypeView.style.display = 'block';
+                allRecsView.style.display = 'none';
+            } else {
+                valueTypeView.style.display = 'none';
+                allRecsView.style.display = 'block';
+            }
+        };
     })();
     </script>
 
