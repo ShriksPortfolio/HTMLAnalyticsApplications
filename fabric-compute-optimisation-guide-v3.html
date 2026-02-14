@@ -122,6 +122,7 @@
             gap: 12px;
             margin-bottom: 44px;
             flex-wrap: wrap;
+            align-items: flex-start;
         }
         .nav-btn {
             display: inline-flex;
@@ -132,8 +133,33 @@
             font-size: 13.5px;
             font-weight: 500;
             text-decoration: none;
-            transition: all var(--transition);
+            transition: all 0.35s cubic-bezier(0.25, 0.1, 0.25, 1);
             letter-spacing: 0px;
+            position: relative;
+            overflow: hidden;
+            flex-direction: column;
+            max-height: 46px;
+        }
+        .nav-btn .btn-desc {
+            font-size: 11.5px;
+            font-weight: 400;
+            color: var(--text-secondary);
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: opacity 0.3s ease, max-height 0.35s ease;
+            line-height: 1.45;
+            padding: 0;
+        }
+        .nav-btn:hover {
+            max-height: 120px;
+            border-radius: 20px;
+            padding: 14px 26px 16px;
+        }
+        .nav-btn:hover .btn-desc {
+            opacity: 1;
+            max-height: 60px;
+            padding-top: 6px;
         }
         .nav-btn-primary {
             background: #E8E5E1;
@@ -1065,10 +1091,10 @@
 
         <!-- Navigation -->
         <div class="nav-buttons">
-            <a href="#recommendations" class="nav-btn nav-btn-primary">📋 Recommendations & Sources</a>
-            <a href="#matrix" class="nav-btn nav-btn-outline">📊 Value & Effort Matrix</a>
-            <a href="#metadata" class="nav-btn nav-btn-outline">🔧 Fabric Metadata Automation</a>
-            <a href="#fsku" class="nav-btn nav-btn-outline">🎯 F-SKU Capacity Assessment</a>
+            <a href="#recommendations" class="nav-btn nav-btn-primary"><span>📋 Recommendations & Sources</span><span class="btn-desc">48 cost optimisation strategies with Microsoft Learn references and benefit ratings</span></a>
+            <a href="#matrix" class="nav-btn nav-btn-outline"><span>📊 Value & Effort Matrix</span><span class="btn-desc">Prioritise efforts by value delivered and implementation effort required</span></a>
+            <a href="#metadata" class="nav-btn nav-btn-outline"><span>🔧 Fabric Metadata Automation</span><span class="btn-desc">Automated tenant scanning via Admin REST API producing structured CSV inventories</span></a>
+            <a href="#fsku" class="nav-btn nav-btn-outline"><span>🎯 F-SKU Capacity Assessment</span><span class="btn-desc">Interactive 25-question wizard producing a tailored F-SKU recommendation</span></a>
         </div>
 
         <!-- Search -->
