@@ -135,7 +135,6 @@
             text-decoration: none;
             transition: all 0.3s ease;
             letter-spacing: 0px;
-            position: relative;
             background: #E8E5E1;
             color: var(--text-primary);
             border: 1px solid #DEDAD5;
@@ -144,41 +143,6 @@
             background: #DEDAD5;
             border-color: #D0CCC7;
             transform: translateY(-1px);
-        }
-        .nav-btn .btn-desc {
-            position: absolute;
-            bottom: calc(100% + 10px);
-            left: 50%;
-            transform: translateX(-50%) translateY(-6px);
-            width: 260px;
-            background: #2D2B28;
-            color: #F5F2EE;
-            font-size: 12px;
-            font-weight: 400;
-            line-height: 1.5;
-            padding: 12px 16px;
-            border-radius: 12px;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.25s ease, transform 0.25s ease;
-            z-index: 100;
-            text-align: center;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-        }
-        .nav-btn .btn-desc::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-left: 7px solid transparent;
-            border-right: 7px solid transparent;
-            border-top: 7px solid #2D2B28;
-        }
-        .nav-btn:hover .btn-desc {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-            pointer-events: auto;
         }
 
         /* ---- Summary Box ---- */
@@ -1090,10 +1054,10 @@
 
         <!-- Navigation -->
         <div class="nav-buttons">
-            <a href="#recommendations" class="nav-btn nav-btn-primary"><span>📋 Recommendations & Sources</span><span class="btn-desc">48 cost optimisation strategies with Microsoft Learn references and benefit ratings</span></a>
-            <a href="#matrix" class="nav-btn nav-btn-outline"><span>📊 Value & Effort Matrix</span><span class="btn-desc">Prioritise efforts by value delivered and implementation effort required</span></a>
-            <a href="#metadata" class="nav-btn nav-btn-outline"><span>🔧 Fabric Metadata Automation</span><span class="btn-desc">Automated tenant scanning via Admin REST API producing structured CSV inventories</span></a>
-            <a href="#fsku" class="nav-btn nav-btn-outline"><span>🎯 F-SKU Capacity Assessment</span><span class="btn-desc">Interactive 25-question wizard producing a tailored F-SKU recommendation</span></a>
+            <a href="#recommendations" class="nav-btn nav-btn-primary">📋 Recommendations & Sources</a>
+            <a href="#matrix" class="nav-btn nav-btn-outline">📊 Value & Effort Matrix</a>
+            <a href="#metadata" class="nav-btn nav-btn-outline">🔧 Fabric Metadata Automation</a>
+            <a href="#fsku" class="nav-btn nav-btn-outline">🎯 F-SKU Capacity Assessment</a>
         </div>
 
         <!-- Search -->
