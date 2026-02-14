@@ -589,6 +589,343 @@
             100% { background: transparent; }
         }
 
+        /* ---- F-SKU Wizard ---- */
+        .fsku-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-lg);
+            padding: 36px;
+            box-shadow: var(--shadow-sm);
+            margin-bottom: 48px;
+        }
+        .wizard-progress {
+            height: 6px;
+            background: var(--bg-secondary);
+            border-radius: 980px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+        .wizard-progress-bar {
+            height: 100%;
+            background: var(--accent);
+            border-radius: 980px;
+            width: 0%;
+            transition: width 0.4s ease;
+        }
+        .wizard-progress-text {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            text-align: center;
+            margin-bottom: 24px;
+            font-weight: 500;
+        }
+        .wizard-stages {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+        .wizard-stage-btn {
+            flex: 1;
+            min-width: 140px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            padding: 14px 12px;
+            background: var(--bg-secondary);
+            border: 2px solid transparent;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all var(--transition);
+            font-family: inherit;
+        }
+        .wizard-stage-btn:hover {
+            background: var(--bg-primary);
+            border-color: var(--border-light);
+        }
+        .wizard-stage-btn.active {
+            background: var(--accent-soft);
+            border-color: var(--accent);
+        }
+        .wizard-stage-btn.completed {
+            background: var(--green-bg);
+            border-color: var(--green);
+        }
+        .stage-icon { font-size: 20px; }
+        .stage-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            text-align: center;
+        }
+        .wizard-panel { animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+        .panel-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-bottom: 28px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .panel-icon { font-size: 32px; }
+        .panel-header h3 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin-bottom: 4px;
+        }
+        .panel-header p {
+            font-size: 13px;
+            color: var(--text-secondary);
+        }
+        .wizard-question {
+            margin-bottom: 28px;
+            padding: 20px 24px;
+            background: var(--bg-primary);
+            border-radius: var(--radius-md);
+            border: 1px solid var(--border-subtle);
+        }
+        .question-number {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .question-text {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        .multi-hint {
+            font-size: 12px;
+            font-weight: 400;
+            color: var(--text-tertiary);
+            font-style: italic;
+        }
+        .option-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 12px;
+        }
+        .option-chip {
+            display: inline-flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .option-chip input { display: none; }
+        .chip-text {
+            display: inline-block;
+            padding: 8px 16px;
+            background: var(--bg-card);
+            border: 1.5px solid var(--border-light);
+            border-radius: 980px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all var(--transition);
+            cursor: pointer;
+        }
+        .chip-text:hover {
+            border-color: var(--accent);
+            color: var(--text-primary);
+        }
+        .option-chip input:checked + .chip-text {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 2px 8px rgba(196, 101, 58, 0.25);
+        }
+        .wizard-notes {
+            width: 100%;
+            padding: 10px 14px;
+            font-family: inherit;
+            font-size: 13px;
+            border: 1.5px solid var(--border-light);
+            border-radius: var(--radius-sm);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            resize: vertical;
+            min-height: 40px;
+            max-height: 120px;
+            outline: none;
+            transition: border-color var(--transition);
+        }
+        .wizard-notes:focus {
+            border-color: var(--accent);
+        }
+        .wizard-notes::placeholder {
+            color: var(--text-tertiary);
+        }
+        .wizard-nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 24px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border-subtle);
+        }
+        .wiz-nav-btn {
+            padding: 12px 24px;
+            border-radius: 980px;
+            font-size: 13px;
+            font-weight: 600;
+            font-family: inherit;
+            cursor: pointer;
+            border: 1.5px solid var(--border-light);
+            background: var(--bg-card);
+            color: var(--text-primary);
+            transition: all var(--transition);
+        }
+        .wiz-nav-btn:hover {
+            background: var(--bg-secondary);
+            transform: translateY(-1px);
+        }
+        .wiz-nav-btn.primary {
+            background: var(--accent);
+            color: #fff;
+            border-color: var(--accent);
+            box-shadow: 0 2px 8px rgba(196, 101, 58, 0.25);
+        }
+        .wiz-nav-btn.primary:hover {
+            background: var(--accent-hover);
+            transform: translateY(-1px);
+        }
+        .wiz-nav-btn.generate {
+            background: var(--green);
+            color: #fff;
+            border-color: var(--green);
+            box-shadow: 0 2px 8px rgba(91, 140, 90, 0.25);
+            font-size: 14px;
+            padding: 14px 32px;
+        }
+        .wiz-nav-btn.generate:hover {
+            background: var(--green-text);
+            transform: translateY(-1px);
+        }
+        /* Results */
+        .wizard-results {
+            margin-top: 36px;
+            padding-top: 36px;
+            border-top: 2px solid var(--accent);
+        }
+        .results-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+        .results-header h3 {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+        .results-actions {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+        .result-section-title {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+            margin: 28px 0 16px;
+        }
+        .radar-container {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0 32px;
+        }
+        .sku-card {
+            display: inline-block;
+            width: calc(50% - 8px);
+            padding: 24px;
+            border-radius: var(--radius-md);
+            margin-bottom: 16px;
+            vertical-align: top;
+        }
+        .sku-card:first-of-type { margin-right: 12px; }
+        .sku-card h4 {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+        }
+        .sku-card.dev {
+            background: var(--orange-bg);
+            border: 1px solid rgba(196, 136, 58, 0.2);
+        }
+        .sku-card.dev h4 { color: var(--orange-text); }
+        .sku-card.prod {
+            background: var(--green-bg);
+            border: 1px solid rgba(91, 140, 90, 0.2);
+        }
+        .sku-card.prod h4 { color: var(--green-text); }
+        .sku-name {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+        }
+        .sku-card p {
+            font-size: 13px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+        .risk-flag {
+            padding: 14px 20px;
+            background: var(--yellow-bg);
+            border: 1px solid rgba(125, 106, 46, 0.2);
+            border-radius: var(--radius-sm);
+            font-size: 13px;
+            color: var(--yellow-text);
+            margin-bottom: 24px;
+        }
+        .budget-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 13px;
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            overflow: hidden;
+            background: var(--bg-card);
+            margin-bottom: 12px;
+        }
+        .budget-table th {
+            background: var(--bg-secondary);
+            padding: 12px 18px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-light);
+        }
+        .budget-table td {
+            padding: 12px 18px;
+            border-bottom: 1px solid var(--border-subtle);
+            color: var(--text-primary);
+        }
+        .budget-table tr:last-child td { border-bottom: none; }
+        .budget-table tr:hover { background: var(--accent-soft); }
+
         /* ---- Print ---- */
         @media print {
             .nav-buttons { display: none; }
@@ -643,6 +980,7 @@
             <a href="#recommendations" class="nav-btn nav-btn-primary">📋 Recommendations & Sources</a>
             <a href="#matrix" class="nav-btn nav-btn-outline">📊 Value & Effort Matrix</a>
             <a href="#metadata" class="nav-btn nav-btn-outline">🔧 Fabric Metadata Automation</a>
+            <a href="#fsku" class="nav-btn nav-btn-outline">🎯 F-SKU Capacity Assessment</a>
         </div>
 
         <!-- Search -->
@@ -1820,6 +2158,138 @@
 
         </div>
 
+        <!-- ============================================ -->
+        <!-- SECTION 4: F-SKU Decision Assessment         -->
+        <!-- ============================================ -->
+        <div class="section-divider" id="fsku">
+            <h2>🎯 F-SKU Capacity Assessment</h2>
+            <p>Interactive wizard — 10 questions across 5 stages producing a tailored F-SKU recommendation with radar profile</p>
+            <a href="#recommendations" class="nav-btn nav-btn-outline" style="margin-top:8px;">↑ Back to top</a>
+        </div>
+        <div class="fsku-section">
+            <div class="wizard-progress"><div class="wizard-progress-bar" id="wizardProgressBar"></div></div>
+            <div class="wizard-progress-text" id="wizardProgressText">Stage 1 of 5</div>
+            <div class="wizard-stages" id="wizardStages">
+                <button class="wizard-stage-btn active" onclick="goToStage(0)" id="stageBtn0"><span class="stage-icon">🏢</span><span class="stage-label">Organisation Profile</span></button>
+                <button class="wizard-stage-btn" onclick="goToStage(1)" id="stageBtn1"><span class="stage-icon">🏗️</span><span class="stage-label">Current Foundation</span></button>
+                <button class="wizard-stage-btn" onclick="goToStage(2)" id="stageBtn2"><span class="stage-icon">🗄️</span><span class="stage-label">Data Estate</span></button>
+                <button class="wizard-stage-btn" onclick="goToStage(3)" id="stageBtn3"><span class="stage-icon">⚡</span><span class="stage-label">Fabric Workloads</span></button>
+                <button class="wizard-stage-btn" onclick="goToStage(4)" id="stageBtn4"><span class="stage-icon">💰</span><span class="stage-label">Users & Budget</span></button>
+            </div>
+            <div class="wizard-panels" id="wizardPanels">
+                <div class="wizard-panel" id="panel0">
+                    <div class="panel-header"><span class="panel-icon">🏢</span><div><h3>Stage 1: Organisation Profile</h3><p>Scale, maturity, and operating context</p></div></div>
+                    <div class="wizard-question"><div class="question-number">Q1</div><div class="question-text">How many employees does your organisation have?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q1_1" value="< 500" onchange="onAnswer()"><span class="chip-text">< 500</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_1" value="500–2,000" onchange="onAnswer()"><span class="chip-text">500–2,000</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_1" value="2,000–10,000" onchange="onAnswer()"><span class="chip-text">2,000–10,000</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_1" value="10,000–50,000" onchange="onAnswer()"><span class="chip-text">10,000–50,000</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_1" value="50,000+" onchange="onAnswer()"><span class="chip-text">50,000+</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q1_1" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q2</div><div class="question-text">How would you describe your organisation's data maturity?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q1_2" value="Ad-hoc (spreadsheets, no central platform)" onchange="onAnswer()"><span class="chip-text">Ad-hoc (spreadsheets, no central platform)</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_2" value="Reactive (some BI tools, limited governance)" onchange="onAnswer()"><span class="chip-text">Reactive (some BI tools, limited governance)</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_2" value="Managed (centralised platform, some governance)" onchange="onAnswer()"><span class="chip-text">Managed (centralised platform, some governance)</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_2" value="Optimised (well-governed, automated, CI/CD)" onchange="onAnswer()"><span class="chip-text">Optimised (well-governed, automated, CI/CD)</span></label>
+                        <label class="option-chip"><input type="radio" name="q1_2" value="Advanced (data mesh, self-service with guardrails)" onchange="onAnswer()"><span class="chip-text">Advanced (data mesh, self-service with guardrails)</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q1_2" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-nav"><div></div><button class="wiz-nav-btn primary" onclick="goToStage(1)">Next: Current Foundation →</button></div>
+                </div>
+                <div class="wizard-panel" id="panel1" style="display:none;">
+                    <div class="panel-header"><span class="panel-icon">🏗️</span><div><h3>Stage 2: Current Foundation</h3><p>Existing platform, licensing, and readiness</p></div></div>
+                    <div class="wizard-question"><div class="question-number">Q3</div><div class="question-text">What is your current Power BI licensing model?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q2_1" value="Power BI Free only" onchange="onAnswer()"><span class="chip-text">Power BI Free only</span></label>
+                        <label class="option-chip"><input type="radio" name="q2_1" value="Power BI Pro" onchange="onAnswer()"><span class="chip-text">Power BI Pro</span></label>
+                        <label class="option-chip"><input type="radio" name="q2_1" value="Premium Per User (PPU)" onchange="onAnswer()"><span class="chip-text">Premium Per User (PPU)</span></label>
+                        <label class="option-chip"><input type="radio" name="q2_1" value="Premium P-SKU (P1/P2/P3/P4)" onchange="onAnswer()"><span class="chip-text">Premium P-SKU (P1/P2/P3/P4)</span></label>
+                        <label class="option-chip"><input type="radio" name="q2_1" value="Microsoft Fabric (already using)" onchange="onAnswer()"><span class="chip-text">Microsoft Fabric (already using)</span></label>
+                        <label class="option-chip"><input type="radio" name="q2_1" value="No Power BI currently" onchange="onAnswer()"><span class="chip-text">No Power BI currently</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q2_1" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q4</div><div class="question-text">What are your top pain points? <span class="multi-hint">(select all that apply)</span></div><div class="option-grid">
+                        <label class="option-chip"><input type="checkbox" name="q2_2" value="Performance / slow reports" onchange="onAnswer()"><span class="chip-text">Performance / slow reports</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q2_2" value="Cost too expensive" onchange="onAnswer()"><span class="chip-text">Cost too expensive</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q2_2" value="Governance gaps" onchange="onAnswer()"><span class="chip-text">Governance gaps</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q2_2" value="Refresh failures" onchange="onAnswer()"><span class="chip-text">Refresh failures</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q2_2" value="Security gaps" onchange="onAnswer()"><span class="chip-text">Security gaps</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q2_2" value="No single source of truth" onchange="onAnswer()"><span class="chip-text">No single source of truth</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q2_2" value="Scalability ceiling" onchange="onAnswer()"><span class="chip-text">Scalability ceiling</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q2_2" value="Manual processes" onchange="onAnswer()"><span class="chip-text">Manual processes</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q2_2" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-nav"><button class="wiz-nav-btn" onclick="goToStage(0)">← Previous</button><button class="wiz-nav-btn primary" onclick="goToStage(2)">Next: Data Estate →</button></div>
+                </div>
+                <div class="wizard-panel" id="panel2" style="display:none;">
+                    <div class="panel-header"><span class="panel-icon">🗄️</span><div><h3>Stage 3: Data Estate</h3><p>Data volumes and refresh patterns</p></div></div>
+                    <div class="wizard-question"><div class="question-number">Q5</div><div class="question-text">What is your total data volume across all sources?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q3_1" value="< 10 GB" onchange="onAnswer()"><span class="chip-text">< 10 GB</span></label>
+                        <label class="option-chip"><input type="radio" name="q3_1" value="10–100 GB" onchange="onAnswer()"><span class="chip-text">10–100 GB</span></label>
+                        <label class="option-chip"><input type="radio" name="q3_1" value="100 GB–1 TB" onchange="onAnswer()"><span class="chip-text">100 GB–1 TB</span></label>
+                        <label class="option-chip"><input type="radio" name="q3_1" value="1–10 TB" onchange="onAnswer()"><span class="chip-text">1–10 TB</span></label>
+                        <label class="option-chip"><input type="radio" name="q3_1" value="10–50 TB" onchange="onAnswer()"><span class="chip-text">10–50 TB</span></label>
+                        <label class="option-chip"><input type="radio" name="q3_1" value="50+ TB" onchange="onAnswer()"><span class="chip-text">50+ TB</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q3_1" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q6</div><div class="question-text">How frequently does your data need to be refreshed?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q3_2" value="Weekly" onchange="onAnswer()"><span class="chip-text">Weekly</span></label>
+                        <label class="option-chip"><input type="radio" name="q3_2" value="Daily (once)" onchange="onAnswer()"><span class="chip-text">Daily (once)</span></label>
+                        <label class="option-chip"><input type="radio" name="q3_2" value="Multiple times per day" onchange="onAnswer()"><span class="chip-text">Multiple times per day</span></label>
+                        <label class="option-chip"><input type="radio" name="q3_2" value="Near real-time (15–60 mins)" onchange="onAnswer()"><span class="chip-text">Near real-time (15–60 mins)</span></label>
+                        <label class="option-chip"><input type="radio" name="q3_2" value="Real-time (streaming)" onchange="onAnswer()"><span class="chip-text">Real-time (streaming)</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q3_2" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-nav"><button class="wiz-nav-btn" onclick="goToStage(1)">← Previous</button><button class="wiz-nav-btn primary" onclick="goToStage(3)">Next: Fabric Workloads →</button></div>
+                </div>
+                <div class="wizard-panel" id="panel3" style="display:none;">
+                    <div class="panel-header"><span class="panel-icon">⚡</span><div><h3>Stage 4: Fabric Workloads</h3><p>Which Fabric workloads and their intensity</p></div></div>
+                    <div class="wizard-question"><div class="question-number">Q7</div><div class="question-text">Which Fabric workloads do you plan to use? <span class="multi-hint">(select all that apply)</span></div><div class="option-grid">
+                        <label class="option-chip"><input type="checkbox" name="q4_1" value="Data Engineering (Spark, Lakehouse)" onchange="onAnswer()"><span class="chip-text">Data Engineering (Spark, Lakehouse)</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q4_1" value="Data Factory (Pipelines, Dataflows)" onchange="onAnswer()"><span class="chip-text">Data Factory (Pipelines, Dataflows)</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q4_1" value="Data Warehouse (SQL analytics)" onchange="onAnswer()"><span class="chip-text">Data Warehouse (SQL analytics)</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q4_1" value="Power BI (Semantic Models, Reports)" onchange="onAnswer()"><span class="chip-text">Power BI (Semantic Models, Reports)</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q4_1" value="Real-Time Intelligence" onchange="onAnswer()"><span class="chip-text">Real-Time Intelligence</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q4_1" value="Data Science (ML)" onchange="onAnswer()"><span class="chip-text">Data Science (ML)</span></label>
+                        <label class="option-chip"><input type="checkbox" name="q4_1" value="Not sure yet" onchange="onAnswer()"><span class="chip-text">Not sure yet</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q4_1" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q8</div><div class="question-text">Do you plan to use Copilot for Fabric?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q4_2" value="No" onchange="onAnswer()"><span class="chip-text">No</span></label>
+                        <label class="option-chip"><input type="radio" name="q4_2" value="Yes, if available" onchange="onAnswer()"><span class="chip-text">Yes, if available</span></label>
+                        <label class="option-chip"><input type="radio" name="q4_2" value="Yes, as a priority" onchange="onAnswer()"><span class="chip-text">Yes, as a priority</span></label>
+                        <label class="option-chip"><input type="radio" name="q4_2" value="Not sure yet" onchange="onAnswer()"><span class="chip-text">Not sure yet</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q4_2" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-nav"><button class="wiz-nav-btn" onclick="goToStage(2)">← Previous</button><button class="wiz-nav-btn primary" onclick="goToStage(4)">Next: Users & Budget →</button></div>
+                </div>
+                <div class="wizard-panel" id="panel4" style="display:none;">
+                    <div class="panel-header"><span class="panel-icon">💰</span><div><h3>Stage 5: Users & Budget</h3><p>Consumption patterns and commercial constraints</p></div></div>
+                    <div class="wizard-question"><div class="question-number">Q9</div><div class="question-text">What is your peak concurrent user count?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q5_1" value="< 10" onchange="onAnswer()"><span class="chip-text">< 10</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_1" value="10–25" onchange="onAnswer()"><span class="chip-text">10–25</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_1" value="26–50" onchange="onAnswer()"><span class="chip-text">26–50</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_1" value="51–100" onchange="onAnswer()"><span class="chip-text">51–100</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_1" value="101–250" onchange="onAnswer()"><span class="chip-text">101–250</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_1" value="250+" onchange="onAnswer()"><span class="chip-text">250+</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q5_1" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-question"><div class="question-number">Q10</div><div class="question-text">What is your available monthly budget for Fabric capacity?</div><div class="option-grid">
+                        <label class="option-chip"><input type="radio" name="q5_2" value="< £500/mo" onchange="onAnswer()"><span class="chip-text">< £500/mo</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_2" value="£500–£1,500/mo" onchange="onAnswer()"><span class="chip-text">£500–£1,500/mo</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_2" value="£1,500–£3,000/mo" onchange="onAnswer()"><span class="chip-text">£1,500–£3,000/mo</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_2" value="£3,000–£6,000/mo" onchange="onAnswer()"><span class="chip-text">£3,000–£6,000/mo</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_2" value="£6,000–£15,000/mo" onchange="onAnswer()"><span class="chip-text">£6,000–£15,000/mo</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_2" value="£15,000+/mo" onchange="onAnswer()"><span class="chip-text">£15,000+/mo</span></label>
+                        <label class="option-chip"><input type="radio" name="q5_2" value="Not yet defined" onchange="onAnswer()"><span class="chip-text">Not yet defined</span></label>
+                    </div><textarea class="wizard-notes" id="notes_q5_2" placeholder="Additional notes (optional)…" oninput="onAnswer()"></textarea></div>
+                    <div class="wizard-nav"><button class="wiz-nav-btn" onclick="goToStage(3)">← Previous</button><button class="wiz-nav-btn generate" onclick="generateAssessment()">🎯 Generate Assessment</button></div>
+                </div>
+            </div>
+            <div class="wizard-results" id="wizardResults" style="display:none;">
+                <div class="results-header">
+                    <h3>🎯 Your F-SKU Assessment Results</h3>
+                    <div class="results-actions">
+                        <button class="wiz-nav-btn" onclick="window.print()">📄 Export to PDF</button>
+                        <button class="wiz-nav-btn" onclick="exportCSV()">📊 Export to CSV</button>
+                        <button class="wiz-nav-btn" onclick="resetWizard()">↺ Start Over</button>
+                    </div>
+                </div>
+                <div id="resultsContent"></div>
+            </div>
+        </div>
+
         <!-- Footer -->
         <div class="footer">
             <div><strong>SEED Thought Leadership</strong> | Fabric Compute Cost Optimisation Reference Guide | Version 1.0</div>
@@ -2031,6 +2501,155 @@
                 search(this.value);
             }
         });
+    })();
+    </script>
+    <script>
+    (function() {
+        var STAGES = [{"id": "org-profile", "title": "Organisation Profile", "icon": "🏢", "desc": "Scale, maturity, and operating context", "questions": [{"id": "q1_1", "text": "How many employees does your organisation have?", "type": "single", "options": ["< 500", "500–2,000", "2,000–10,000", "10,000–50,000", "50,000+"]}, {"id": "q1_2", "text": "How would you describe your organisation's data maturity?", "type": "single", "options": ["Ad-hoc (spreadsheets, no central platform)", "Reactive (some BI tools, limited governance)", "Managed (centralised platform, some governance)", "Optimised (well-governed, automated, CI/CD)", "Advanced (data mesh, self-service with guardrails)"]}]}, {"id": "current-foundation", "title": "Current Foundation", "icon": "🏗️", "desc": "Existing platform, licensing, and readiness", "questions": [{"id": "q2_1", "text": "What is your current Power BI licensing model?", "type": "single", "options": ["Power BI Free only", "Power BI Pro", "Premium Per User (PPU)", "Premium P-SKU (P1/P2/P3/P4)", "Microsoft Fabric (already using)", "No Power BI currently"]}, {"id": "q2_2", "text": "What are your top pain points? (select all that apply)", "type": "multi", "options": ["Performance / slow reports", "Cost too expensive", "Governance gaps", "Refresh failures", "Security gaps", "No single source of truth", "Scalability ceiling", "Manual processes"]}]}, {"id": "data-estate", "title": "Data Estate", "icon": "🗄️", "desc": "Data volumes and refresh patterns", "questions": [{"id": "q3_1", "text": "What is your total data volume across all sources?", "type": "single", "options": ["< 10 GB", "10–100 GB", "100 GB–1 TB", "1–10 TB", "10–50 TB", "50+ TB"]}, {"id": "q3_2", "text": "How frequently does your data need to be refreshed?", "type": "single", "options": ["Weekly", "Daily (once)", "Multiple times per day", "Near real-time (15–60 mins)", "Real-time (streaming)"]}]}, {"id": "fabric-workloads", "title": "Fabric Workloads", "icon": "⚡", "desc": "Which Fabric workloads and their intensity", "questions": [{"id": "q4_1", "text": "Which Fabric workloads do you plan to use?", "type": "multi", "options": ["Data Engineering (Spark, Lakehouse)", "Data Factory (Pipelines, Dataflows)", "Data Warehouse (SQL analytics)", "Power BI (Semantic Models, Reports)", "Real-Time Intelligence", "Data Science (ML)", "Not sure yet"]}, {"id": "q4_2", "text": "Do you plan to use Copilot for Fabric?", "type": "single", "options": ["No", "Yes, if available", "Yes, as a priority", "Not sure yet"]}]}, {"id": "users-budget", "title": "Users & Budget", "icon": "💰", "desc": "Consumption patterns and commercial constraints", "questions": [{"id": "q5_1", "text": "What is your peak concurrent user count?", "type": "single", "options": ["< 10", "10–25", "26–50", "51–100", "101–250", "250+"]}, {"id": "q5_2", "text": "What is your available monthly budget for Fabric capacity?", "type": "single", "options": ["< £500/mo", "£500–£1,500/mo", "£1,500–£3,000/mo", "£3,000–£6,000/mo", "£6,000–£15,000/mo", "£15,000+/mo", "Not yet defined"]}]}];
+        var TOTAL_Q = 10;
+        var currentStage = 0;
+        var SKU_TABLE = [
+            {name:'F2',cus:2,payg:262,res:158},{name:'F4',cus:4,payg:525,res:315},
+            {name:'F8',cus:8,payg:1049,res:630},{name:'F16',cus:16,payg:2099,res:1260},
+            {name:'F32',cus:32,payg:4198,res:2519},{name:'F64',cus:64,payg:8396,res:5038},
+            {name:'F128',cus:128,payg:16791,res:10076},{name:'F256',cus:256,payg:33583,res:20151},
+            {name:'F512',cus:512,payg:67165,res:40302},{name:'F1024',cus:1024,payg:134330,res:80604},
+            {name:'F2048',cus:2048,payg:268661,res:161208}
+        ];
+        function sku(n){return SKU_TABLE.find(function(s){return s.name===n});}
+        window.goToStage = function(i) {
+            if(i<0||i>=STAGES.length)return;
+            for(var x=0;x<STAGES.length;x++){document.getElementById('panel'+x).style.display='none';document.getElementById('stageBtn'+x).classList.remove('active');}
+            document.getElementById('panel'+i).style.display='block';
+            document.getElementById('stageBtn'+i).classList.add('active');
+            currentStage=i; updateProgress();
+            document.getElementById('fsku').scrollIntoView({behavior:'smooth',block:'start'});
+        };
+        window.onAnswer = function(){updateProgress();};
+        function getAnswer(qid,type){
+            if(type==='multi'){var v=[];document.querySelectorAll('input[name="'+qid+'"]:checked').forEach(function(c){v.push(c.value);});return v;}
+            var s=document.querySelector('input[name="'+qid+'"]:checked');return s?s.value:'';
+        }
+        function getNote(qid){var e=document.getElementById('notes_'+qid);return e?e.value.trim():'';}
+        function updateProgress(){
+            var ans=0;
+            STAGES.forEach(function(st){st.questions.forEach(function(q){
+                if(q.type==='multi'){if(document.querySelectorAll('input[name="'+q.id+'"]:checked').length>0)ans++;}
+                else{if(document.querySelector('input[name="'+q.id+'"]:checked'))ans++;}
+            });});
+            var pct=Math.round((ans/TOTAL_Q)*100);
+            document.getElementById('wizardProgressBar').style.width=pct+'%';
+            document.getElementById('wizardProgressText').textContent='Stage '+(currentStage+1)+' of '+STAGES.length+' \u2014 '+ans+'/'+TOTAL_Q+' answered ('+pct+'%)';
+            STAGES.forEach(function(st,si){
+                var sa=0;st.questions.forEach(function(q){
+                    if(q.type==='multi'){if(document.querySelectorAll('input[name="'+q.id+'"]:checked').length>0)sa++;}
+                    else{if(document.querySelector('input[name="'+q.id+'"]:checked'))sa++;}
+                });
+                var b=document.getElementById('stageBtn'+si);
+                if(sa===st.questions.length&&si!==currentStage)b.classList.add('completed');else b.classList.remove('completed');
+            });
+        }
+        function optIdx(qid,max){
+            var a=getAnswer(qid,'single');if(!a)return 0;var q=null;
+            STAGES.forEach(function(s){s.questions.forEach(function(x){if(x.id===qid)q=x;});});
+            if(!q)return 0;var i=q.options.indexOf(a);if(i<0)return 0;
+            return(i/Math.max(q.options.length-1,1))*max;
+        }
+        function multiScore(qid,max){
+            var a=getAnswer(qid,'multi');if(!a||!a.length)return 0;var q=null;
+            STAGES.forEach(function(s){s.questions.forEach(function(x){if(x.id===qid)q=x;});});
+            if(!q)return 0;return Math.min(a.length/Math.max(q.options.length-1,1),1)*max;
+        }
+        function computeScores(){
+            return {
+                orgScale:     Math.min(10,(optIdx('q1_1',50)+optIdx('q1_2',50))/100*10),
+                dataEstate:   Math.min(10,(optIdx('q3_1',50)+optIdx('q3_2',50))/100*10),
+                workloads:    Math.min(10,(multiScore('q4_1',70)+optIdx('q4_2',30))/100*10),
+                users:        Math.min(10, optIdx('q5_1',100)/100*10),
+                budget:       Math.min(10, optIdx('q5_2',100)/100*10)
+            };
+        }
+        function drawRadar(sc,id){
+            var dims=[{k:'orgScale',l:'Organisation'},{k:'dataEstate',l:'Data Estate'},{k:'workloads',l:'Workloads'},{k:'users',l:'Users'},{k:'budget',l:'Budget'}];
+            var n=dims.length,sz=340,cx=sz/2,cy=sz/2,R=110,step=2*Math.PI/n,start=-Math.PI/2;
+            var svg='<svg width="'+sz+'" height="'+sz+'" viewBox="0 0 '+sz+' '+sz+'">';
+            for(var lv=2;lv<=10;lv+=2){var gr=R*(lv/10);svg+='<circle cx="'+cx+'" cy="'+cy+'" r="'+gr+'" fill="none" stroke="#e8e8ed" stroke-width="1"/>';}
+            for(var i=0;i<n;i++){var a=start+i*step;svg+='<line x1="'+cx+'" y1="'+cy+'" x2="'+(cx+R*Math.cos(a)).toFixed(1)+'" y2="'+(cy+R*Math.sin(a)).toFixed(1)+'" stroke="#e8e8ed" stroke-width="1"/>';}
+            var pts=[];
+            for(var i=0;i<n;i++){var a=start+i*step;var v=sc[dims[i].k]||0;var pr=R*(v/10);pts.push((cx+pr*Math.cos(a)).toFixed(1)+','+(cy+pr*Math.sin(a)).toFixed(1));}
+            svg+='<polygon points="'+pts.join(' ')+'" fill="rgba(196,101,58,0.15)" stroke="var(--accent)" stroke-width="2.5"/>';
+            for(var i=0;i<n;i++){
+                var a=start+i*step;var v=sc[dims[i].k]||0;var pr=R*(v/10);
+                var px=(cx+pr*Math.cos(a)).toFixed(1),py=(cy+pr*Math.sin(a)).toFixed(1);
+                svg+='<circle cx="'+px+'" cy="'+py+'" r="5" fill="var(--accent)"/>';
+                var lx=cx+(R+32)*Math.cos(a),ly=cy+(R+32)*Math.sin(a);
+                var anc='middle';if(Math.cos(a)<-0.3)anc='end';else if(Math.cos(a)>0.3)anc='start';
+                svg+='<text x="'+lx.toFixed(1)+'" y="'+(ly+4).toFixed(1)+'" text-anchor="'+anc+'" font-size="11" font-family="Inter,sans-serif" fill="#6e6e73" font-weight="500">'+dims[i].l+'</text>';
+                svg+='<text x="'+lx.toFixed(1)+'" y="'+(ly+17).toFixed(1)+'" text-anchor="'+anc+'" font-size="12" font-family="Inter,sans-serif" fill="#1d1d1f" font-weight="700">'+v.toFixed(1)+'/10</text>';
+            }
+            svg+='</svg>';
+            document.getElementById(id).innerHTML=svg;
+        }
+        window.generateAssessment = function(){
+            var sc=computeScores();
+            var composite=(sc.orgScale*0.15+sc.dataEstate*0.25+sc.workloads*0.25+sc.users*0.20+sc.budget*0.15);
+            var copilot=getAnswer('q4_2','single')==='Yes, as a priority';
+            var prodSku;
+            if(composite<=1.5)prodSku='F2';else if(composite<=2.5)prodSku='F4';else if(composite<=3.5)prodSku='F8';
+            else if(composite<=4.5)prodSku='F16';else if(composite<=5.5)prodSku='F32';else if(composite<=6.5)prodSku='F64';
+            else if(composite<=7.5)prodSku='F128';else if(composite<=8.5)prodSku='F256';else prodSku='F512';
+            if(copilot&&parseInt(prodSku.replace('F',''))<64)prodSku='F64';
+            var prodCU=parseInt(prodSku.replace('F',''));
+            var valid=[2,4,8,16,32,64,128,256,512,1024,2048];
+            var devCU=valid.reduce(function(p,c){return Math.abs(c-Math.max(2,Math.floor(prodCU/4)))<Math.abs(p-Math.max(2,Math.floor(prodCU/4)))?c:p;});
+            var devSku='F'+devCU;
+            var p=sku(prodSku),d=sku(devSku);
+            var html='';
+            html+='<div class="result-section-title">📡 Workload Profile</div>';
+            html+='<div class="radar-container" id="radarChart"></div>';
+            html+='<div class="result-section-title">💡 Recommended Capacity Architecture</div>';
+            html+='<div class="sku-card dev"><h4>🟠 Development</h4><div class="sku-name">'+devSku+'</div><p>'+d.cus+' CUs — Pause evenings & weekends to save ~60%</p></div>';
+            html+='<div class="sku-card prod"><h4>🟢 Production</h4><div class="sku-name">'+prodSku+'</div><p>'+p.cus+' CUs — Monitor with Capacity Metrics App for 2–4 weeks then adjust</p></div>';
+            if(copilot) html+='<div class="risk-flag">⚠️ <strong>Copilot requirement:</strong> F64 minimum applied to production capacity</div>';
+            html+='<div class="result-section-title">💰 Cost Comparison</div>';
+            var totalPayg=p.payg+d.payg;
+            var totalRes=p.res+d.res;
+            var withPause=p.payg+(d.payg*0.4);
+            var optimised=p.res+(d.payg*0.4);
+            html+='<table class="budget-table"><thead><tr><th>Scenario</th><th>Monthly (est.)</th><th>Annual (est.)</th><th>Notes</th></tr></thead><tbody>';
+            html+='<tr><td><strong>All PAYG</strong></td><td>~\u00a3'+totalPayg.toLocaleString()+'</td><td>~\u00a3'+(totalPayg*12).toLocaleString()+'</td><td>Maximum flexibility</td></tr>';
+            html+='<tr><td><strong>PAYG + Pause/Resume</strong></td><td>~\u00a3'+Math.round(withPause).toLocaleString()+'</td><td>~\u00a3'+Math.round(withPause*12).toLocaleString()+'</td><td>Dev paused evenings & weekends</td></tr>';
+            html+='<tr><td><strong>Reserved (1-year)</strong></td><td>~\u00a3'+totalRes.toLocaleString()+'</td><td>~\u00a3'+(totalRes*12).toLocaleString()+'</td><td>~40% discount, committed</td></tr>';
+            html+='<tr><td><strong>Optimised mix</strong></td><td>~\u00a3'+Math.round(optimised).toLocaleString()+'</td><td>~\u00a3'+Math.round(optimised*12).toLocaleString()+'</td><td>Reserved prod + PAYG dev with pause</td></tr>';
+            html+='</tbody></table>';
+            html+='<p style="font-size:11px;color:var(--text-tertiary);">* UK South PAYG estimates (Feb 2025). Verify at <a href="https://azure.microsoft.com/en-gb/pricing/details/microsoft-fabric/" target="_blank" style="color:var(--accent);">azure.microsoft.com/pricing</a>.</p>';
+            html+='<div style="margin-top:28px;padding:16px 20px;background:var(--bg-secondary);border-radius:var(--radius-md);font-size:13px;color:var(--text-secondary);line-height:1.6;">';
+            html+='<strong style="color:var(--text-primary);">⚡ Important:</strong> This is a <strong>recommended starting point</strong>. ';
+            html+='Microsoft recommends monitoring via the <a href="https://learn.microsoft.com/en-us/fabric/enterprise/metrics-app" target="_blank" style="color:var(--accent);">Capacity Metrics App</a> for 2–4 weeks then adjusting. F-SKUs can be changed at any time with no downtime.</div>';
+            document.getElementById('resultsContent').innerHTML=html;
+            document.getElementById('wizardResults').style.display='block';
+            setTimeout(function(){drawRadar(sc,'radarChart');},50);
+            document.getElementById('wizardResults').scrollIntoView({behavior:'smooth',block:'start'});
+        };
+        window.resetWizard = function(){
+            if(!confirm('Clear all answers?'))return;
+            document.querySelectorAll('.fsku-section input[type="radio"],.fsku-section input[type="checkbox"]').forEach(function(e){e.checked=false;});
+            document.querySelectorAll('.fsku-section textarea').forEach(function(e){e.value='';});
+            document.getElementById('wizardResults').style.display='none';
+            goToStage(0);
+        };
+        window.exportCSV = function(){
+            var csv='Section,Question,Answer,Notes\n';
+            STAGES.forEach(function(st){st.questions.forEach(function(q){
+                var a=q.type==='multi'?getAnswer(q.id,'multi').join('; '):getAnswer(q.id,'single');
+                var n=getNote(q.id);
+                csv+='"'+st.title+'","'+q.text.replace(/"/g,'""')+'","'+a.replace(/"/g,'""')+'","'+n.replace(/"/g,'""')+'"\n';
+            });});
+            var blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
+            var link=document.createElement('a');link.href=URL.createObjectURL(blob);
+            link.download='fsku-assessment-'+new Date().toISOString().slice(0,10)+'.csv';link.click();
+        };
+        updateProgress();
     })();
     </script>
 </body>
