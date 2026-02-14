@@ -147,9 +147,9 @@
         }
         .nav-btn .btn-desc {
             position: absolute;
-            top: calc(100% + 10px);
+            bottom: calc(100% + 10px);
             left: 50%;
-            transform: translateX(-50%) translateY(6px);
+            transform: translateX(-50%) translateY(-6px);
             width: 260px;
             background: #2D2B28;
             color: #F5F2EE;
@@ -165,15 +165,15 @@
             text-align: center;
             box-shadow: 0 8px 24px rgba(0,0,0,0.15);
         }
-        .nav-btn .btn-desc::before {
+        .nav-btn .btn-desc::after {
             content: '';
             position: absolute;
-            top: -6px;
+            bottom: -6px;
             left: 50%;
             transform: translateX(-50%);
             border-left: 7px solid transparent;
             border-right: 7px solid transparent;
-            border-bottom: 7px solid #2D2B28;
+            border-top: 7px solid #2D2B28;
         }
         .nav-btn:hover .btn-desc {
             opacity: 1;
