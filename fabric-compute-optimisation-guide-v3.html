@@ -258,6 +258,44 @@
         .recs-section td:first-child { font-weight: 600; color: var(--accent); font-size: 13px; }
         .recs-section td:last-child { text-align: center; }
 
+        /* ---- Recs Benefit Filter ---- */
+        .recs-benefit-filters {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+            align-items: center;
+        }
+        .recs-benefit-filters .filter-label {
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-right: 4px;
+        }
+        .recs-filter-summary {
+            font-size: 13px;
+            color: var(--text-tertiary);
+            margin-bottom: 24px;
+            padding: 10px 18px;
+            background: var(--bg-secondary);
+            border-radius: var(--radius-sm);
+            border: 1px solid var(--border-subtle);
+            display: none;
+        }
+        .recs-filter-summary span {
+            font-weight: 600;
+            color: var(--accent);
+        }
+        .category-section.hidden-by-filter {
+            display: none;
+        }
+        .recs-section tbody tr {
+            transition: opacity 0.2s ease;
+        }
+        .recs-section tbody tr.hidden-by-filter {
+            display: none;
+        }
+
         /* Matrix table columns */
         .matrix-section td:first-child { font-weight: 600; color: var(--accent); font-size: 13px; }
 
@@ -1245,6 +1283,8 @@
             .nav-buttons { display: none; }
             .nav-btn { display: none !important; }
             .search-container { display: none; }
+            .recs-benefit-filters { display: none; }
+            .recs-filter-summary { display: none !important; }
             .brand-header { border-bottom: 1px solid #ccc; }
             body { padding: 24px; background: #fff; }
             .section-divider { page-break-before: always; }
@@ -1269,6 +1309,8 @@
             .matrix-stats { gap: 10px; }
             .stat-card { min-width: 90px; padding: 14px 12px; }
             .legend-container { flex-direction: column; }
+            .recs-benefit-filters { gap: 8px; }
+            .recs-benefit-filters .filter-label { width: 100%; margin-bottom: 2px; }
             td, th { padding: 10px 12px; font-size: 12px; }
         }
 
@@ -1372,6 +1414,24 @@
                 </div>
             </div>
         </div>
+
+        <!-- Benefit Rating Filter -->
+        <div class="recs-benefit-filters" id="recsBenefitFilters">
+            <span class="filter-label">Filter by Benefit:</span>
+            <button class="quadrant-filter-btn active" data-benefit="ALL" onclick="filterRecsBenefit('ALL', this)">
+                <span class="vtb-icon">📋</span> Show All <span class="qf-count" id="rfCount-all"></span>
+            </button>
+            <button class="quadrant-filter-btn" data-benefit="HIGH" onclick="filterRecsBenefit('HIGH', this)">
+                <span style="color:var(--green-text);">●</span> High <span class="qf-count" id="rfCount-high"></span>
+            </button>
+            <button class="quadrant-filter-btn" data-benefit="MID" onclick="filterRecsBenefit('MID', this)">
+                <span style="color:var(--orange-text);">●</span> Mid <span class="qf-count" id="rfCount-mid"></span>
+            </button>
+            <button class="quadrant-filter-btn" data-benefit="LOW" onclick="filterRecsBenefit('LOW', this)">
+                <span style="color:var(--grey-text);">●</span> Low <span class="qf-count" id="rfCount-low"></span>
+            </button>
+        </div>
+        <div class="recs-filter-summary" id="recsFilterSummary"></div>
 
         <div class="category-section">
             <div class="category-header">1. Capacity Management (Items #1–8)</div>
@@ -3003,6 +3063,86 @@
                 search(this.value);
             }
         });
+    })();
+    </script>
+
+    <!-- Recs Benefit Filter Logic -->
+    <script>
+    (function() {
+        var recsSection = document.getElementById('recommendations');
+        if (!recsSection) return;
+
+        // Count benefit levels dynamically
+        var allRows = recsSection.querySelectorAll('.category-section tbody tr');
+        var counts = { ALL: 0, HIGH: 0, MID: 0, LOW: 0 };
+        allRows.forEach(function(row) {
+            var b = row.querySelector('.benefit-high, .benefit-mid, .benefit-low');
+            if (!b) return;
+            counts.ALL++;
+            if (b.classList.contains('benefit-high')) counts.HIGH++;
+            else if (b.classList.contains('benefit-mid')) counts.MID++;
+            else if (b.classList.contains('benefit-low')) counts.LOW++;
+        });
+
+        // Populate count badges
+        var elAll = document.getElementById('rfCount-all');
+        var elHigh = document.getElementById('rfCount-high');
+        var elMid = document.getElementById('rfCount-mid');
+        var elLow = document.getElementById('rfCount-low');
+        if (elAll) elAll.textContent = counts.ALL;
+        if (elHigh) elHigh.textContent = counts.HIGH;
+        if (elMid) elMid.textContent = counts.MID;
+        if (elLow) elLow.textContent = counts.LOW;
+
+        window.filterRecsBenefit = function(level, btnEl) {
+            // Toggle active button
+            var btns = document.querySelectorAll('#recsBenefitFilters .quadrant-filter-btn');
+            btns.forEach(function(b) { b.classList.remove('active'); });
+            btnEl.classList.add('active');
+
+            var summaryEl = document.getElementById('recsFilterSummary');
+            var categorySections = recsSection.querySelectorAll('.category-section');
+
+            if (level === 'ALL') {
+                // Show everything
+                allRows.forEach(function(row) { row.classList.remove('hidden-by-filter'); });
+                categorySections.forEach(function(sec) { sec.classList.remove('hidden-by-filter'); });
+                if (summaryEl) summaryEl.style.display = 'none';
+                return;
+            }
+
+            // Determine which class to match
+            var targetClass = 'benefit-' + level.toLowerCase();
+
+            // Filter rows
+            var visibleTotal = 0;
+            categorySections.forEach(function(sec) {
+                var rows = sec.querySelectorAll('tbody tr');
+                var visibleInSection = 0;
+                rows.forEach(function(row) {
+                    var b = row.querySelector('.benefit-high, .benefit-mid, .benefit-low');
+                    if (b && b.classList.contains(targetClass)) {
+                        row.classList.remove('hidden-by-filter');
+                        visibleInSection++;
+                        visibleTotal++;
+                    } else {
+                        row.classList.add('hidden-by-filter');
+                    }
+                });
+                // Hide entire category if no visible rows
+                if (visibleInSection === 0) {
+                    sec.classList.add('hidden-by-filter');
+                } else {
+                    sec.classList.remove('hidden-by-filter');
+                }
+            });
+
+            // Show summary
+            if (summaryEl) {
+                summaryEl.innerHTML = 'Showing <span>' + visibleTotal + '</span> of ' + counts.ALL + ' recommendations with <span>' + level + '</span> benefit rating';
+                summaryEl.style.display = 'block';
+            }
+        };
     })();
     </script>
 
