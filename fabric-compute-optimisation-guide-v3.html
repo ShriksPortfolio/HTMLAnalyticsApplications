@@ -1,0 +1,2023 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fabric Compute Cost Optimisation Guide</title>
+    <style>
+        /* ============================================ */
+        /* Apple-inspired UI — SF Pro, generous space,  */
+        /* soft radii, muted palette, content breathes  */
+        /* ============================================ */
+
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+        :root {
+            --text-primary: #1d1d1f;
+            --text-secondary: #6e6e73;
+            --text-tertiary: #86868b;
+            --bg-primary: #ffffff;
+            --bg-secondary: #f5f5f7;
+            --bg-card: #fbfbfd;
+            --border-light: #d2d2d7;
+            --border-subtle: #e8e8ed;
+            --accent: #0071e3;
+            --accent-hover: #0077ED;
+            --green: #34c759;
+            --green-bg: #e8f8ed;
+            --green-text: #1a7a34;
+            --orange: #ff9500;
+            --orange-bg: #fff4e6;
+            --orange-text: #8a5200;
+            --grey: #8e8e93;
+            --grey-bg: #f2f2f7;
+            --grey-text: #636366;
+            --blue-bg: #e8f0fe;
+            --blue-text: #0055b3;
+            --yellow-bg: #fff8e1;
+            --yellow-text: #7a6200;
+            --peach-bg: #fff0e8;
+            --peach-text: #9a4500;
+            --red-bg: #fef0f0;
+            --red-text: #c62828;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.04), 0 1px 2px rgba(0,0,0,0.06);
+            --shadow-md: 0 4px 12px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04);
+            --shadow-lg: 0 8px 30px rgba(0,0,0,0.08), 0 2px 8px rgba(0,0,0,0.04);
+            --transition: 0.25s cubic-bezier(0.25, 0.1, 0.25, 1);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            background: var(--bg-primary);
+            padding: 48px 48px 64px;
+            color: var(--text-primary);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* ---- Brand Header ---- */
+        .brand-header {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding-bottom: 32px;
+            margin-bottom: 32px;
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        .brand-header .fabric-logo {
+            flex-shrink: 0;
+            border-radius: 10px;
+        }
+        .brand-header .brand-text {
+            display: flex;
+            flex-direction: column;
+        }
+        .brand-header .brand-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            margin-bottom: 1px;
+        }
+        .brand-header .brand-author {
+            font-size: 12px;
+            color: var(--text-tertiary);
+            font-weight: 400;
+        }
+
+        /* ---- Typography ---- */
+        h1 {
+            font-size: 34px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+        .subtitle {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 32px;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* ---- Navigation Buttons ---- */
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        .nav-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            border-radius: 980px;
+            font-size: 14px;
+            font-weight: 500;
+            text-decoration: none;
+            transition: all var(--transition);
+            letter-spacing: -0.1px;
+        }
+        .nav-btn-primary {
+            background: var(--accent);
+            color: #fff;
+        }
+        .nav-btn-primary:hover {
+            background: var(--accent-hover);
+            color: #fff;
+            transform: scale(1.02);
+        }
+        .nav-btn-outline {
+            background: var(--bg-secondary);
+            color: var(--text-primary);
+            border: none;
+        }
+        .nav-btn-outline:hover {
+            background: #ebebef;
+            transform: scale(1.02);
+        }
+
+        /* ---- Summary Box ---- */
+        .summary-box {
+            background: var(--bg-secondary);
+            padding: 28px 32px;
+            margin-bottom: 40px;
+            border-radius: var(--radius-lg);
+            border: none;
+            border-left: none;
+        }
+        .summary-box h3 {
+            font-size: 13px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--text-secondary);
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+        }
+        .summary-stats {
+            display: flex;
+            gap: 32px;
+            flex-wrap: wrap;
+        }
+        .stat { text-align: center; }
+        .stat-number {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -1px;
+        }
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 2px;
+        }
+
+        /* ---- Category Sections ---- */
+        .category-section {
+            margin-bottom: 48px;
+            page-break-inside: avoid;
+        }
+        .category-header {
+            background: var(--text-primary);
+            color: #fff;
+            padding: 14px 24px;
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 0;
+            border-radius: var(--radius-md) var(--radius-md) 0 0;
+            letter-spacing: -0.2px;
+        }
+        .category-header.alt {
+            background: #2d2d2f;
+        }
+
+        /* ---- Tables ---- */
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            font-size: 13px;
+            border: 1px solid var(--border-subtle);
+            border-top: none;
+            border-radius: 0 0 var(--radius-md) var(--radius-md);
+            overflow: hidden;
+        }
+        th {
+            background: var(--bg-secondary);
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.6px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border-light);
+        }
+        td {
+            padding: 14px 16px;
+            border-bottom: 1px solid var(--border-subtle);
+            vertical-align: top;
+            color: var(--text-primary);
+            line-height: 1.5;
+        }
+        tr:last-child td {
+            border-bottom: none;
+        }
+        tr:hover {
+            background: var(--bg-secondary);
+        }
+        a {
+            color: var(--accent);
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 500;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+
+        /* Recommendations table columns */
+        .recs-section th:first-child { width: 5%; }
+        .recs-section th:nth-child(2) { width: 42%; }
+        .recs-section th:nth-child(3) { width: 38%; }
+        .recs-section th:nth-child(4) { width: 15%; text-align: center; }
+        .recs-section td:first-child { font-weight: 600; color: var(--accent); font-size: 13px; }
+        .recs-section td:last-child { text-align: center; }
+
+        /* Matrix table columns */
+        .matrix-section td:first-child { font-weight: 600; color: var(--accent); font-size: 13px; }
+
+        /* ---- Benefit Badges ---- */
+        .benefit-high {
+            background: var(--green-bg);
+            color: var(--green-text);
+            padding: 4px 14px;
+            border-radius: 980px;
+            font-weight: 600;
+            font-size: 11px;
+            display: inline-block;
+            letter-spacing: 0.3px;
+        }
+        .benefit-mid {
+            background: var(--orange-bg);
+            color: var(--orange-text);
+            padding: 4px 14px;
+            border-radius: 980px;
+            font-weight: 600;
+            font-size: 11px;
+            display: inline-block;
+            letter-spacing: 0.3px;
+        }
+        .benefit-low {
+            background: var(--grey-bg);
+            color: var(--grey-text);
+            padding: 4px 14px;
+            border-radius: 980px;
+            font-weight: 600;
+            font-size: 11px;
+            display: inline-block;
+            letter-spacing: 0.3px;
+        }
+
+        /* ---- Value Type & Effort Tags ---- */
+        .vtype-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 980px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+            margin: 2px 2px;
+            letter-spacing: 0.1px;
+        }
+        .effort-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 980px;
+            font-size: 11px;
+            font-weight: 600;
+            white-space: nowrap;
+            letter-spacing: 0.1px;
+        }
+
+        /* ---- Section Divider ---- */
+        .section-divider {
+            margin: 72px 0 40px 0;
+            padding-top: 48px;
+            border-top: 1px solid var(--border-light);
+        }
+        .section-divider h2 {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            margin-bottom: 8px;
+            letter-spacing: -0.4px;
+        }
+        .section-divider p {
+            font-size: 15px;
+            color: var(--text-secondary);
+            margin-bottom: 20px;
+            font-weight: 400;
+        }
+
+        /* ---- Matrix Stats ---- */
+        .matrix-stats {
+            display: flex;
+            gap: 16px;
+            margin-bottom: 32px;
+            flex-wrap: wrap;
+        }
+        .stat-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            text-align: center;
+            flex: 1;
+            min-width: 120px;
+            box-shadow: var(--shadow-sm);
+            transition: all var(--transition);
+        }
+        .stat-card:hover {
+            box-shadow: var(--shadow-md);
+            transform: translateY(-2px);
+        }
+        .stat-card .sc-number {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--text-primary);
+            letter-spacing: -1px;
+        }
+        .stat-card .sc-label {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 4px;
+            font-weight: 500;
+        }
+
+        /* ---- Legend ---- */
+        .legend-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+        .legend-box {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-radius: var(--radius-md);
+            padding: 20px 24px;
+            flex: 1;
+            min-width: 300px;
+            box-shadow: var(--shadow-sm);
+        }
+        .legend-box h3 {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-tertiary);
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+            font-size: 12px;
+            color: var(--text-secondary);
+        }
+        .legend-count {
+            font-weight: 700;
+            color: var(--text-tertiary);
+            min-width: 28px;
+            text-align: right;
+            font-size: 12px;
+        }
+
+        /* ---- Page Break & Footer ---- */
+        .page-break {
+            page-break-after: always;
+            margin: 48px 0;
+            border-top: 1px solid var(--border-subtle);
+            padding-top: 48px;
+        }
+        .footer {
+            margin-top: 64px;
+            padding-top: 24px;
+            border-top: 1px solid var(--border-subtle);
+            font-size: 12px;
+            color: var(--text-tertiary);
+            display: flex;
+            justify-content: space-between;
+            font-weight: 400;
+        }
+
+        /* ---- Metadata Section ---- */
+        .metadata-section td:first-child { font-weight: 600; color: var(--accent); font-size: 13px; }
+        code {
+            font-family: 'SF Mono', 'Fira Code', 'Cascadia Code', Consolas, monospace;
+            font-size: 11.5px;
+            background: var(--bg-secondary);
+            padding: 2px 7px;
+            border-radius: 5px;
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* ---- Search ---- */
+        .search-container {
+            position: relative;
+            margin-bottom: 40px;
+        }
+        .search-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .search-icon {
+            position: absolute;
+            left: 16px;
+            color: var(--text-tertiary);
+            pointer-events: none;
+            transition: color var(--transition);
+        }
+        .search-input {
+            width: 100%;
+            padding: 14px 16px 14px 48px;
+            font-size: 15px;
+            font-family: inherit;
+            font-weight: 400;
+            color: var(--text-primary);
+            background: var(--bg-secondary);
+            border: 1.5px solid transparent;
+            border-radius: var(--radius-md);
+            outline: none;
+            transition: all var(--transition);
+            -webkit-font-smoothing: antialiased;
+        }
+        .search-input::placeholder {
+            color: var(--text-tertiary);
+            font-weight: 400;
+        }
+        .search-input:focus {
+            background: var(--bg-primary);
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(0, 113, 227, 0.12);
+        }
+        .search-input:focus + .search-kbd,
+        .search-input:not(:placeholder-shown) + .search-kbd {
+            opacity: 1;
+        }
+        .search-kbd {
+            position: absolute;
+            right: 16px;
+            font-size: 11px;
+            font-family: inherit;
+            font-weight: 500;
+            color: var(--text-tertiary);
+            background: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            border-radius: 6px;
+            padding: 3px 8px;
+            opacity: 0;
+            transition: opacity var(--transition);
+            pointer-events: none;
+        }
+        .search-results {
+            position: absolute;
+            top: calc(100% + 6px);
+            left: 0;
+            right: 0;
+            background: var(--bg-primary);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-lg);
+            max-height: 400px;
+            overflow-y: auto;
+            z-index: 100;
+            display: none;
+        }
+        .search-results.active {
+            display: block;
+        }
+        .search-result-item {
+            padding: 12px 20px;
+            cursor: pointer;
+            border-bottom: 1px solid var(--border-subtle);
+            transition: background var(--transition);
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+        .search-result-item:last-child {
+            border-bottom: none;
+        }
+        .search-result-item:hover,
+        .search-result-item.active {
+            background: var(--bg-secondary);
+        }
+        .search-result-num {
+            font-weight: 700;
+            color: var(--accent);
+            font-size: 13px;
+            min-width: 32px;
+            flex-shrink: 0;
+        }
+        .search-result-text {
+            font-size: 13px;
+            color: var(--text-primary);
+            line-height: 1.4;
+        }
+        .search-result-text mark {
+            background: rgba(0, 113, 227, 0.12);
+            color: var(--accent);
+            border-radius: 3px;
+            padding: 0 2px;
+            font-weight: 600;
+        }
+        .search-result-meta {
+            font-size: 11px;
+            color: var(--text-tertiary);
+            margin-top: 3px;
+        }
+        .search-no-results {
+            padding: 20px;
+            text-align: center;
+            color: var(--text-tertiary);
+            font-size: 14px;
+        }
+        .search-highlight {
+            animation: highlightPulse 2s ease-out;
+        }
+        @keyframes highlightPulse {
+            0% { background: rgba(0, 113, 227, 0.15); }
+            100% { background: transparent; }
+        }
+
+        /* ---- Print ---- */
+        @media print {
+            .nav-buttons { display: none; }
+            .nav-btn { display: none !important; }
+            .search-container { display: none; }
+            .brand-header { border-bottom: 1px solid #ccc; }
+            body { padding: 24px; }
+            .section-divider { page-break-before: always; }
+            .stat-card { box-shadow: none; border: 1px solid #ddd; }
+            .stat-card:hover { transform: none; }
+            .legend-box { box-shadow: none; }
+            .category-header, .category-header.alt {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+            .benefit-high, .benefit-mid, .benefit-low, .vtype-tag, .effort-tag {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+
+        /* ---- Responsive ---- */
+        @media (max-width: 768px) {
+            body { padding: 24px 20px; }
+            h1 { font-size: 26px; }
+            .summary-stats { gap: 20px; }
+            .matrix-stats { gap: 10px; }
+            .stat-card { min-width: 90px; padding: 14px 12px; }
+            .legend-container { flex-direction: column; }
+            td, th { padding: 10px 12px; font-size: 12px; }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+
+        <!-- Brand Header -->
+        <div class="brand-header">
+            <img class="fabric-logo" src="data:image/png;base64,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" alt="Microsoft Fabric" width="40" height="40">
+            <div class="brand-text">
+                <span class="brand-label">Microsoft Fabric</span>
+                <span class="brand-author">Content Author: By Shrikesh Pattni</span>
+            </div>
+        </div>
+
+        <h1>48 Proven Approaches to Optimising Microsoft Fabric Compute Costs</h1>
+        <p class="subtitle">A comprehensive reference guide with Microsoft Learn sources and benefit ratings</p>
+
+        <!-- Navigation -->
+        <div class="nav-buttons">
+            <a href="#recommendations" class="nav-btn nav-btn-primary">📋 Recommendations & Sources</a>
+            <a href="#matrix" class="nav-btn nav-btn-outline">📊 Value & Effort Matrix</a>
+            <a href="#metadata" class="nav-btn nav-btn-outline">🔧 Fabric Metadata Automation</a>
+        </div>
+
+        <!-- Search -->
+        <div class="search-container">
+            <div class="search-wrapper">
+                <svg class="search-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                <input type="text" class="search-input" id="searchInput" placeholder="Search recommendations… e.g. &quot;pause resume&quot;, &quot;Delta&quot;, &quot;throttling&quot;" autocomplete="off">
+                <kbd class="search-kbd" id="searchKbd">ESC to clear</kbd>
+            </div>
+            <div class="search-results" id="searchResults"></div>
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SECTION 1: Recommendations & Sources       -->
+        <!-- ========================================== -->
+        <div id="recommendations" class="recs-section">
+
+        <div class="summary-box">
+            <h3>Guide Overview</h3>
+            <div class="summary-stats">
+                <div class="stat">
+                    <div class="stat-number">48</div>
+                    <div class="stat-label">Total Recommendations</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">6</div>
+                    <div class="stat-label">Categories</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">22</div>
+                    <div class="stat-label">High Impact Items</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">18</div>
+                    <div class="stat-label">Medium Impact Items</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header">1. Capacity Management (Items #1–8)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Recommendation</th>
+                        <th>Source</th>
+                        <th>Benefit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#1</td>
+                        <td>Implement automated pause/resume schedules for non-production capacities using Azure Automation or Logic Apps</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/enterprise/pause-resume" target="_blank">Pause and resume your capacity</a></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#2</td>
+                        <td>Right-size capacity SKUs based on actual CU consumption patterns observed in the Metrics App</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/enterprise/capacity-planning-manage-capacity-growth-governance" target="_blank">Capacity Planning Guide</a></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#3</td>
+                        <td>Use the Microsoft Fabric Capacity Metrics App daily to monitor utilisation trends and identify cost drivers</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/enterprise/metrics-app" target="_blank">Capacity Metrics App</a></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#4</td>
+                        <td>Separate dev/test workloads from production capacities to enable independent pause/resume schedules</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/enterprise/capacity-planning-manage-capacity-growth-governance" target="_blank">Capacity Planning Guide</a></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#5</td>
+                        <td>Enable smoothing to avoid throttling spikes and benefit from 24-hour background operation distribution</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/enterprise/throttling" target="_blank">Understand Throttling</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#6</td>
+                        <td>Schedule heavy workloads (refreshes, ETL) during off-peak hours to avoid interactive operation conflicts</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/enterprise/metrics-app-compute-page" target="_blank">Metrics App Compute Page</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#7</td>
+                        <td>Use Azure Logic Apps or Automation to implement dynamic capacity scaling based on time or workload triggers</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/enterprise/pause-resume" target="_blank">Pause and resume your capacity</a></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#8</td>
+                        <td>Monitor background vs interactive CU consumption separately to understand true workload distribution</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/enterprise/metrics-app-timepoint-page" target="_blank">Metrics App Timepoint Page</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header alt">2. Notebook Optimisation (Items #9–16)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Recommendation</th>
+                        <th>Source</th>
+                        <th>Benefit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#9</td>
+                        <td>Use High Concurrency mode to share Spark sessions across multiple notebooks — only the initiating session is billed</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-engineering/high-concurrency-overview" target="_blank">High Concurrency Mode Overview</a></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#10</td>
+                        <td>Configure appropriate Spark pool sizes — avoid over-provisioning nodes beyond workload requirements</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-engineering/workspace-admin-settings" target="_blank">Workspace Admin Settings</a></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#11</td>
+                        <td>Enable V-Order on Delta tables for read-heavy workloads to achieve faster query performance</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-engineering/delta-optimization-and-v-order" target="_blank">Delta Optimization and V-Order</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#12</td>
+                        <td>Use .cache() strategically — only on DataFrames accessed multiple times; unpersist when done</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-engineering/spark-best-practices-development-monitoring" target="_blank">Spark Best Practices</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#13</td>
+                        <td>Prefer df.filter() before df.select() to reduce data volume early in the transformation chain</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-engineering/spark-best-practices-development-monitoring" target="_blank">Spark Best Practices</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#14</td>
+                        <td>Avoid collect() on large datasets — use display() with limits or write to Delta for downstream analysis</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-engineering/how-to-use-notebook" target="_blank">How to Use Notebooks</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#15</td>
+                        <td>Set appropriate shuffle partitions (spark.sql.shuffle.partitions) based on data volume — default 200 may be excessive</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-engineering/spark-best-practices-development-monitoring" target="_blank">Spark Best Practices</a></td>
+                        <td><span class="benefit-low">LOW</span></td>
+                    </tr>
+                    <tr>
+                        <td>#16</td>
+                        <td>Use broadcast joins for small dimension tables to avoid expensive shuffle operations</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-engineering/spark-best-practices-development-monitoring" target="_blank">Spark Best Practices</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="page-break"></div>
+
+        <div class="category-section">
+            <div class="category-header">3. Dataflow Gen2 vs Notebooks Decision Framework (Items #17–24)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Recommendation</th>
+                        <th>Source</th>
+                        <th>Benefit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#17</td>
+                        <td>Use Dataflow Gen2 for simple ETL workloads under 1M rows where Power Query transformations are sufficient</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/fundamentals/decision-guide-pipeline-dataflow-spark" target="_blank">Decision Guide: Pipeline, Dataflow, Spark</a></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#18</td>
+                        <td>Use Notebooks for complex transformations over 1M rows where Spark's distributed computing is beneficial</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-factory/decision-guide-data-integration" target="_blank">Data Integration Decision Guide</a></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#19</td>
+                        <td>Avoid Dataflow Gen2 for iterative/looping logic — Notebooks handle procedural patterns more efficiently</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-factory/dataflow-gen2-performance-best-practices" target="_blank">Dataflow Gen2 Performance Best Practices</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#20</td>
+                        <td>Use Notebooks when joining 3+ large tables — Spark optimises join strategies better than Mashup engine</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-factory/decision-guide-data-integration" target="_blank">Data Integration Decision Guide</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#21</td>
+                        <td>Prefer Dataflow Gen2 for citizen developer scenarios where no-code visual interface is required</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-factory/dataflows-gen2-overview" target="_blank">Dataflow Gen2 Overview</a></td>
+                        <td><span class="benefit-low">LOW</span></td>
+                    </tr>
+                    <tr>
+                        <td>#22</td>
+                        <td>Use Notebooks when you need explicit partitioning control or custom Delta table maintenance</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-table-maintenance" target="_blank">Lakehouse Table Maintenance</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#23</td>
+                        <td>Dataflow Gen2 staging Lakehouse adds CU overhead — disable staging if transformations fold to source</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-factory/pricing-dataflows-gen2" target="_blank">Dataflow Gen2 Pricing</a></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#24</td>
+                        <td>Use Copy Activity for simple data movement without transformation — lower CU cost than Dataflow Gen2</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-factory/decision-guide-data-transformation" target="_blank">Data Transformation Decision Guide</a></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header alt">4. Delta Table & Lakehouse Design (Items #25–32)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Recommendation</th>
+                        <th>Source</th>
+                        <th>Benefit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#25</td>
+                        <td>Partition large tables by date or region — avoid high-cardinality columns that create too many small files</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-engineering/delta-optimization-and-v-order" target="_blank">Delta Optimization and V-Order</a></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#26</td>
+                        <td>Run OPTIMIZE regularly on frequently queried tables to compact small files into larger ones</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-engineering/table-compaction" target="_blank">Table Compaction</a></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#27</td>
+                        <td>Use VACUUM to remove old files no longer referenced — default retention is 7 days, balance with time travel needs</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-table-maintenance" target="_blank">Lakehouse Table Maintenance</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#28</td>
+                        <td>Enable Z-Order on common filter columns to improve file skipping for analytical queries</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-engineering/table-compaction" target="_blank">Table Compaction</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#29</td>
+                        <td>Use Delta table time travel sparingly — each version increases storage costs in OneLake</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-and-delta-tables" target="_blank">Lakehouse and Delta Tables</a></td>
+                        <td><span class="benefit-low">LOW</span></td>
+                    </tr>
+                    <tr>
+                        <td>#30</td>
+                        <td>Prefer CTAS (CREATE TABLE AS SELECT) over INSERT for bulk loads to reduce transaction log overhead</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-warehouse/guidelines-warehouse-performance" target="_blank">Warehouse Performance Guidelines</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#31</td>
+                        <td>Use incremental refresh patterns — avoid full table reloads where change detection is possible</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/fundamentals/direct-lake-understand-storage" target="_blank">Direct Lake Query Performance</a></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#32</td>
+                        <td>Separate bronze/silver/gold into distinct Lakehouses for governance and independent maintenance schedules</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-engineering/lakehouse-and-delta-tables" target="_blank">Lakehouse and Delta Tables</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="page-break"></div>
+
+        <div class="category-section">
+            <div class="category-header">5. Pipeline & Orchestration (Items #33–40)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Recommendation</th>
+                        <th>Source</th>
+                        <th>Benefit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#33</td>
+                        <td>Use pipeline parameters to avoid duplicating pipelines — create reusable templates with dynamic values</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-factory/notebook-activity" target="_blank">Notebook Activity in Pipelines</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#34</td>
+                        <td>Set appropriate concurrency limits on ForEach loops to prevent capacity exhaustion</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-engineering/spark-job-concurrency-and-queueing" target="_blank">Spark Job Concurrency</a></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#35</td>
+                        <td>Use Until loops with max iteration limits to prevent runaway execution costs</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-factory/notebook-activity" target="_blank">Notebook Activity in Pipelines</a></td>
+                        <td><span class="benefit-low">LOW</span></td>
+                    </tr>
+                    <tr>
+                        <td>#36</td>
+                        <td>Implement retry policies with exponential backoff to handle transient failures efficiently</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-factory/notebook-activity" target="_blank">Notebook Activity in Pipelines</a></td>
+                        <td><span class="benefit-low">LOW</span></td>
+                    </tr>
+                    <tr>
+                        <td>#37</td>
+                        <td>Use pipeline variables over repeated lookup activities to reduce unnecessary compute operations</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-engineering/notebook-utilities" target="_blank">NotebookUtils</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#38</td>
+                        <td>Chain notebooks in pipelines with session tags — don't call notebooks from within notebooks</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-engineering/configure-high-concurrency-session-notebooks-in-pipelines" target="_blank">High Concurrency in Pipelines</a></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#39</td>
+                        <td>Schedule pipelines sequentially if they compete for the same CUs — avoid parallel execution during peak times</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/enterprise/throttling" target="_blank">Understand Throttling</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#40</td>
+                        <td>Use event-based triggers over scheduled triggers where possible — only execute when data arrives</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/data-factory/notebook-activity" target="_blank">Notebook Activity in Pipelines</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header alt">6. Monitoring & Governance (Items #41–48)</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th>#</th>
+                        <th>Recommendation</th>
+                        <th>Source</th>
+                        <th>Benefit</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>#41</td>
+                        <td>Use the Fabric Capacity Metrics app as your daily operational dashboard for capacity health</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/enterprise/metrics-app" target="_blank">Capacity Metrics App</a></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#42</td>
+                        <td>Tag workloads with workspace naming conventions for cost allocation and chargeback reporting</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/enterprise/capacity-planning-manage-capacity-growth-governance" target="_blank">Capacity Planning Guide</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#43</td>
+                        <td>Set up alerts for capacity utilisation thresholds (e.g., 80%) to proactively prevent throttling</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/enterprise/capacity-planning-troubleshoot-consumption" target="_blank">Troubleshoot Consumption</a></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#44</td>
+                        <td>Review Admin API exports for usage patterns and identify opportunities for automation</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/enterprise/fabric-operations" target="_blank">Fabric Operations</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#45</td>
+                        <td>Audit unused datasets and reports monthly — orphaned items still consume storage and may trigger refreshes</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/enterprise/azure-billing" target="_blank">Understand Azure Bill</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#46</td>
+                        <td>Implement workspace-level access controls to prevent uncontrolled workspace sprawl</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/enterprise/capacity-planning-manage-capacity-growth-governance" target="_blank">Capacity Planning Guide</a></td>
+                        <td><span class="benefit-low">LOW</span></td>
+                    </tr>
+                    <tr>
+                        <td>#47</td>
+                        <td>Document data refresh dependencies to identify redundant or cascading refreshes</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/enterprise/metrics-app-compute-page" target="_blank">Metrics App Compute Page</a></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#48</td>
+                        <td>Use Microsoft Purview lineage to track data flow, identify waste, and understand downstream impact</td>
+                        <td><a href="https://learn.microsoft.com/en-us/fabric/get-started/delta-lake-interoperability" target="_blank">Delta Lake Interoperability</a></td>
+                        <td><span class="benefit-low">LOW</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SECTION 2: Value & Effort Matrix           -->
+        <!-- ========================================== -->
+        <div class="section-divider" id="matrix">
+            <h2>📊 Value & Effort Matrix</h2>
+            <p>Prioritise optimisation efforts by understanding the type of value each recommendation delivers and the effort required to implement it</p>
+            <a href="#recommendations" class="nav-btn nav-btn-outline" style="margin-top:8px;">↑ Back to Recommendations & Sources</a>
+        </div>
+
+        <div class="matrix-section">
+
+            <!-- Summary stats -->
+            <div class="matrix-stats">
+                <div class="stat-card">
+                    <div class="sc-number">21</div>
+                    <div class="sc-label">🚀 Quick Wins</div>
+                </div>
+                <div class="stat-card">
+                    <div class="sc-number">22</div>
+                    <div class="sc-label">🔧 Moderate Effort</div>
+                </div>
+                <div class="stat-card">
+                    <div class="sc-number">5</div>
+                    <div class="sc-label">🏗️ Investment</div>
+                </div>
+                <div class="stat-card">
+                    <div class="sc-number">29</div>
+                    <div class="sc-label">⚡ CU Reduction</div>
+                </div>
+                <div class="stat-card">
+                    <div class="sc-number">17</div>
+                    <div class="sc-label">🛡️ Cost Avoidance</div>
+                </div>
+            </div>
+
+            <!-- Legend -->
+            <div class="legend-container">
+                <div class="legend-box">
+                    <h3>Value Types</h3>
+                    <div class="legend-item"><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span> <span>— Directly lowers compute consumption</span> <span class="legend-count">29</span></div>
+                    <div class="legend-item"><span class="vtype-tag" style="color:var(--blue-text);background:var(--blue-bg);">🛡️ Cost Avoidance</span> <span>— Prevents unnecessary spend before it happens</span> <span class="legend-count">17</span></div>
+                    <div class="legend-item"><span class="vtype-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">⚠️ Throttling Prevention</span> <span>— Protects performance under load</span> <span class="legend-count">7</span></div>
+                    <div class="legend-item"><span class="vtype-tag" style="color:var(--peach-text);background:var(--peach-bg);">⚙️ Operational Efficiency</span> <span>— Reduces manual effort, improves workflow</span> <span class="legend-count">13</span></div>
+                </div>
+                <div class="legend-box">
+                    <h3>Effort Levels</h3>
+                    <div class="legend-item"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span> <span>— Config change or toggle, minimal dev time</span> <span class="legend-count">21</span></div>
+                    <div class="legend-item"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span> <span>— Requires some development or testing</span> <span class="legend-count">22</span></div>
+                    <div class="legend-item"><span class="effort-tag" style="color:var(--red-text);background:var(--red-bg);">🏗️ Investment</span> <span>— Architectural change, needs planning</span> <span class="legend-count">5</span></div>
+                </div>
+            </div>
+
+        <div class="category-section">
+            <div class="category-header">1. Capacity Management (Items #1–8)</div>
+            <table>
+                <thead><tr>
+                    <th style="width:4%;">#</th>
+                    <th style="width:36%;">Recommendation</th>
+                    <th style="width:26%;">Value Type</th>
+                    <th style="width:12%;">Effort</th>
+                    <th style="width:10%;">Benefit</th>
+                </tr></thead>
+                <tbody>
+                    <tr>
+                        <td>#1</td>
+                        <td>Implement automated pause/resume schedules for non-production capacities using Azure Automation or Logic Apps</td>
+                        <td><span class="vtype-tag" style="color:var(--blue-text);background:var(--blue-bg);">🛡️ Cost Avoidance</span> <span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#2</td>
+                        <td>Right-size capacity SKUs based on actual CU consumption patterns observed in the Metrics App</td>
+                        <td><span class="vtype-tag" style="color:var(--blue-text);background:var(--blue-bg);">🛡️ Cost Avoidance</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#3</td>
+                        <td>Use the Microsoft Fabric Capacity Metrics App daily to monitor utilisation trends and identify cost drivers</td>
+                        <td><span class="vtype-tag" style="color:var(--peach-text);background:var(--peach-bg);">⚙️ Operational Efficiency</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#4</td>
+                        <td>Separate dev/test workloads from production capacities to enable independent pause/resume schedules</td>
+                        <td><span class="vtype-tag" style="color:var(--blue-text);background:var(--blue-bg);">🛡️ Cost Avoidance</span> <span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--red-text);background:var(--red-bg);">🏗️ Investment</span></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#5</td>
+                        <td>Enable smoothing to avoid throttling spikes and benefit from 24-hour background operation distribution</td>
+                        <td><span class="vtype-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">⚠️ Throttling Prevention</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#6</td>
+                        <td>Schedule heavy workloads (refreshes, ETL) during off-peak hours to avoid interactive operation conflicts</td>
+                        <td><span class="vtype-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">⚠️ Throttling Prevention</span> <span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#7</td>
+                        <td>Use Azure Logic Apps or Automation to implement dynamic capacity scaling based on time or workload triggers</td>
+                        <td><span class="vtype-tag" style="color:var(--blue-text);background:var(--blue-bg);">🛡️ Cost Avoidance</span> <span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#8</td>
+                        <td>Monitor background vs interactive CU consumption separately to understand true workload distribution</td>
+                        <td><span class="vtype-tag" style="color:var(--peach-text);background:var(--peach-bg);">⚙️ Operational Efficiency</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header alt">2. Notebook Optimisation (Items #9–16)</div>
+            <table>
+                <thead><tr>
+                    <th style="width:4%;">#</th>
+                    <th style="width:36%;">Recommendation</th>
+                    <th style="width:26%;">Value Type</th>
+                    <th style="width:12%;">Effort</th>
+                    <th style="width:10%;">Benefit</th>
+                </tr></thead>
+                <tbody>
+                    <tr>
+                        <td>#9</td>
+                        <td>Use High Concurrency mode to share Spark sessions across multiple notebooks — only the initiating session consumes full CUs</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#10</td>
+                        <td>Configure appropriate Spark pool sizes — avoid over-provisioning nodes beyond workload requirements</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span> <span class="vtype-tag" style="color:var(--blue-text);background:var(--blue-bg);">🛡️ Cost Avoidance</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#11</td>
+                        <td>Enable V-Order on Delta tables for read-heavy workloads to achieve faster query performance</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#12</td>
+                        <td>Use .cache() strategically — only on DataFrames accessed multiple times; unpersist when done</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#13</td>
+                        <td>Prefer df.filter() before df.select() to reduce data volume early in the transformation chain</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#14</td>
+                        <td>Avoid collect() on large datasets — use display() with limits or write to Delta for downstream analysis</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span> <span class="vtype-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">⚠️ Throttling Prevention</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#15</td>
+                        <td>Set appropriate shuffle partitions (spark.sql.shuffle.partitions) based on data volume — default 200 may not be optimal</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-low">LOW</span></td>
+                    </tr>
+                    <tr>
+                        <td>#16</td>
+                        <td>Use broadcast joins for small dimension tables to avoid expensive shuffle operations</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="category-section">
+            <div class="category-header">3. Dataflow vs Notebook Selection (Items #17–24)</div>
+            <table>
+                <thead><tr>
+                    <th style="width:4%;">#</th>
+                    <th style="width:36%;">Recommendation</th>
+                    <th style="width:26%;">Value Type</th>
+                    <th style="width:12%;">Effort</th>
+                    <th style="width:10%;">Benefit</th>
+                </tr></thead>
+                <tbody>
+                    <tr>
+                        <td>#17</td>
+                        <td>Use Dataflow Gen2 for simple ETL workloads under 1M rows where Power Query transformations are sufficient</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span> <span class="vtype-tag" style="color:var(--peach-text);background:var(--peach-bg);">⚙️ Operational Efficiency</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#18</td>
+                        <td>Use Notebooks for complex transformations over 1M rows where Spark’s distributed computing is beneficial</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#19</td>
+                        <td>Avoid Dataflow Gen2 for iterative/looping logic — Notebooks handle procedural patterns more efficiently</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#20</td>
+                        <td>Use Notebooks when joining 3+ large tables — Spark optimises join strategies better than Mashup engine</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#21</td>
+                        <td>Prefer Dataflow Gen2 for citizen developer scenarios where no-code visual interface is required</td>
+                        <td><span class="vtype-tag" style="color:var(--peach-text);background:var(--peach-bg);">⚙️ Operational Efficiency</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-low">LOW</span></td>
+                    </tr>
+                    <tr>
+                        <td>#22</td>
+                        <td>Use Notebooks when you need explicit partitioning control or custom Delta table maintenance</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span> <span class="vtype-tag" style="color:var(--peach-text);background:var(--peach-bg);">⚙️ Operational Efficiency</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#23</td>
+                        <td>Dataflow Gen2 staging Lakehouse adds CU overhead — disable staging if transformations fold to source</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span> <span class="vtype-tag" style="color:var(--blue-text);background:var(--blue-bg);">🛡️ Cost Avoidance</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#24</td>
+                        <td>Use Copy Activity for simple data movement without transformation — lower CU cost than Dataflow Gen2</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span> <span class="vtype-tag" style="color:var(--blue-text);background:var(--blue-bg);">🛡️ Cost Avoidance</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header alt">4. Delta & Lakehouse Design (Items #25–32)</div>
+            <table>
+                <thead><tr>
+                    <th style="width:4%;">#</th>
+                    <th style="width:36%;">Recommendation</th>
+                    <th style="width:26%;">Value Type</th>
+                    <th style="width:12%;">Effort</th>
+                    <th style="width:10%;">Benefit</th>
+                </tr></thead>
+                <tbody>
+                    <tr>
+                        <td>#25</td>
+                        <td>Partition large tables by date or region — avoid high-cardinality columns that create too many small files</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--red-text);background:var(--red-bg);">🏗️ Investment</span></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#26</td>
+                        <td>Run OPTIMIZE regularly on frequently queried tables to compact small files into larger ones</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#27</td>
+                        <td>Use VACUUM to remove old files no longer referenced — default retention is 7 days, balance with time travel needs</td>
+                        <td><span class="vtype-tag" style="color:var(--blue-text);background:var(--blue-bg);">🛡️ Cost Avoidance</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#28</td>
+                        <td>Enable Z-Order on common filter columns to improve file skipping for analytical queries</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#29</td>
+                        <td>Use Delta table time travel sparingly — each version increases storage costs in OneLake</td>
+                        <td><span class="vtype-tag" style="color:var(--blue-text);background:var(--blue-bg);">🛡️ Cost Avoidance</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-low">LOW</span></td>
+                    </tr>
+                    <tr>
+                        <td>#30</td>
+                        <td>Prefer CTAS (CREATE TABLE AS SELECT) over INSERT for bulk loads to reduce transaction log overhead</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#31</td>
+                        <td>Use incremental refresh patterns — avoid full table reloads where change detection is possible</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span> <span class="vtype-tag" style="color:var(--blue-text);background:var(--blue-bg);">🛡️ Cost Avoidance</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--red-text);background:var(--red-bg);">🏗️ Investment</span></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#32</td>
+                        <td>Separate bronze/silver/gold into distinct Lakehouses for governance and independent maintenance schedules</td>
+                        <td><span class="vtype-tag" style="color:var(--peach-text);background:var(--peach-bg);">⚙️ Operational Efficiency</span> <span class="vtype-tag" style="color:var(--blue-text);background:var(--blue-bg);">🛡️ Cost Avoidance</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--red-text);background:var(--red-bg);">🏗️ Investment</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="page-break"></div>
+
+        <div class="category-section">
+            <div class="category-header">5. Pipeline & Orchestration (Items #33–40)</div>
+            <table>
+                <thead><tr>
+                    <th style="width:4%;">#</th>
+                    <th style="width:36%;">Recommendation</th>
+                    <th style="width:26%;">Value Type</th>
+                    <th style="width:12%;">Effort</th>
+                    <th style="width:10%;">Benefit</th>
+                </tr></thead>
+                <tbody>
+                    <tr>
+                        <td>#33</td>
+                        <td>Use pipeline parameters to avoid duplicating pipelines — create reusable templates with dynamic values</td>
+                        <td><span class="vtype-tag" style="color:var(--peach-text);background:var(--peach-bg);">⚙️ Operational Efficiency</span> <span class="vtype-tag" style="color:var(--blue-text);background:var(--blue-bg);">🛡️ Cost Avoidance</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#34</td>
+                        <td>Set appropriate concurrency limits on ForEach loops to prevent capacity exhaustion</td>
+                        <td><span class="vtype-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">⚠️ Throttling Prevention</span> <span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#35</td>
+                        <td>Use Until loops with max iteration limits to prevent runaway execution costs</td>
+                        <td><span class="vtype-tag" style="color:var(--blue-text);background:var(--blue-bg);">🛡️ Cost Avoidance</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-low">LOW</span></td>
+                    </tr>
+                    <tr>
+                        <td>#36</td>
+                        <td>Implement retry policies with exponential backoff to handle transient failures efficiently</td>
+                        <td><span class="vtype-tag" style="color:var(--peach-text);background:var(--peach-bg);">⚙️ Operational Efficiency</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-low">LOW</span></td>
+                    </tr>
+                    <tr>
+                        <td>#37</td>
+                        <td>Use pipeline variables over repeated lookup activities to reduce unnecessary compute operations</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#38</td>
+                        <td>Chain notebooks in pipelines with session tags — don’t call notebooks from within notebooks</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#39</td>
+                        <td>Schedule pipelines sequentially if they compete for the same CUs — avoid parallel execution during peak times</td>
+                        <td><span class="vtype-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">⚠️ Throttling Prevention</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#40</td>
+                        <td>Use event-based triggers over scheduled triggers where possible — only execute when data arrives</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span> <span class="vtype-tag" style="color:var(--blue-text);background:var(--blue-bg);">🛡️ Cost Avoidance</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="category-section">
+            <div class="category-header alt">6. Monitoring & Governance (Items #41–48)</div>
+            <table>
+                <thead><tr>
+                    <th style="width:4%;">#</th>
+                    <th style="width:36%;">Recommendation</th>
+                    <th style="width:26%;">Value Type</th>
+                    <th style="width:12%;">Effort</th>
+                    <th style="width:10%;">Benefit</th>
+                </tr></thead>
+                <tbody>
+                    <tr>
+                        <td>#41</td>
+                        <td>Use the Fabric Capacity Metrics app as your daily operational dashboard for capacity health</td>
+                        <td><span class="vtype-tag" style="color:var(--peach-text);background:var(--peach-bg);">⚙️ Operational Efficiency</span> <span class="vtype-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">⚠️ Throttling Prevention</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#42</td>
+                        <td>Tag workloads with workspace naming conventions for cost allocation and chargeback reporting</td>
+                        <td><span class="vtype-tag" style="color:var(--peach-text);background:var(--peach-bg);">⚙️ Operational Efficiency</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#43</td>
+                        <td>Set up alerts for capacity utilisation thresholds (e.g., 80%) to proactively prevent throttling</td>
+                        <td><span class="vtype-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">⚠️ Throttling Prevention</span> <span class="vtype-tag" style="color:var(--blue-text);background:var(--blue-bg);">🛡️ Cost Avoidance</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-high">HIGH</span></td>
+                    </tr>
+                    <tr>
+                        <td>#44</td>
+                        <td>Review Admin API exports for usage patterns and identify opportunities for automation</td>
+                        <td><span class="vtype-tag" style="color:var(--peach-text);background:var(--peach-bg);">⚙️ Operational Efficiency</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#45</td>
+                        <td>Audit unused datasets and reports monthly — orphaned items still consume storage and may trigger refreshes</td>
+                        <td><span class="vtype-tag" style="color:var(--blue-text);background:var(--blue-bg);">🛡️ Cost Avoidance</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#46</td>
+                        <td>Implement workspace-level access controls to prevent uncontrolled workspace sprawl</td>
+                        <td><span class="vtype-tag" style="color:var(--peach-text);background:var(--peach-bg);">⚙️ Operational Efficiency</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--green-text);background:var(--green-bg);">🚀 Quick Win</span></td>
+                        <td><span class="benefit-low">LOW</span></td>
+                    </tr>
+                    <tr>
+                        <td>#47</td>
+                        <td>Document data refresh dependencies to identify redundant or cascading refreshes</td>
+                        <td><span class="vtype-tag" style="color:var(--green-text);background:var(--green-bg);">⚡ CU Reduction</span> <span class="vtype-tag" style="color:var(--blue-text);background:var(--blue-bg);">🛡️ Cost Avoidance</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--yellow-text);background:var(--yellow-bg);">🔧 Moderate</span></td>
+                        <td><span class="benefit-mid">MID</span></td>
+                    </tr>
+                    <tr>
+                        <td>#48</td>
+                        <td>Use Microsoft Purview lineage to track data flow, identify waste, and understand downstream impact</td>
+                        <td><span class="vtype-tag" style="color:var(--peach-text);background:var(--peach-bg);">⚙️ Operational Efficiency</span></td>
+                        <td style="text-align:center;"><span class="effort-tag" style="color:var(--red-text);background:var(--red-bg);">🏗️ Investment</span></td>
+                        <td><span class="benefit-low">LOW</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        </div>
+
+        <!-- ========================================== -->
+        <!-- SECTION 3: Fabric Metadata Automation     -->
+        <!-- ========================================== -->
+        <div class="section-divider" id="metadata">
+            <h2>🔧 Fabric Metadata Extraction Automation</h2>
+            <p>Automated governance scanning using the Fabric Admin REST API and Scanner API — producing a complete tenant inventory as structured CSV outputs</p>
+            <a href="#recommendations" class="nav-btn nav-btn-outline" style="margin-top:8px;">↑ Back to top</a>
+        </div>
+
+        <div class="metadata-section">
+
+            <!-- Process overview cards -->
+            <div class="matrix-stats">
+                <div class="stat-card">
+                    <div class="sc-number">16</div>
+                    <div class="sc-label">📄 CSV Outputs</div>
+                </div>
+                <div class="stat-card">
+                    <div class="sc-number">4</div>
+                    <div class="sc-label">🔗 API Categories</div>
+                </div>
+                <div class="stat-card">
+                    <div class="sc-number">6</div>
+                    <div class="sc-label">⚙️ Tenant Settings</div>
+                </div>
+                <div class="stat-card">
+                    <div class="sc-number">5</div>
+                    <div class="sc-label">🏗️ Process Groups</div>
+                </div>
+            </div>
+
+            <!-- Group 1: Workspace & Item Inventory -->
+            <div class="category-section">
+                <div class="category-header">1. Workspace & Item Inventory</div>
+                <table>
+                    <thead><tr>
+                        <th style="width:4%;">#</th>
+                        <th style="width:22%;">Output File</th>
+                        <th style="width:34%;">Description</th>
+                        <th style="width:22%;">API Endpoint</th>
+                        <th style="width:18%;">Source</th>
+                    </tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><code>workspaces.csv</code></td>
+                            <td>Complete workspace inventory across the tenant — name, ID, state, type, capacity assignment, and default dataset storage format</td>
+                            <td><code>/admin/groups</code></td>
+                            <td><a href="https://learn.microsoft.com/en-us/rest/api/power-bi/admin/groups-get-groups-as-admin" target="_blank">Get Groups As Admin</a></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><code>all_items_core.csv</code></td>
+                            <td>Core item inventory — every dataset, report, dashboard, dataflow, and notebook across all workspaces with item type, ID, and workspace mapping</td>
+                            <td><code>/admin/workspaces/getInfo</code></td>
+                            <td><a href="https://learn.microsoft.com/en-us/rest/api/power-bi/admin/workspace-info-post-workspace-info" target="_blank">Scanner API — Post Workspace Info</a></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><code>all_items_full_details.csv</code></td>
+                            <td>Extended item metadata — includes configured data sources, endorsement status, sensitivity labels, descriptions, and last modified timestamps</td>
+                            <td><code>/admin/workspaces/scanResult</code></td>
+                            <td><a href="https://learn.microsoft.com/en-us/rest/api/power-bi/admin/workspace-info-get-scan-result" target="_blank">Scanner API — Get Scan Result</a></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td><code>items_by_type_summary.csv</code></td>
+                            <td>Aggregated item counts grouped by artifact type (Dataset, Report, Dashboard, Dataflow, Notebook, etc.) — derived from Scanner API output</td>
+                            <td><code>/admin/workspaces/scanResult</code></td>
+                            <td><a href="https://learn.microsoft.com/en-us/fabric/governance/metadata-scanning-overview" target="_blank">Metadata Scanning Overview</a></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td><code>items_by_workspace_summary.csv</code></td>
+                            <td>Item counts aggregated by workspace — shows content density per workspace for sprawl detection and governance prioritisation</td>
+                            <td><code>/admin/workspaces/scanResult</code></td>
+                            <td><a href="https://learn.microsoft.com/en-us/fabric/governance/metadata-scanning-overview" target="_blank">Metadata Scanning Overview</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Group 2: Capacity & Paid Resource Tracking -->
+            <div class="category-section">
+                <div class="category-header alt">2. Capacity & Paid Resource Tracking</div>
+                <table>
+                    <thead><tr>
+                        <th style="width:4%;">#</th>
+                        <th style="width:22%;">Output File</th>
+                        <th style="width:34%;">Description</th>
+                        <th style="width:22%;">API Endpoint</th>
+                        <th style="width:18%;">Source</th>
+                    </tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>6</td>
+                            <td><code>capacity_summary.csv</code></td>
+                            <td>All capacities in the tenant — SKU, state, region, admins, and capacity ID. Essential for mapping workspaces to billing units</td>
+                            <td><code>/admin/capacities</code></td>
+                            <td><a href="https://learn.microsoft.com/en-us/rest/api/power-bi/admin/get-capacities-as-admin" target="_blank">Get Capacities As Admin</a></td>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td><code>capacity_workspace_governance.csv</code></td>
+                            <td>Workspace-to-capacity mapping with governance metadata — links each workspace to its capacity for cost allocation and chargeback reporting</td>
+                            <td><code>/admin/groups</code> + <code>/admin/capacities</code></td>
+                            <td><a href="https://learn.microsoft.com/en-us/rest/api/power-bi/admin/groups-get-groups-as-admin" target="_blank">Get Groups As Admin</a></td>
+                        </tr>
+                        <tr>
+                            <td>8</td>
+                            <td><code>paid_capacity_items.csv</code></td>
+                            <td>Filtered list of items running exclusively on paid (non-trial) capacities — identifies what is actually consuming licensed CUs</td>
+                            <td><code>/admin/workspaces/scanResult</code> + capacity filter</td>
+                            <td><a href="https://learn.microsoft.com/en-us/fabric/enterprise/licenses" target="_blank">Fabric Licences</a></td>
+                        </tr>
+                        <tr>
+                            <td>9</td>
+                            <td><code>paid_capacity_type_summary.csv</code></td>
+                            <td>Paid capacity item counts broken down by artifact type — shows the distribution of compute-consuming items across datasets, reports, notebooks, etc.</td>
+                            <td>Derived from scan + capacity filter</td>
+                            <td><a href="https://learn.microsoft.com/en-us/fabric/enterprise/capacity-planning-manage-capacity-growth-governance" target="_blank">Capacity Planning Guide</a></td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td><code>paid_capacity_workspace_summary.csv</code></td>
+                            <td>Paid capacity usage aggregated by workspace — enables workspace-level cost attribution and identifies highest-consumption workspaces</td>
+                            <td>Derived from scan + capacity filter</td>
+                            <td><a href="https://learn.microsoft.com/en-us/fabric/enterprise/metrics-app" target="_blank">Capacity Metrics App</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Group 3: Semantic Model Metadata -->
+            <div class="category-section">
+                <div class="category-header">3. Semantic Model Metadata</div>
+                <table>
+                    <thead><tr>
+                        <th style="width:4%;">#</th>
+                        <th style="width:22%;">Output File</th>
+                        <th style="width:34%;">Description</th>
+                        <th style="width:22%;">API Endpoint</th>
+                        <th style="width:18%;">Source</th>
+                    </tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>11</td>
+                            <td><code>semantic_models.csv</code></td>
+                            <td>Full semantic model inventory — name, ID, configured by, data sources, endorsement, storage mode, and workspace assignment</td>
+                            <td><code>/admin/datasets</code></td>
+                            <td><a href="https://learn.microsoft.com/en-us/rest/api/power-bi/admin/datasets-get-datasets-as-admin" target="_blank">Get Datasets As Admin</a></td>
+                        </tr>
+                        <tr>
+                            <td>12</td>
+                            <td><code>semantic_model_ids.csv</code></td>
+                            <td>Lightweight reference list of semantic model IDs mapped to names and workspaces — used as a lookup table for downstream joins and enrichment</td>
+                            <td><code>/admin/datasets</code></td>
+                            <td><a href="https://learn.microsoft.com/en-us/rest/api/power-bi/admin/datasets-get-datasets-as-admin" target="_blank">Get Datasets As Admin</a></td>
+                        </tr>
+                        <tr>
+                            <td>13</td>
+                            <td><code>semantic_models_by_workspace.csv</code></td>
+                            <td>Semantic models grouped and counted by workspace — identifies workspace-level model density for governance review and rationalisation</td>
+                            <td><code>/admin/datasets</code> + workspace join</td>
+                            <td><a href="https://learn.microsoft.com/en-us/fabric/governance/metadata-scanning-overview" target="_blank">Metadata Scanning Overview</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Group 4: User & Access Governance -->
+            <div class="category-section">
+                <div class="category-header alt">4. User & Access Governance</div>
+                <table>
+                    <thead><tr>
+                        <th style="width:4%;">#</th>
+                        <th style="width:22%;">Output File</th>
+                        <th style="width:34%;">Description</th>
+                        <th style="width:22%;">API Endpoint</th>
+                        <th style="width:18%;">Source</th>
+                    </tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>14</td>
+                            <td><code>workspace_users.csv</code></td>
+                            <td>User membership per workspace — lists every user/group with their assigned role (Admin, Member, Contributor, Viewer) per workspace</td>
+                            <td><code>/admin/groups/{id}/users</code></td>
+                            <td><a href="https://learn.microsoft.com/en-us/rest/api/power-bi/admin/groups-get-group-users-as-admin" target="_blank">Get Group Users As Admin</a></td>
+                        </tr>
+                        <tr>
+                            <td>15</td>
+                            <td><code>workspace_access_summary.csv</code></td>
+                            <td>Workspace-level access summary — aggregated role counts per workspace to identify over-permissioned or under-governed workspaces</td>
+                            <td><code>/admin/groups/{id}/users</code></td>
+                            <td><a href="https://learn.microsoft.com/en-us/power-bi/collaborate-share/service-roles-new-workspaces" target="_blank">Workspace Roles</a></td>
+                        </tr>
+                        <tr>
+                            <td>16</td>
+                            <td><code>user_access_summary.csv</code></td>
+                            <td>User-centric access summary — aggregated view per user showing how many workspaces they have access to and at which role levels</td>
+                            <td><code>/admin/groups/{id}/users</code> + pivot</td>
+                            <td><a href="https://learn.microsoft.com/en-us/power-bi/guidance/powerbi-implementation-planning-security-tenant-level-planning" target="_blank">Tenant-Level Security Planning</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- Group 5: Required Tenant Settings -->
+            <div class="category-section">
+                <div class="category-header">5. Required Tenant Settings for API Access</div>
+                <table>
+                    <thead><tr>
+                        <th style="width:4%;">#</th>
+                        <th style="width:30%;">Tenant Setting</th>
+                        <th style="width:36%;">What It Enables</th>
+                        <th style="width:30%;">Source</th>
+                    </tr></thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td><strong>Allow service principals to use Power BI APIs</strong></td>
+                            <td>Service principals can call Admin REST APIs without a delegated admin token — eliminates MFA issues for automation</td>
+                            <td><a href="https://learn.microsoft.com/en-us/power-bi/enterprise/service-premium-service-principal" target="_blank">Service Principal for Admin APIs</a></td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td><strong>Allow service principals to use read-only admin APIs</strong></td>
+                            <td>Service principals can call read-only Admin APIs (Scanner, Get Groups, Get Activity Events) — minimum for governance scanning</td>
+                            <td><a href="https://learn.microsoft.com/en-us/fabric/admin/metadata-scanning-setup" target="_blank">Metadata Scanning Setup</a></td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td><strong>Enhance admin APIs responses with detailed metadata</strong></td>
+                            <td>Enables model caching — Scanner API responses include table names, column names, measure names, and descriptions</td>
+                            <td><a href="https://learn.microsoft.com/en-us/fabric/admin/metadata-scanning-setup" target="_blank">Metadata Scanning Setup</a></td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td><strong>Enhance admin APIs responses with DAX and mashup expressions</strong></td>
+                            <td>Scanner responses include DAX measure expressions and Power Query M code — requires detailed metadata setting above</td>
+                            <td><a href="https://learn.microsoft.com/en-us/fabric/admin/metadata-scanning-setup" target="_blank">Metadata Scanning Setup</a></td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td><strong>Service Principal security group assignment</strong></td>
+                            <td>All API settings scoped to a specific security group (e.g. SG-PBI-ServicePrincipals) — never enable for entire organisation</td>
+                            <td><a href="https://learn.microsoft.com/en-us/power-bi/guidance/powerbi-implementation-planning-security-tenant-level-planning" target="_blank">Tenant-Level Security Planning</a></td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td><strong>Client Credentials OAuth 2.0 flow</strong></td>
+                            <td>Authenticate using App Registration + Client Secret — resource: <code>https://analysis.windows.net/powerbi/api</code></td>
+                            <td><a href="https://learn.microsoft.com/en-us/rest/api/power-bi/admin" target="_blank">Power BI Admin REST API Reference</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <div><strong>SEED Thought Leadership</strong> | Fabric Compute Cost Optimisation Reference Guide | Version 1.0</div>
+            <div>Last Updated: January 2026</div>
+        </div>
+    </div>
+    <script>
+    (function() {
+        // Build search index from all table rows in both sections
+        var index = [];
+        var rows = document.querySelectorAll('table tbody tr');
+        rows.forEach(function(row) {
+            var cells = row.querySelectorAll('td');
+            if (cells.length >= 2) {
+                var num = cells[0].textContent.trim();
+                var text = cells[1].textContent.trim();
+                // Get category from closest category-header
+                var section = row.closest('.category-section');
+                var cat = section ? section.querySelector('.category-header') : null;
+                var catName = cat ? cat.textContent.trim() : '';
+                // Get benefit if present
+                var benefitEl = row.querySelector('.benefit-high, .benefit-mid, .benefit-low');
+                var benefit = benefitEl ? benefitEl.textContent.trim() : '';
+                // Get value types if present
+                var vtypes = [];
+                row.querySelectorAll('.vtype-tag').forEach(function(t) { vtypes.push(t.textContent.trim()); });
+                var effort = '';
+                var effortEl = row.querySelector('.effort-tag');
+                if (effortEl) effort = effortEl.textContent.trim();
+
+                index.push({
+                    num: num,
+                    text: text,
+                    category: catName,
+                    benefit: benefit,
+                    vtypes: vtypes,
+                    effort: effort,
+                    row: row,
+                    searchable: (num + ' ' + text + ' ' + catName + ' ' + benefit + ' ' + vtypes.join(' ') + ' ' + effort).toLowerCase()
+                });
+            }
+        });
+
+        // Deduplicate by num (same recommendation appears in both views)
+        var seen = {};
+        var uniqueIndex = [];
+        index.forEach(function(item) {
+            var key = item.num + '|' + item.text.substring(0, 50);
+            if (!seen[key]) {
+                seen[key] = true;
+                // Find ALL matching rows (both views)
+                item.allRows = index.filter(function(i) {
+                    return i.num === item.num && i.text.substring(0, 50) === item.text.substring(0, 50);
+                }).map(function(i) { return i.row; });
+                uniqueIndex.push(item);
+            }
+        });
+
+        var input = document.getElementById('searchInput');
+        var resultsDiv = document.getElementById('searchResults');
+        var activeIndex = -1;
+
+        function highlightText(text, query) {
+            if (!query) return text;
+            var words = query.trim().split(/\s+/).filter(function(w) { return w.length > 0; });
+            var result = text;
+            words.forEach(function(word) {
+                var escaped = word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+                var regex = new RegExp('(' + escaped + ')', 'gi');
+                result = result.replace(regex, '<mark>$1</mark>');
+            });
+            return result;
+        }
+
+        function search(query) {
+            activeIndex = -1;
+            if (!query || query.length < 2) {
+                resultsDiv.classList.remove('active');
+                resultsDiv.innerHTML = '';
+                return;
+            }
+
+            var q = query.toLowerCase();
+            var words = q.trim().split(/\s+/).filter(function(w) { return w.length > 0; });
+            
+            var matches = uniqueIndex.filter(function(item) {
+                return words.every(function(word) {
+                    return item.searchable.indexOf(word) !== -1;
+                });
+            });
+
+            if (matches.length === 0) {
+                resultsDiv.innerHTML = '<div class="search-no-results">No recommendations found for "<strong>' + query + '</strong>"</div>';
+                resultsDiv.classList.add('active');
+                return;
+            }
+
+            // Limit to 10 results
+            var shown = matches.slice(0, 10);
+            var html = '';
+            shown.forEach(function(item, i) {
+                var meta = item.category;
+                if (item.benefit) meta += ' · ' + item.benefit;
+                if (item.vtypes.length) meta += ' · ' + item.vtypes.join(', ');
+                if (item.effort) meta += ' · ' + item.effort;
+
+                html += '<div class="search-result-item" data-index="' + i + '">';
+                html += '<span class="search-result-num">' + item.num + '</span>';
+                html += '<div><div class="search-result-text">' + highlightText(item.text, query) + '</div>';
+                html += '<div class="search-result-meta">' + highlightText(meta, query) + '</div></div>';
+                html += '</div>';
+            });
+
+            if (matches.length > 10) {
+                html += '<div class="search-no-results" style="font-size:12px;">' + (matches.length - 10) + ' more results — refine your search</div>';
+            }
+
+            resultsDiv.innerHTML = html;
+            resultsDiv.classList.add('active');
+
+            // Click handlers
+            resultsDiv.querySelectorAll('.search-result-item').forEach(function(el, i) {
+                el.addEventListener('click', function() {
+                    selectResult(shown[i]);
+                });
+            });
+        }
+
+        function selectResult(item) {
+            resultsDiv.classList.remove('active');
+            // Highlight and scroll to the first visible row
+            var targetRow = item.allRows[0];
+            
+            // Remove any previous highlights
+            document.querySelectorAll('.search-highlight').forEach(function(el) {
+                el.classList.remove('search-highlight');
+            });
+
+            // Highlight all matching rows in both views
+            item.allRows.forEach(function(row) {
+                row.classList.add('search-highlight');
+            });
+
+            // Scroll to the row
+            targetRow.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+
+        function setActiveResult(index) {
+            var items = resultsDiv.querySelectorAll('.search-result-item');
+            items.forEach(function(el) { el.classList.remove('active'); });
+            if (index >= 0 && index < items.length) {
+                items[index].classList.add('active');
+                items[index].scrollIntoView({ block: 'nearest' });
+            }
+        }
+
+        // Event listeners
+        input.addEventListener('input', function() {
+            search(this.value);
+        });
+
+        input.addEventListener('keydown', function(e) {
+            var items = resultsDiv.querySelectorAll('.search-result-item');
+            var shown = [];
+            // Rebuild shown list from unique index
+            var q = input.value.toLowerCase();
+            var words = q.trim().split(/\s+/).filter(function(w) { return w.length > 0; });
+            if (words.length > 0) {
+                shown = uniqueIndex.filter(function(item) {
+                    return words.every(function(word) { return item.searchable.indexOf(word) !== -1; });
+                }).slice(0, 10);
+            }
+
+            if (e.key === 'ArrowDown') {
+                e.preventDefault();
+                activeIndex = Math.min(activeIndex + 1, items.length - 1);
+                setActiveResult(activeIndex);
+            } else if (e.key === 'ArrowUp') {
+                e.preventDefault();
+                activeIndex = Math.max(activeIndex - 1, 0);
+                setActiveResult(activeIndex);
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                if (activeIndex >= 0 && activeIndex < shown.length) {
+                    selectResult(shown[activeIndex]);
+                } else if (shown.length > 0) {
+                    selectResult(shown[0]);
+                }
+            } else if (e.key === 'Escape') {
+                resultsDiv.classList.remove('active');
+                input.value = '';
+                input.blur();
+                document.querySelectorAll('.search-highlight').forEach(function(el) {
+                    el.classList.remove('search-highlight');
+                });
+            }
+        });
+
+        // Close results when clicking outside
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.search-container')) {
+                resultsDiv.classList.remove('active');
+            }
+        });
+
+        // Re-show results when focusing back on input with content
+        input.addEventListener('focus', function() {
+            if (this.value.length >= 2) {
+                search(this.value);
+            }
+        });
+    })();
+    </script>
+</body>
+</html>
