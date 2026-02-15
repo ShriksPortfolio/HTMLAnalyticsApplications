@@ -111,9 +111,26 @@
         .subtitle {
             font-size: 15px;
             color: var(--text-secondary);
-            margin-bottom: 36px;
+            margin-bottom: 28px;
             font-weight: 400;
             line-height: 1.6;
+        }
+
+        /* ---- Introduction Section ---- */
+        .intro-section {
+            background: var(--bg-card);
+            border: 1px solid var(--border-subtle);
+            border-left: 4px solid var(--accent);
+            border-radius: var(--radius-md);
+            padding: 28px 32px;
+            margin-bottom: 36px;
+            box-shadow: var(--shadow-sm);
+            line-height: 1.75;
+        }
+        .intro-section p {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin: 0;
         }
 
         /* ---- Navigation Buttons ---- */
@@ -1363,12 +1380,17 @@
             <div class="brand-text">
                 <span class="brand-label">Microsoft Fabric</span>
                 <span class="brand-author">Content Author: By Shrikesh Pattni</span>
-                <span class="brand-author" style="color:var(--accent);font-weight:500;">Fabric Accelerator</span>
+                <span class="brand-author" style="color:var(--accent);font-weight:500;">Fabric Accelerator: Compute Cost Optimisation Playbook</span>
             </div>
         </div>
 
         <h1>48 Proven Approaches to Optimising Microsoft Fabric Compute Costs</h1>
         <p class="subtitle">A comprehensive reference guide with Microsoft Learn sources and benefit ratings</p>
+
+        <!-- Introduction -->
+        <div class="intro-section">
+            <p>Microsoft Fabric's consumption-based pricing model means that every notebook execution, Dataflow refresh, warehouse query, and semantic model load draws from a shared pool of Capacity Units (CUs). Without deliberate cost governance, compute consumption can escalate quickly — particularly in enterprise environments running multiple workloads across Lakehouses, Data Warehouses, and Power BI. This playbook consolidates 48 proven cost optimisation approaches into a single, searchable reference, designed to help architects and engineers build cost-efficient Fabric architecture from the ground up. Each recommendation is sourced from official Microsoft Learn documentation and assessed using a Value &amp; Effort Matrix to help prioritise where to focus first. Whether you are evaluating F-SKU capacity sizing, automating metadata extraction, or looking to reduce CU consumption across your tenant, this guide provides a structured, evidence-based starting point.</p>
+        </div>
 
         <!-- Navigation -->
         <div class="nav-buttons">
